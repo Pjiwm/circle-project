@@ -73,6 +73,7 @@ For more information: [NX setup](https://nx.dev/getting-started/nx-setup)
 ### What happens when code is committed that does not follow the code conventions?
 When code is committed that contains linting errors it will fail whilst running in the pipeline.
 Your pull request will fail and can therefor not be pr'd back to dev or main.
+
 ## Git and Github rules
 - Do not push directly to Dev (Main is disabled already)
 - Use Milestones for user stories.
@@ -84,4 +85,12 @@ Your pull request will fail and can therefor not be pr'd back to dev or main.
 - in the description write: Closes #Issue number of issue you've solved. This way Issues will automatically be closed after the pull request has been submitted.
 - Only use `feature` and `bug-fix` branches.
 - Do your code reviews seriously
+- Do not review/submit pull requests that are still running CI tests.
+- Assign yourself and other people if necessary to the assignee's tab in a pull request.
+- Feel free to request reviewers in a pull request.
 - Make sure not to commit big chunks of changes, commit in small steps.
+
+# Working Lean
+- Make use of the github projects kanban board.
+- Always assign yourself first before working on any tasks
+- Make sure to update the tasks status (in progress, testing done)
