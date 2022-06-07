@@ -7,7 +7,7 @@ on:
     branches: [dev, main]
 
 jobs:
-  unit-tests:
+  test-and-lint-backend:
     runs-on: ubuntu-latest
     steps:
       - name: Setup Node 16.x
@@ -18,15 +18,5 @@ jobs:
           cache: npm
       - name: build and test
       - run: npm ci
-      - run: npx nx test backend --parallel --maxParallel=4 --coverage
-
-  code-quality-backend: 
-    # runs-on: ubuntu-latest
-    steps:
-      # - uses: actions/checkout@v3
-      - name: lint
-      # - uses: actions/setup-node@v3
-        # with:
-          # node-version: '16.x'
-      # - run: npm ci
       - run: npx nx run backend:lint
+      - run: npx nx test backend --parallel --maxParallel=4 --coverage
