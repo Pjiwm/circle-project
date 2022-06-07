@@ -1,94 +1,86 @@
 
+# Setup
+Clone the project: `git clone https://github.com/Pjiwm/circle-project/edit/main`
 
-# TheCircle
+## Docker Setup
+### If you do not have Docker installed yet, but want to use the Docker setup:
+If you Are on windows 10/11 Home: 
+1. Install WSL: [WSL installation guide]https://docs.microsoft.com/en-us/windows/wsl/install
+2. Restart computer, run `WSL -l` to see if its working.
+3. If Windows did not install a default distro (Ubuntu) Install one from the MS store: [Ubuntu from MS store](https://apps.microsoft.com/store/detail/ubuntu/9PDXGNCFSCZV?hl=en-us&gl=US)
+4. For a more comfortable working environment get Windows Terminal and set Ubuntu as your default CLI: [Windows Terminal from MS store](https://apps.microsoft.com/store/detail/ubuntu/9PDXGNCFSCZV?hl=en-us&gl=US)
+6. Install Docker: [Docker](https://www.docker.com/)
+7. Restart computer
+8. Open Docker-Desktop open settings and got to: `Resources > WSL Integration` Enable Ubuntu and press refresh
+9. Open Windows Terminal or Ubuntu and see if the docker command is working.
 
-This project was generated using [Nx](https://nx.dev).
+If you are on Linux, Mac or Windows 10/11 Pro:
+1. Install Docker
+2. Run Docker in a CLI to see if it works
+### When Docker is installed:
+1. navigate to the repo in a terminal or inside your IDE's CLI
+2. run `docker-compose build`
+3. run `docker-compose up`
 
-<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
+### Using remote containers with VSCode
+For an optimal dev environment use the Remote containers extensions.
+1. Open VSCode in this project
+2. Install Remote - Containers from Microsoft (ms-vscode-remote.remote-containers)
+3. Open the command pallet `ctrl` + `shift` + `p` and run `> Remote Containers: Open Folder in container..`
+4. You should now be inside the container within VSCode.
 
-🔎 **Smart, Fast and Extensible Build System**
+## Regular Setup
+1. Install Node 16: [guide](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+2. Install NX globally with `npm install -g nx`
+3. Setup a local MariaDB server or any other MySQL server.
+4. Use a tool like Xamp or phpMyAdmin to manage your local databases.
+5. Install OpenSSL on Windows
 
-## Adding capabilities to your workspace
+## Working environment
+### Managing the project in your editor/IDE
+Open the project in your editor/IDE preferably VSCode due to extensions used for linting and the NX gui extension.
+- If you do not use VSCode make sure you can use ESLint linting and optionally an extension for NX. Otherwise you have to use the NX CLI. 
+  (If you use og Vim, Nano or [Ed](https://en.wikipedia.org/wiki/Ed_(text_editor)) have fun 💀)
+- If you use Docker with remote containers all extensions should be installed already.
+- If you are not using Docker but are using VSCode make sure to install the recommended extensions.
+Set prettier as your formatter, this will make sure you're not making any linting errors.
+### Project structure
+This repository is an NX monorepo. This means different projects backend, frontend etc. are all in the same workspace area.
+in the `apps` directory the different projects can be found. The `libs` directory can be used to put resources in that will be reused over different apps.
+Running tests, building, serving, generating new components, linting etc. can all be done using NX commands.
+In VSCode simply navigate to the left. There should be a logo with the letters NX. Using this extension running any NX command will become fairly easy.
+For more information: [NX setup](https://nx.dev/getting-started/nx-setup)
 
-Nx supports many plugins which add capabilities for developing different types of applications and different tools.
-
-These capabilities include generating applications, libraries, etc as well as the devtools to test, and build projects as well.
-
-Below are our core plugins:
-
-- [React](https://reactjs.org)
-  - `npm install --save-dev @nrwl/react`
-- Web (no framework frontends)
-  - `npm install --save-dev @nrwl/web`
-- [Angular](https://angular.io)
-  - `npm install --save-dev @nrwl/angular`
-- [Nest](https://nestjs.com)
-  - `npm install --save-dev @nrwl/nest`
-- [Express](https://expressjs.com)
-  - `npm install --save-dev @nrwl/express`
-- [Node](https://nodejs.org)
-  - `npm install --save-dev @nrwl/node`
-
-There are also many [community plugins](https://nx.dev/community) you could add.
-
-## Generate an application
-
-Run `nx g @nrwl/react:app my-app` to generate an application.
-
-> You can use any of the plugins above to generate applications as well.
-
-When using Nx, you can create multiple applications and libraries in the same workspace.
-
-## Generate a library
-
-Run `nx g @nrwl/react:lib my-lib` to generate a library.
-
-> You can also use any of the plugins above to generate libraries as well.
-
-Libraries are shareable across libraries and applications. They can be imported from `@the-circle/mylib`.
-
-## Development server
-
-Run `nx serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `nx g @nrwl/react:component my-component --project=my-app` to generate a new component.
-
-## Build
-
-Run `nx build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `nx test my-app` to execute the unit tests via [Jest](https://jestjs.io).
-
-Run `nx affected:test` to execute the unit tests affected by a change.
-
-## Running end-to-end tests
-
-Run `nx e2e my-app` to execute the end-to-end tests via [Cypress](https://www.cypress.io).
-
-Run `nx affected:e2e` to execute the end-to-end tests affected by a change.
-
-## Understand your workspace
-
-Run `nx graph` to see a diagram of the dependencies of your projects.
-
-## Further help
-
-Visit the [Nx Documentation](https://nx.dev) to learn more.
-
-
-
-## ☁ Nx Cloud
-
-### Distributed Computation Caching & Distributed Task Execution
-
-<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-cloud-card.png"></p>
-
-Nx Cloud pairs with Nx in order to enable you to build and test code more rapidly, by up to 10 times. Even teams that are new to Nx can connect to Nx Cloud and start saving time instantly.
-
-Teams using Nx gain the advantage of building full-stack applications with their preferred framework alongside Nx’s advanced code generation and project dependency graph, plus a unified experience for both frontend and backend developers.
-
-Visit [Nx Cloud](https://nx.app/) to learn more.
+# Contribution rules
+## Code conventions
+- Strict convention rules are not applied in any frontend Projects. Most components and boilerplate will be generated already.
+- No unused variables
+- Always make use of semicolons (;) at the end of a statement.
+- Use single quotes.
+- All functions must have a JSDoc comment.
+```TS
+   /**
+    * I am a JSDoc, I describe the function below me.
+    * This function calls someone SUS!
+    * @param person - The person who's gonna be sus.
+    */
+  function amongUs(person: any): void {
+    console.log(`${person} is sus`);
+  }
+```
+- No unused functions
+- When you use an ESLint Ignore statement add an explanation.
+### What happens when code is committed that does not follow the code conventions?
+When code is committed that contains linting errors it will fail whilst running in the pipeline.
+Your pull request will fail and can therefor not be pr'd back to dev or main.
+## Git and Github rules
+- Do not push directly to Dev (Main is disabled already)
+- Use labels for user stories.
+- Use an issue per problem you'll tackle.
+- Add corresponding labels (user stories) to your issue.
+- For every new problem you'll solve you work on a different feature or bug-fix branch. (feature/stream-window, bug-fix/centered-div)
+- When done with a branch create a pull request with your pushed branch.
+- in the description write: Closes #Issue number of issue you've solved. This way Issues will automatically be closed after the pull request has been submitted.
+- Only use `feature` and `bug-fix` branches.
+- Do your code reviews seriously
+- Make sure not to commit big chunks of changes, commit in small steps.
