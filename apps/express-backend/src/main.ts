@@ -4,9 +4,7 @@
  */
 
 import * as express from "express";
-const lol = '';
 const app = express();
-
 app.get("/api", (req, res) => {
   res.send({ message: "Welcome to express-backend!" });
 });
