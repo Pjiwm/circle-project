@@ -1,14 +1,21 @@
 
 # Setup
-Clone the project: `git clone https://github.com/Pjiwm/circle-project/edit/main`
+Clone the project: 
+```
+git clone https://github.com/Pjiwm/circle-project/edit/main
+```
 
 ## Docker Setup
 ### If you do not have Docker installed yet, but want to use the Docker setup:
 If you Are on windows 10/11 Home: 
 1. Install WSL: [WSL installation guide]https://docs.microsoft.com/en-us/windows/wsl/install
-2. Restart computer, run `WSL -l` to see if its working.
-3. If Windows did not install a default distro (Ubuntu) Install one from the MS store: [Ubuntu from MS store](https://apps.microsoft.com/store/detail/ubuntu/9PDXGNCFSCZV?hl=en-us&gl=US)
-4. For a more comfortable working environment get Windows Terminal and set Ubuntu as your default CLI: [Windows Terminal from MS store](https://apps.microsoft.com/store/detail/ubuntu/9PDXGNCFSCZV?hl=en-us&gl=US)
+2. Restart your computer,  and run in powershell:
+```
+WSL -l 
+``` 
+3. If you receive any errors troubleshoot.
+4. If Windows did not install a default distro (Ubuntu) Install one from the MS store: [Ubuntu from MS store](https://apps.microsoft.com/store/detail/ubuntu/9PDXGNCFSCZV?hl=en-us&gl=US)
+5. For a more comfortable working environment get Windows Terminal and set Ubuntu as your default CLI: [Windows Terminal from MS store](https://apps.microsoft.com/store/detail/ubuntu/9PDXGNCFSCZV?hl=en-us&gl=US)
 6. Install Docker: [Docker](https://www.docker.com/)
 7. Restart computer
 8. Open Docker-Desktop open settings and got to: `Resources > WSL Integration` Enable Ubuntu and press refresh
