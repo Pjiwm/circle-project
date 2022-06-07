@@ -75,9 +75,10 @@ When code is committed that contains linting errors it will fail whilst running 
 Your pull request will fail and can therefor not be pr'd back to dev or main.
 ## Git and Github rules
 - Do not push directly to Dev (Main is disabled already)
-- Use labels for user stories.
+- Use Milestones for user stories.
 - Use an issue per problem you'll tackle.
-- Add corresponding labels (user stories) to your issue.
+- Add corresponding Milestones (user stories) to your issue.
+- Add fitting labels to your issue (bugfix, new feature, documentation etc.)
 - For every new problem you'll solve you work on a different feature or bug-fix branch. (feature/stream-window, bug-fix/centered-div)
 - When done with a branch create a pull request with your pushed branch.
 - in the description write: Closes #Issue number of issue you've solved. This way Issues will automatically be closed after the pull request has been submitted.
