@@ -8,7 +8,19 @@
     },
     {
       "files": ["*.ts", "*.tsx"],
-      "rules": {}
+      "rules": {
+        "semi": ["error", "always"],
+        "quotes": ["error", "double"],
+        "require-jsdoc": ["error", {
+          "require": {
+            "FunctionDeclaration": true,
+            "MethodDefinition": true,
+            "ClassDeclaration": false,
+            "ArrowFunctionExpression": false,
+            "FunctionExpression": true
+          }
+        }]
+      }
     },
     {
       "files": ["*.js", "*.jsx"],

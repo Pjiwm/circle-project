@@ -1,0 +1,23 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "serve frontend",
+            "command": "npx nx serve angular-frontend",
+            "request": "launch",
+            "type": "node-terminal"
+        },
+        {
+            "name": "serve backend",
+            "command": "npx nx serve express-backend",
+            "request": "launch",
+            "type": "node-terminal"
+        },
+        {
+            "name": "Run backend tests",
+            "command": "npx nx test express-backend --maxParallel=5",
+            "request": "launch",
+            "type": "node-terminal"
+        },
+    ]
+}

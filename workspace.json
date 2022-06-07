@@ -2,6 +2,8 @@
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
   "projects": {
+    "angular-frontend": "apps/angular-frontend",
+    "angular-frontend-e2e": "apps/angular-frontend-e2e",
     "express-backend": "apps/express-backend"
   }
 }

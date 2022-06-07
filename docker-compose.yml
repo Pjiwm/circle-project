@@ -1,0 +1,40 @@
+services:
+  node:
+    container_name: circle_node
+    build: .
+    volumes: 
+      - .:/usr/src/app
+    links:
+      - 'mariadb'
+    ports: 
+      - "4200:4200"
+      - "3000:3000"
+    env_file:
+      - .env
+    depends_on:
+      - 'mariadb'
+
+  mariadb:
+      container_name: circle_mariadb
+      image: mariadb
+      cap_add: [SYS_NICE]
+      volumes: 
+        - .:/usr/src/app/mariadb
+      env_file:
+        - .env
+      environment:
+          MARIADB_ROOT_PASSWORD: ${SQL_ROOT_PASSWORD}
+  phpmyadmin:
+      container_name: circle_phpmyadmin
+      image: phpmyadmin
+      ports:
+         - 8080:80
+      depends_on:
+         - "mariadb"
+      cap_add: [SYS_NICE]
+      env_file:
+          - .env
+      environment:
+          PMA_HOST: circle_mariadb
+          PMA_PASSWORD: ${SQL_ROOT_PASSWORD}
+          PMA_USER: root
