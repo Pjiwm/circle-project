@@ -34,7 +34,7 @@ For an optimal dev environment use the Remote containers extensions.
 2. Install NX globally with `npm install -g nx`
 3. Setup a local MariaDB server or any other MySQL server.
 4. Use a tool like Xamp or phpMyAdmin to manage your local databases.
-5. Install OpenSSL on Windows
+5. Install OpenSSL on Windows.
 
 ## Working environment
 ### Managing the project in your editor/IDE
@@ -75,7 +75,7 @@ When code is committed that contains linting errors it will fail whilst running 
 Your pull request will fail and can therefor not be pr'd back to dev or main.
 
 ## Git and Github rules
-- Do not push directly to Dev (Main is disabled already)
+- Do not push directly to Dev or Main.
 - Use Milestones for user stories.
 - Use an issue per problem you'll tackle.
 - Add corresponding Milestones (user stories) to your issue.
@@ -83,8 +83,9 @@ Your pull request will fail and can therefor not be pr'd back to dev or main.
 - For every new problem you'll solve you work on a different feature or bug-fix branch. (feature/stream-window, bug-fix/centered-div)
 - When done with a branch create a pull request with your pushed branch.
 - in the description write: Closes #Issue number of issue you've solved. This way Issues will automatically be closed after the pull request has been submitted.
+- Every pull request needs at least one code review.
 - Only use `feature` and `bug-fix` branches.
-- Do your code reviews seriously
+- Do your code reviews seriously.
 - Do not review/submit pull requests that are still running CI tests.
 - Assign yourself and other people if necessary to the assignee's tab in a pull request.
 - Feel free to request reviewers in a pull request.
@@ -92,5 +93,6 @@ Your pull request will fail and can therefor not be pr'd back to dev or main.
 
 # Working Lean
 - Make use of the github projects kanban board.
-- Always assign yourself first before working on any tasks
-- Make sure to update the tasks status (in progress, testing done)
+- The boards can be found in this repo's projects tab > Projects (classic)
+- Always assign yourself first before working on any tasks.
+- Make sure to update the tasks status. (in progress, testing done)
