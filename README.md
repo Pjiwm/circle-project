@@ -2,7 +2,7 @@
 # Setup
 Clone the project: 
 ```
-git clone https://github.com/Pjiwm/circle-project/edit/main
+git clone https://github.com/Pjiwm/circle-project/
 ```
 
 ## Docker Setup
@@ -26,22 +26,25 @@ If you are on Linux, Mac or Windows 10/11 Pro:
 2. Run Docker in a CLI to see if it works
 ### When Docker is installed:
 1. navigate to the repo in a terminal or inside your IDE's CLI
-2. run `docker-compose build`
-3. run `docker-compose up`
+2. Copy and paste `sample.env` (to keep it on the repo) and rename it to `.env`
+3. run `docker-compose build`
+4. run `docker-compose up`
 
 ### Using remote containers with VSCode
 For an optimal dev environment use the Remote containers extensions.
 1. Open VSCode in this project
 2. Install Remote - Containers from Microsoft (ms-vscode-remote.remote-containers)
-3. Open the command pallet `ctrl` + `shift` + `p` and run `> Remote Containers: Open Folder in container..`
-4. You should now be inside the container within VSCode.
+3. Copy and paste `sample.env` (to keep it on the repo) and rename it to `.env`
+4. Open the command pallet `ctrl` + `shift` + `p` and run `> Remote Containers: Open Folder in container..`
+5. You should now be inside the container within VSCode.
 
 ## Regular Setup
 1. Install Node 16: [guide](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 2. Install NX globally with `npm install -g nx`
-3. Setup a local MariaDB server or any other MySQL server.
-4. Use a tool like Xamp or phpMyAdmin to manage your local databases.
-5. Install OpenSSL on Windows.
+3. Copy and paste `sample.env` (to keep it on the repo) and rename it to `.env`
+4. Setup a local MariaDB server or any other MySQL server.
+5. Use a tool like Xamp or phpMyAdmin to manage your local databases.
+6. Install OpenSSL on Windows.
 
 ## Working environment
 ### Managing the project in your editor/IDE
