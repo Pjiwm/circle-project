@@ -8,7 +8,7 @@ git clone https://github.com/Pjiwm/circle-project/
 ## Docker Setup
 ### If you do not have Docker installed yet, but want to use the Docker setup:
 If you Are on windows 10/11 Home: 
-1. Install WSL: [WSL installation guide]https://docs.microsoft.com/en-us/windows/wsl/install
+1. Install WSL: [WSL installation guide](https://docs.microsoft.com/en-us/windows/wsl/install)
 2. Restart your computer,  and run in powershell:
 ```
 WSL -l 
