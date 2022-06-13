@@ -46,6 +46,10 @@ For an optimal dev environment use the Remote containers extensions.
 5. Use a tool like Xamp or phpMyAdmin to manage your local databases.
 6. Install OpenSSL on Windows.
 
+##Angular commands
+Generating a component: `npx nx g @nrwl/angular:component <name> --project frontend`
+Generating a service: `npx nx g @nrwl/angular:service <name> --project frontend`
+
 ## Working environment
 ### Managing the project in your editor/IDE
 Open the project in your editor/IDE preferably VSCode due to extensions used for linting and the NX gui extension.
