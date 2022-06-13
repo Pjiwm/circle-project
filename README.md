@@ -8,7 +8,7 @@ git clone https://github.com/Pjiwm/circle-project/
 ## Docker Setup
 ### If you do not have Docker installed yet, but want to use the Docker setup:
 If you Are on windows 10/11 Home: 
-1. Install WSL: [WSL installation guide]https://docs.microsoft.com/en-us/windows/wsl/install
+1. Install WSL: [WSL installation guide](https://docs.microsoft.com/en-us/windows/wsl/install)
 2. Restart your computer,  and run in powershell:
 ```
 WSL -l 
@@ -106,3 +106,9 @@ Your pull request will fail and can therefor not be pr'd back to dev or main.
 - The boards can be found in this repo's projects tab > Projects (classic)
 - Always assign yourself first before working on any tasks.
 - Make sure to update the tasks status. (in progress, testing done)
+- WIP-Limits:
+    - Kanban-backlog 10
+    - under development 6
+    - under test 4
+    - done (waiting for acceptance by PO) 3
+    - accepted by PO ∞
