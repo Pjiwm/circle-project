@@ -1,0 +1,75 @@
+.background-secondary{
+    background-color: white;
+}
+
+a {
+    text-decoration: none;
+}
+
+.sidenav {
+    width: 150px;
+    position: fixed;
+    min-height: 100vh;
+}
+
+.icon-div{
+    position: fixed;
+}
+
+fa-icon{
+    size: 20px !important;
+    color: #000;
+    &:hover{
+        color: black;
+    }
+}
+
+.sidenav-text{
+    color: #000;
+    font-size: 0.84rem;
+}
+
+.sidenav-item{
+    width: 100%;
+    padding: 0;
+    &:hover{
+        color: black;F
+        fa-icon{
+            color: black;
+        }
+        .sidenav-text{
+            color: black;
+        }
+    }
+}
+
+.active-link{
+    fa-icon{
+        color: #000 !important;
+    }
+    .sidenav-text{
+        color: #000 !important;
+    }
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+}
+
+// X-Large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+}
+
+// XX-Large devices (larger desktops, 1400px and up)
+@media (min-width: 1400px) {
+}
