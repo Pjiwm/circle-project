@@ -3,6 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "f-start": "nx serve angular-frontend",
+    "b-start": "nx serve express-backend",
     "start": "nx serve",
     "build": "nx build",
     "test": "nx test",
