@@ -106,3 +106,9 @@ Your pull request will fail and can therefor not be pr'd back to dev or main.
 - The boards can be found in this repo's projects tab > Projects (classic)
 - Always assign yourself first before working on any tasks.
 - Make sure to update the tasks status. (in progress, testing done)
+- WIP-Limits:
+    - Kanban-backlog 10
+    - under development 6
+    - under test 4
+    - done (waiting for acceptance by PO) 3
+    - accepted by PO ∞
