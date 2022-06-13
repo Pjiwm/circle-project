@@ -14,7 +14,6 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '16.x'
-          cache: npm
       - run: npm ci
       - run: npx nx run express-backend:lint
       - run: npx nx test express-backend --parallel --maxParallel=4 --coverage
