@@ -1,6 +1,5 @@
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
-import { RouterModule } from "@angular/router";
 import { StreamComponent } from "./pages/streamer/stream/stream.component";
 import { StreamService } from "./services/StreamService";
 import { HttpClientModule } from "@angular/common/http";

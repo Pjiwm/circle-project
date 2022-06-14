@@ -1,12 +1,34 @@
-<div class="container text-center">
-    <div>
-    <webcam [height]="400" 
-            [width]="1000">
-     </webcam>
+<div class="row">
+  <div class="text-center col-sm-9 camera-div" #parentCam>
+    <div class="cam" *ngIf="WebcamOn">
+      <webcam [width]="webcam_width"> </webcam>
     </div>
-<div>
-    <button class="btn btn-primary" (click)="Start();"> Start your Live stream</button>
-    <button class="btn btn-primary" (click)="Stop();"> Stop your Live stream</button>
-    <button class="btn btn-primary" (click)="Pause();"> Pause your Live stream</button>
+
+    <div class="cam" *ngIf="!WebcamOn">
+      <p>You need to start the stream</p>
+    </div>    
+  </div>
+  <div class="col-sm-3">
+    <the-circle-chat></the-circle-chat>
+  </div>
 </div>
-    </div>
+
+<footer id="footer">
+    <div class="text-center">
+    <button class="btn btn-streaming" (click)="Start()">
+      <fa-icon [icon]="FaPlay" class="icon fa-lg pe-2"></fa-icon> Start Your
+      Live stream
+    </button>
+
+    <button class="btn btn-primary btn-streaming" (click)="Stop()">
+      <fa-icon [icon]="FaStop" class="icon fa-lg pe-2"></fa-icon> Stop your Live
+      stream
+    </button>
+    <button class="btn btn-primary btn-streaming" (click)="Pause()">
+      <fa-icon [icon]="FaPause" class="icon fa-lg pe-2"></fa-icon> Pause your
+      Live stream
+    </button>
+
+</div>
+</footer>
+

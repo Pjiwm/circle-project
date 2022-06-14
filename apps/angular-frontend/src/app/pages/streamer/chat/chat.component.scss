@@ -1,0 +1,22 @@
+
+
+.sidenav {
+    width: 100%;
+    // margin-top: 50px;
+    //min-height: 100vh;
+    top: 0;
+    right: 0;
+    overflow-x: hidden;
+    color: red;
+}
+
+#wrapper {
+    position: absolute;
+    right: 0;
+    border: 2px black;
+}
+
+.chat {
+    border-width: 2px black;
+    z-index: 3;
+}
