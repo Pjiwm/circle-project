@@ -11,30 +11,13 @@ services:
       - "3000:3000"
     env_file:
       - .env
+    environment:
+      MONGO_DB_CONNECTION: ${MONGO_DB_CONNECTION}
     depends_on:
-      - 'mariadb'
-
-  mariadb:
-      container_name: circle_mariadb
-      image: mariadb
-      cap_add: [SYS_NICE]
-      volumes: 
-        - .:/usr/src/app/mariadb
-      env_file:
-        - .env
-      environment:
-          MARIADB_ROOT_PASSWORD: ${SQL_ROOT_PASSWORD}
-  phpmyadmin:
-      container_name: circle_phpmyadmin
-      image: phpmyadmin
-      ports:
-         - 8080:80
-      depends_on:
-         - "mariadb"
-      cap_add: [SYS_NICE]
-      env_file:
-          - .env
-      environment:
-          PMA_HOST: circle_mariadb
-          PMA_PASSWORD: ${SQL_ROOT_PASSWORD}
-          PMA_USER: root
+  mongo:
+    container_name: circle_mongo
+    image: mongo
+    ports:
+      - 27017:2707
+    volumes:
+      - ./data/db:/data/db
