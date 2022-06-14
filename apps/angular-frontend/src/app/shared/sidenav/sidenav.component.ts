@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { faEye, faUsers, faTrophy, faCalendarAlt } from '@fortawesome/free-solid-svg-icons'
+import { faEye, faPlay, faTrophy, faCalendarAlt } from '@fortawesome/free-solid-svg-icons'
 
 @Component({
   selector: "the-circle-sidenav",
@@ -9,7 +9,7 @@ import { faEye, faUsers, faTrophy, faCalendarAlt } from '@fortawesome/free-solid
 export class SidenavComponent implements OnInit {
 
   FaEye = faEye
-	faUsers = faUsers
+	FaPlay = faPlay
 	faTrophy = faTrophy
 	faCalenderAlt = faCalendarAlt
 

@@ -1,7 +1,7 @@
-<div class="background-secondary sidenav p-0 shadow d-none d-md-block">
-  <div class="text-center icon-div mx-3">
-    <div class="sidenav-item mt-4">
-      <a class="d-block" routerLink="edit" routerLinkActive="active-link">
+<div class="sidenav p-0 shadow d-none d-md-block">
+  <div class="text-center">
+    <div class="sidenav-item">
+      <a class="d-block" [routerLink]="['/']" routerLinkActive="active-link">
         <p class="sidenav-text fw-bold m-0">Mae Holland</p>
         <fa-icon [icon]="FaEye" class="icon fa-lg pe-2"></fa-icon>
         <p class="sidenav-text fw-bold d-inline-block">1.000.000</p>
@@ -9,9 +9,9 @@
     </div>
 
     <div class="sidenav-item mt-3">
-      <a class="d-block" routerLink="edit" routerLinkActive="active-link">
+      <a class="d-block" [routerLink]="['/']" routerLinkActive="active-link">
         <p class="sidenav-text fw-bold m-0">Tom Holland</p>
-        <fa-icon [icon]="FaEye" class="icon fa-lg pe-2"></fa-icon>
+        <fa-icon [icon]="FaPlay" class="icon fa-lg pe-2"></fa-icon>
         <p class="sidenav-text fw-bold d-inline-block">964.463</p>
       </a>
     </div>
