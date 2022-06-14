@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Observable } from "rxjs";
-import { User } from "../../models/user";
+import { Person } from '../../../../../../libs/models'
 import { AuthService } from "../../services/auth.service";
 
 @Component({
@@ -10,12 +10,12 @@ import { AuthService } from "../../services/auth.service";
 })
 export class NavbarComponent implements OnInit {
   isNavbarCollapsed = true;
-  loggInUser$!: Observable<User | undefined>;
+  loggInUser$!: Observable<Person | undefined>;
   
   constructor(private authservice: AuthService) {}
 
   ngOnInit(): void {
-    this.loggInUser$ = this.authservice.currentUser$
+    this.loggInUser$ = this.authservice.currentPerson$
   }
 
   logout(): void {

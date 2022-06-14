@@ -1,11 +1,13 @@
 export class User {
-  id: number;
-  name: string;
-  publicKey: string;
+  id: String;
+  name: String;
+  PrivateKey: String;
+  PublicKey: String;
 
-  constructor(id: number, name: string, publicKey: string) {
+  constructor(id: String, name: String, publicKey: String, privateKey: String) {
     this.id = id;
     this.name = name;
-    this.publicKey = publicKey;
+    this.PrivateKey = privateKey;
+    this.PublicKey = publicKey;
   }
 }

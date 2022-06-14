@@ -22,10 +22,19 @@
                 formControlName="name"
               />
             </div>
+            <div class="form-group">
+                <label for="inputPrivateKey"><b>PrivateKey:</b></label>
+                <input
+                  type="password"
+                  class="form-control"
+                  placeholder="PrivateKey"
+                  formControlName="PrivateKey"
+                />
+              </div>
             
             <div *ngIf="noUserFound">
               <b class="error"
-                >E-mail of wachtwoord incorrect, probeer opnieuw.</b
+                >Naam of Private Key incorrect, probeer opnieuw.</b
               >
             </div>
             <div class="form-group">

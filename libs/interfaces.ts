@@ -20,7 +20,7 @@ interface IPerson {
     Name: String;
     PublicKey: String;
     Satochi: Number;
-    Followed: [IRoom];
+    Followed: [IRoom] | undefined;
 }
 
 export {IRoom,IChatMessage,IPerson}
