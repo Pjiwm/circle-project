@@ -1,16 +1,29 @@
 .main-bg {
-    color: #fff;
-    background-color: #C6002A;
+  color: #fff;
+  background-color: #c6002a;
 }
 
 .navbar-dark .navbar-nav .nav-link {
-    color: #fff;
+  color: #fff;
 }
 
 .navbar-dark .navbar-nav .nav-link:hover {
-    border: 1p solid #000;
+  border: 1p solid #000;
 }
 
 img {
-    width: 150px;
+  width: 150px;
+}
+
+.navbar-right {
+  position: absolute;
+  right: 15px;
+}
+
+// Medium devices (tablets, 768px and up)
+@media (max-width: 993px) {
+  .navbar-right {
+    position: unset;
+    right: 15px;
+  }
 }
