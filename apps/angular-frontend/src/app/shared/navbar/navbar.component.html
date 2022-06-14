@@ -1,22 +1,71 @@
 <div class="main-bg nav navbar navbar-expand-lg navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-            <img routerlink='/' alt="Bress logo" class="logo" src="/assets/img/avans-hogeschool-logo.png" />
-        </a>
-        <button (click)="isNavbarCollapsed = !isNavbarCollapsed" class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      <img
+        routerlink="/"
+        alt="Avans logo"
+        class="logo"
+        src="/assets/img/avans-hogeschool-logo.png"
+      />
+    </a>
+    <button
+      (click)="isNavbarCollapsed = !isNavbarCollapsed"
+      class="navbar-toggler hidden-sm-up"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div
+      [ngbCollapse]="isNavbarCollapsed"
+      class="collapse navbar-collapse"
+      id="navbarNav"
+    >
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [routerLink]="['/following']"
+            routerLinkActive="active-link"
+            >Volgend</a
+          >
+          <div class="active-bar"></div>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [routerLink]="['/browse']"
+            routerLinkActive="active-link"
+            >Bladeren</a
+          >
+          <div class="active-bar"></div>
+        </li>
+      </ul>
+      <span class="navbar-right">
+        <div class="text-right" *ngIf="!(loggInUser$ | async)">
+          <button
+            routerLink="/login"
+            type="button"
+            class="btn btn-outline-light me-2"
+          >
+            Login
           </button>
-          <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link" [routerLink]="['/following']" routerLinkActive="active-link">Volgend</a>
-                <div class="active-bar"></div>
-              </li>    
-              <li class="nav-item">
-                <a class="nav-link" [routerLink]="['/browse']" routerLinkActive="active-link">Bladeren</a>
-                <div class="active-bar"></div>
-              </li>    
-            </ul>
-          </div>
-      </div>
+        </div>
+        <div class="text-end" *ngIf="loggInUser$ | async as user">
+          <span class="px-2 text-white user">{{ user.name }} </span>
+          <button
+            type="button"
+            class="btn btn-outline-light me-2"
+            (click)="logout()"
+          >
+            Uitloggen
+          </button>
+        </div>
+      </span>
+    </div>
   </div>
+</div>
