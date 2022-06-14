@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 //import { StreamService } from "../../services/StreamService";
 import {WebcamImage} from 'ngx-webcam';
 import { Observable, Subject } from "rxjs";
-import { StreamService } from "../../services/StreamService";
+import { StreamService } from "../../../services/StreamService";
 
 @Component({
   selector: "the-circle-stream",

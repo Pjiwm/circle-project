@@ -1,12 +1,11 @@
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { RouterModule } from "@angular/router";
-import { HomeComponent } from "./home/home.component";
-import { StreamComponent } from "./streamer/stream/stream.component";
+import { StreamComponent } from "./pages/streamer/stream/stream.component";
 import { StreamService } from "./services/StreamService";
 import { HttpClientModule } from "@angular/common/http";
 import { WebcamModule } from "ngx-webcam";
-import { ChatComponent } from "./streamer/chat/chat.component";
+import { ChatComponent } from "./pages/streamer/chat/chat.component";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
@@ -21,7 +20,6 @@ import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     StreamComponent,
     ChatComponent,
     NavbarComponent,
