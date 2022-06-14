@@ -2,7 +2,9 @@
 import * as express from "express";
 const app = express();
 import router from "./app/router/router";
+import mongoDB = require("./db.connection");
 
+mongoDB.connectToMongo();
 
 app.get("/test", (req, res) => {
   res.send("Hello World!");
