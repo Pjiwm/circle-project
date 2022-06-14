@@ -8,6 +8,8 @@ import { NavbarComponent } from "./shared/navbar/navbar.component";
 import { PageNotFoundComponent } from "./pages/page-not-found/page-not-found.component";
 import { BrowseComponent } from "./pages/browse/browse.component";
 import { FollowingComponent } from "./pages/following/following.component";
+import { SidenavComponent } from "./shared/sidenav/sidenav.component";
+import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 
 @NgModule({
   declarations: [
@@ -16,8 +18,13 @@ import { FollowingComponent } from "./pages/following/following.component";
     PageNotFoundComponent,
     BrowseComponent,
     FollowingComponent,
+    SidenavComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, NgbModule],
+  imports: [
+    BrowserModule, 
+    FontAwesomeModule, 
+    AppRoutingModule, 
+    NgbModule],
   providers: [],
   bootstrap: [AppComponent],
 })

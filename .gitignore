@@ -1,6 +1,9 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 # Environment
 .env
+
+# Docker volumes
+/data
 # compiled output
 /dist
 /tmp
