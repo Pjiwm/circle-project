@@ -1,7 +1,3 @@
-.background-secondary{
-    background-color: white;
-}
-
 a {
     text-decoration: none;
 }
@@ -12,64 +8,66 @@ a {
     min-height: 100vh;
 }
 
-.icon-div{
-    position: fixed;
-}
-
-fa-icon{
-    size: 20px !important;
-    color: #000;
-    &:hover{
-        color: black;
-    }
-}
-
-.sidenav-text{
+.sidenav-text {
     color: #000;
     font-size: 0.84rem;
 }
 
-.sidenav-item{
+.sidenav-item {
     width: 100%;
-    padding: 0;
-    &:hover{
-        color: black;F
-        fa-icon{
+    padding: 5px;
+    fa-icon {
+        color: rgb(177, 0, 0);
+    }
+
+    &:hover {
+        color: black;
+        font-weight: bold;
+        background-color: rgb(240, 240, 240);
+
+        fa-icon {
             color: black;
         }
-        .sidenav-text{
+
+        .sidenav-text {
             color: black;
         }
     }
 }
 
-.active-link{
-    fa-icon{
+.active-link {
+    fa-icon {
         color: #000 !important;
     }
-    .sidenav-text{
+
+    .sidenav-text {
         color: #000 !important;
     }
 }
+
+.streamer-list {
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+// .tr-rows:hover {
+//     font-weight: bold;
+//     background-color: rgb(233, 233, 233);
+//     box-shadow: 0 4px 17px rgba(0, 0, 0, 0.35);
+// }
+
 
 // Small devices (landscape phones, 576px and up)
-@media (min-width: 576px) {
-
-}
+@media (min-width: 576px) {}
 
 // Medium devices (tablets, 768px and up)
-@media (min-width: 768px) {
-
-}
+@media (min-width: 768px) {}
 
 // Large devices (desktops, 992px and up)
-@media (min-width: 992px) {
-}
+@media (min-width: 992px) {}
 
 // X-Large devices (large desktops, 1200px and up)
-@media (min-width: 1200px) {
-}
+@media (min-width: 1200px) {}
 
 // XX-Large devices (larger desktops, 1400px and up)
-@media (min-width: 1400px) {
-}
+@media (min-width: 1400px) {}
