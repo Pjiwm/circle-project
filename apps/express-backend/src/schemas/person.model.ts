@@ -17,7 +17,8 @@ const PersonSchema = new Schema<IPerson>({
     required: [true, "Satochi is required"],
   },
   Followed: {
-    type: [RoomModel],
+    // TODO type werkt misschien niet, dit moet misschien later gefixt worden?
+    type: [RoomModel.schema],
   },
 });
 
