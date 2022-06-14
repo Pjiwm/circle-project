@@ -7,17 +7,17 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import { map, Observable } from 'rxjs';
-import { User } from '../models/user';
 import { AuthService } from './auth.service';
+import { Person } from '../../../../../libs/models'
 
 @Injectable()
 export class LoggedInAuthGuard implements CanActivate, CanActivateChild {
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(): Observable<boolean> {
-    return this.authService.currentUser$.pipe(
-      map((user: User | undefined) => {
-        if (user) {
+    return this.authService.currentPerson$.pipe(
+      map((person: Person | undefined) => {
+        if (person) {
           return true;
         } else {
           console.log('not logged in, reroute to /login');

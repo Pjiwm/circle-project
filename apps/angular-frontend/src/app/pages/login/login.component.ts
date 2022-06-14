@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { User } from '../../models/user';
+import { Person } from "../../../../../../libs/models"
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.initForm();
-    this.authService.getUserFromLocalStorage().subscribe((user: User) => {
+    this.authService.getPersonFromLocalStorage().subscribe((user: Person) => {
       if (user) {
         console.log('User already logged in');
         console.log(user);
@@ -38,15 +38,17 @@ export class LoginComponent implements OnInit, OnDestroy {
   initForm(): void {
     this.loginForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
+      PrivateKey: new FormControl('', [Validators.required]),
     });
   }
 
   onSubmit(): void {
     if (this.loginForm!.valid) {
       this.submitted = true;
-      const name = this.loginForm!.value.email;
+      const name = this.loginForm!.value.name;
+      const privateKey = this.loginForm!.value.PrivateKey;
       this.authService
-        .login(name)
+        .login(name, privateKey)
         .subscribe((user) => {
           if (user) {
             console.log('Logged in');
