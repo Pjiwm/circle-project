@@ -10,16 +10,16 @@ interface IChatMessage {
     _Id: String
     Person: IPerson;
     Room: IRoom;
-    Title: String;
-    IsLive: Boolean;
-    Viewers: Number;
+    Message: String;
+    DateTime: Date;
+    Hash: String;
 }
 
 interface IPerson {
     _Id: String
     Name: String;
     PublicKey: String;
-    Satochie: Number;
+    Satochi: Number;
     Followed: [IRoom];
 }
 

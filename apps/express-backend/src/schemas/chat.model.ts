@@ -1,6 +1,7 @@
-import { Document, Schema, model } from "mongoose";
-
-const ChatSchema = new Schema({
+import { Schema } from "mongoose";
+import { IChatMessage } from "../../../../libs/interfaces";
+import * as getModel from "./model_cache";
+const ChatSchema = new Schema<IChatMessage>({
   Person: {
     type: Schema.Types.ObjectId,
     ref: "person",
@@ -26,4 +27,5 @@ const ChatSchema = new Schema({
   },
 });
 
-export const ChatModel = model("chat", ChatSchema);
+export default getModel.cacher("chat", ChatSchema);
+

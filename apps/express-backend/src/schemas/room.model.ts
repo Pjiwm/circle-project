@@ -1,11 +1,6 @@
-import { Document, Schema, model } from "mongoose"
-
-export interface IRoom {
-  Streamer: new Person;
-  Title: String;
-  IsLive: Boolean;
-  Viewers: Number;
-}
+import { Schema } from "mongoose";
+import { IRoom } from "../../../../libs/interfaces";
+import * as getModel from "./model_cache";
 
 const RoomSchema = new Schema<IRoom>({
   Streamer: {
@@ -28,5 +23,6 @@ const RoomSchema = new Schema<IRoom>({
   },
 });
 
-export const RoomModel = model<IRoom>("room", RoomSchema);
+export default getModel.cacher("Room", RoomSchema);
+
 
