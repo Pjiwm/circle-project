@@ -1,5 +1,8 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 //import { StreamService } from "../../services/StreamService";
+import {WebcamImage} from 'ngx-webcam';
+import { Observable, Subject } from "rxjs";
+import { StreamService } from "../../services/StreamService";
 
 @Component({
   selector: "the-circle-stream",
@@ -7,10 +10,28 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./stream.component.scss"],
 })
 export class StreamComponent implements OnInit {
-  value = "";
-  //constructor() {}
+  public webcamImage: WebcamImage | null = null;
+  private trigger: Subject<void> = new Subject<void>();
 
-  ngOnInit() {
-    this.value = "";
+  constructor(private streamService: StreamService){
+
+  }
+  ngOnInit(): void {
+    throw new Error("Method not implemented.");
+  }
+
+  Start(): void {
+    this.trigger.next();
+  }
+
+  Stop(): void {
+   }
+
+  Pause(): void {
+
+  }
+
+  ViewerCount(): number {
+    return 0;
   }
 }

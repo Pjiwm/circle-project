@@ -1,1 +1,12 @@
-<p>stream works!</p>
+<div class="container text-center">
+    <div>
+    <webcam [height]="400" 
+            [width]="1000">
+     </webcam>
+    </div>
+<div>
+    <button class="btn btn-primary" (click)="Start();"> Start your Live stream</button>
+    <button class="btn btn-primary" (click)="Stop();"> Stop your Live stream</button>
+    <button class="btn btn-primary" (click)="Pause();"> Pause your Live stream</button>
+</div>
+    </div>

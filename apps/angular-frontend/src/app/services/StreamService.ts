@@ -9,10 +9,9 @@ export class StreamService {
     constructor(private http: HttpClient) {
     }
 
-    // Methode Start Stream
+    // Methode Start Stream API
 
-    // Methode Stop Stream
+    // Methode Stop Stream API
 
-
-    // Methode Pause Stream
+    // Methode Pause Stream API
 }
