@@ -1,7 +1,6 @@
-import { Schema } from "mongoose";
+import { Schema, model } from "mongoose";
 import { IPerson } from "../../../../libs/interfaces";
-import * as getModel from "./model_cache";
-import roomModel from "./room.model";
+import {RoomModel} from "./room.model";
 
 const PersonSchema = new Schema<IPerson>({
   Name: {
@@ -18,8 +17,9 @@ const PersonSchema = new Schema<IPerson>({
     required: [true, "Satochi is required"],
   },
   Followed: {
-    type: [roomModel]
+    // TODO type werkt misschien niet, dit moet misschien later gefixt worden?
+    type: [RoomModel.schema],
   },
 });
 
-export default getModel.cacher("person", PersonSchema);
+export const PersonModel = model<IPerson>("person", PersonSchema);
