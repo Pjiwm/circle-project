@@ -6,6 +6,8 @@ const controller: CrudController = new CrudController(PersonModel);
 
 routes.get("", controller.getAll);
 routes.get("/:id", controller.getById);
-routes.post("/:id", controller.update);
+routes.put("/:id", controller.update);
 
+//development
+routes.post("", controller.create);
 export default routes;

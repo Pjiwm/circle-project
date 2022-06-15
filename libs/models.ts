@@ -1,6 +1,6 @@
 import { IRoom, IChatMessage, IPerson } from "./interfaces";
 
-class Room implements IRoom {
+class Room {
   _Id: String;
   Streamer: IPerson;
   Title: String;
@@ -22,7 +22,7 @@ class Room implements IRoom {
   }
 }
 
-class Person implements IPerson {
+class Person {
   _Id: String;
   Name: String;
   PublicKey: String;
@@ -44,7 +44,7 @@ class Person implements IPerson {
   }
 }
 
-class ChatMessage implements IChatMessage {
+class ChatMessage {
   _Id: String;
   Person: IPerson;
   Room: IRoom;
