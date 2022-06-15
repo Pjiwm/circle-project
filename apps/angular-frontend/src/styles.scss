@@ -3,9 +3,12 @@
     background-color: #C6002A;
 }
 
-.logo-img {
-    height: 40px;
-    width: auto;
-    padding-left: 15px;
-    padding-top: 5px;
+
+@font-face {
+    font-family: "notosans";
+    src: url("/assets/fonts/NotoSans-Regular.ttf") format("opentype")
+}
+
+* {
+    font-family: "notosans";
 }

@@ -5,7 +5,7 @@ import { StreamService } from "./services/StreamService";
 import { HttpClientModule } from "@angular/common/http";
 import { WebcamModule } from "ngx-webcam";
 import { ChatComponent } from "./pages/streamer/chat/chat.component";
-
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AppRoutingModule } from "./app-routing.module";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { AppComponent } from "./app.component";
@@ -15,6 +15,8 @@ import { BrowseComponent } from "./pages/browse/browse.component";
 import { FollowingComponent } from "./pages/following/following.component";
 import { SidenavComponent } from "./shared/sidenav/sidenav.component";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
+import { LoginComponent } from "./pages/login/login.component";
+import { LoggedInAuthGuard } from "./services/auth.guard";
 
 @NgModule({
   declarations: [
@@ -26,18 +28,19 @@ import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
     BrowseComponent,
     FollowingComponent,
     SidenavComponent,
+    LoginComponent,
   ],
   imports: [
-    BrowserModule,
     HttpClientModule,
-    NgbModule,
+    BrowserModule,
+    FontAwesomeModule,
     WebcamModule,
-    BrowserModule, 
-    FontAwesomeModule, 
-    AppRoutingModule, 
-    NgbModule
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgbModule,
   ],
-  providers: [StreamService],  
+  providers: [LoggedInAuthGuard, StreamService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

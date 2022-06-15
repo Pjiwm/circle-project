@@ -2,11 +2,7 @@
 import * as express from "express";
 const app = express();
 import router from "./app/router/router";
-
-
-app.get("/test", (req, res) => {
-  res.send("Hello World!");
-});
+import mongoDB = require("./db.connection");
 
 app.use("/api", router);
 app.get("*", (req, res) => {
