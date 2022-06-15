@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 import { IPerson } from "../../../../libs/interfaces";
-import {RoomModel} from "./room.model";
+import { RoomModel } from "./room.model";
 
 const PersonSchema = new Schema<IPerson>({
   Name: {

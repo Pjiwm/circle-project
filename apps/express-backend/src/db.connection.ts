@@ -11,13 +11,13 @@ async function connectToMongo(): Promise<void> {
     process.env.MONGO_DB_CONNECTION || "mongodb://localhost:27017";
   try {
     if (process.env.NODE_ENV !== "test") {
-      await mongoose.connect(`${mongoUrl}/squash`, {
+      await mongoose.connect(`${mongoUrl}/circle`, {
         keepAlive: true,
         keepAliveInitialDelay: 300000,
       });
       console.info("Connected to Mongo DB");
     } else {
-      await mongoose.connect(`${mongoUrl}/squash_test`);
+      await mongoose.connect(`${mongoUrl}/circle_test`);
       console.info("Connected to Mongo test DB");
     }
   } catch (err) {
