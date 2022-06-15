@@ -18,19 +18,26 @@ export class CrudController {
    * @param {*} body - the body of the request
    * @param {*} res - the response we give back after we tried to add the requested object
    */
-  create = async (req, res, next): Promise<void> => {
-    const entity = new this.model(req.body);
-    console.log(req.body);
-    await entity.save().catch(next);
-    res.status(201).json({ id: entity.id });
+  create = async ({ body }, res, next): Promise<void> => {
+    try {
+      const entity = new this.model(body);
+      await entity.save();
+      res.status(201).json({ id: entity.id });
+    } catch (err) {
+      next(err);
+    }
   };
 
   /**
    * @description Obtains all objects found for specified model.
    */
   getAll = async (req, res, next): Promise<void> => {
-    const entities = await this.model.find().catch(next);
-    res.status(200).send(entities);
+    try {
+      const entities = await this.model.find();
+      res.status(200).send(entities);
+    } catch (err) {
+      next(err);
+    }
   };
 
   /**
@@ -39,8 +46,12 @@ export class CrudController {
    * in this case we want the ID, so we can find a specific single object.
    */
   getById = async ({ params }: any, res, next): Promise<void> => {
-    const entities = await this.model.findById(params.id).catch(next);
-    res.status(200).send(entities);
+    try {
+      const entities = await this.model.findById(params.id);
+      res.status(200).send(entities);
+    } catch (err) {
+      next(err);
+    }
   };
 
   /**
@@ -50,11 +61,15 @@ export class CrudController {
    * in this case we want the ID, so we can find a specific single object to edit.
    */
   update = async ({ body, params }: any, res, next): Promise<void> => {
-    await this.model.findByIdAndUpdate({ _id: params.id }, body).catch(next);
-    res.send({
-      message: "updated",
-      object: await this.model.findById(params.id),
-    });
+    try {
+      await this.model.findByIdAndUpdate({ _id: params.id }, body);
+      res.send({
+        message: "updated",
+        object: await this.model.findById(params.id),
+      });
+    } catch (err) {
+      next(err);
+    }
   };
 
   /**
@@ -63,9 +78,11 @@ export class CrudController {
    * in this case we want the ID, so we can find a specific single object that should be removed.
    */
   deleteById = async ({ params }: any, res, next): Promise<void> => {
-    const removedItem = await this.model
-      .findByIdAndDelete(params.id)
-      .catch(next);
-    res.send({ message: "deleted", object: removedItem });
+    try {
+      const removedItem = await this.model.findByIdAndDelete(params.id);
+      res.send({ message: "deleted", object: removedItem });
+    } catch (err) {
+      next(err);
+    }
   };
 }

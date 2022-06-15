@@ -10,9 +10,9 @@ app.use(BodyParser.json());
 
 app.use("/api", router);
 
-app.use("*", function (_, res) {
-  res.status(404).end();
-});
+// app.use("*", function (_, res) {
+//   res.status(404).end();
+// });
 
 // error responses
 app.use("*", function (err, req, res, next) {

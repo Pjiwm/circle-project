@@ -1,9 +1,9 @@
 class EntityNotFoundError extends Error {
   /**
- * @description Sets message in constructor
- *
- */
-    constructor(message) {
+   * @description Sets message in constructor
+   *
+   */
+  constructor(message) {
     super(message);
     this.name = "EntityNotFoundError";
   }
@@ -14,6 +14,7 @@ class EntityNotFoundError extends Error {
  * @param err  - a 400 error with a message of what went wrong during validation
  */
 function validation(err, req, res, next) {
+  console.log(err.name);
   if (err.name === "ValidationError") {
     res.status(400).json({
       message: err.message,
