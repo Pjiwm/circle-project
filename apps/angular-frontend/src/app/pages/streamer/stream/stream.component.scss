@@ -13,12 +13,19 @@ fa-icon{
     border: 2px solid #C6002A;
 }
 
- .cam {
+ .cam-off {
      //width: 100%;
      min-height: 600px;
      background-color: black; 
-  
+
    }
+
+.cam-on {
+    //width: 100%;
+    min-height: 600px;
+    margin-top: 5%;
+
+  }
 
 webcam.height {
     height: 900px;
@@ -31,7 +38,7 @@ webcam.height {
   #footer {
       position: absolute;
       bottom:0;
-      width:100%;
+      width:65%;
       height:60px;
   }
   

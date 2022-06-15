@@ -37,8 +37,10 @@ import { LoggedInAuthGuard } from "./services/auth.guard";
     WebcamModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule,  
     NgbModule,
+    
+    
   ],
   providers: [LoggedInAuthGuard, StreamService],
   bootstrap: [AppComponent],

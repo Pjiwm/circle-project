@@ -10,8 +10,17 @@ export class StreamService {
     }
 
     // Methode Start Stream API
+    start(): void{
 
+    }
     // Methode Stop Stream API
 
+    stop(): void {
+
+    }
     // Methode Pause Stream API
+
+    pause(): void {
+      
+    }
 }
