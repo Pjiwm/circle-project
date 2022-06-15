@@ -1,11 +1,11 @@
-<div class="row">
+<div class="row g-0 rowdiv">
   <div class="text-center col-sm-9 camera-div" #parentCam>
     <div class="cam" *ngIf="WebcamOn">
       <webcam [width]="webcam_width"> </webcam>
     </div>
 
     <div class="cam" *ngIf="!WebcamOn">
-      <p>You need to start the stream</p>
+      <p class="text-light">You are currently offline</p>
     </div>    
   </div>
   <div class="col-sm-3">
