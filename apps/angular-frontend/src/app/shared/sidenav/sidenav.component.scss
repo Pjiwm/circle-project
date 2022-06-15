@@ -5,13 +5,22 @@ a {
 .sidenav {
     width: 150px;
     position: fixed;
-    min-height: 100vh;
+    height: 100%;
 }
 
 .sidenav-text {
     color: #000;
     font-size: 0.84rem;
 }
+
+.streamer-list {
+    height: 80%;
+    overflow-y: auto;
+}
+
+// .streamer-list-title {
+//     height: 20%;
+// }
 
 .sidenav-item {
     width: 100%;
@@ -43,11 +52,6 @@ a {
     .sidenav-text {
         color: #000 !important;
     }
-}
-
-.streamer-list {
-    max-height: 80vh;
-    overflow-y: auto;
 }
 
 // .tr-rows:hover {
