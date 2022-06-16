@@ -1,26 +1,26 @@
 import { Schema, model } from "mongoose";
 import { IChatMessage } from "../../../../libs/interfaces";
 const ChatSchema = new Schema<IChatMessage>({
-  Person: {
+  person: {
     type: Schema.Types.ObjectId,
     ref: "person",
     required: [true, "Person is required"],
   },
-  Room: {
+  room: {
     type: Schema.Types.ObjectId,
     ref: "room",
     required: [true, "Room is required"],
   },
-  Message: {
+  message: {
     type: String,
     max: 120,
     required: [true, "Message is required"],
   },
-  DateTime: {
+  dateTime: {
     type: Date,
     required: [true, "DateTime is required"],
   },
-  Hash: {
+  signature: {
     type: String,
     required: [true, "Hash is required"],
   },

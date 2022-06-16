@@ -2,6 +2,30 @@
   <h1 *ngIf="!isBrowsePage" class="pb-5">Volgend</h1>
   <h1 *ngIf="isBrowsePage" class="pb-5">Bladeren</h1>
   <div class="row card-row">
+
+    <div class="col-12 col-md-6 col-lg-4 col-xl-3 pb-4" *ngFor="let room of rooms">
+      <a class="position-relative" [routerLink]="['/stream', room._id]">
+        <div class="card h-100">
+          <div class="position-relative">
+            <div [ngClass]="{'active' : room.isLive}" class="live active">
+              <span>Live</span>
+            </div>
+            <img class="card-img-top" [src]="'https://avatars.dicebear.com/api/adventurer-neutral/' + room.streamer._id + '.svg'" />
+            <div class="viewer-count">
+              <span>{{ room.viewers }} kijkers</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">{{ room.streamer.name }}</h5>
+            <p class="card-text">
+              {{ room.title }}
+            </p>
+          </div>
+        </div>
+        <div class="card-border"></div>
+      </a>
+    </div>
+
     <div class="col-12 col-md-6 col-lg-4 col-xl-3 pb-4">
       <a class="d-block position-relative" routerLink="/">
         <div class="card h-100">
