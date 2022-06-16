@@ -1,13 +1,12 @@
-<h6 class="p-1">This is a test</h6>
-<button class="btn-primary">Click here foor �</button>
-<button>Test</button>
-<div class="card" style="width: 18rem;">
-  <img src="..." class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
-  </div>
+<the-circle-navbar></the-circle-navbar> 
+<the-circle-sidenav *ngIf="router.url === '/browse' || router.url === '/following'"></the-circle-sidenav>
+
+<!-- If statement for the padding for the sidenav -->
+<div class="main-content mt-5" *ngIf="router.url === '/browse' || router.url === '/following'; else elseBlock">
+    <router-outlet></router-outlet>
 </div>
-<the-circle-nx-welcome>    
-</the-circle-nx-welcome> <router-outlet></router-outlet>
+<ng-template #elseBlock>
+    <div class="mt-5">
+        <router-outlet></router-outlet>
+    </div>
+</ng-template>

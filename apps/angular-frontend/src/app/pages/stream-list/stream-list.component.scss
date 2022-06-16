@@ -1,0 +1,58 @@
+.card-row {
+    a {
+        text-decoration: none;
+        color: #000;
+    }
+    .card {
+        position: relative;
+        transition: 0.25s ease;
+        &:hover {
+            transform: translate(-10px, -10px);
+        }
+    }
+    .card-border {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        border: 3px dashed rgb(76, 76, 76);
+        z-index: -1;
+        border-radius: 0.25rem;
+    }
+}
+.pf-picture {
+    width: 150px;
+    height: 150px;
+}
+
+.card-title {
+    font-weight: bold;
+}
+
+.viewer-count {
+    position: absolute;
+    background-color: rgba(0,0,0,0.7);
+    bottom: 10px;
+    left: 10px;
+    color: #fff;
+    border-radius: 3px;
+    span {
+        padding: 3px 5px;
+    }
+}
+
+.live {
+    position: absolute;
+    background-color: #7a7979;
+    color: #fff;
+    top: 10px;
+    left: 10px;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-weight: bold;
+    text-transform: uppercase;
+    &.active {
+        background-color: #C6002A;;
+    }
+}
