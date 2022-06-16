@@ -16,4 +16,7 @@ RUN npm install http-server -g
 # OpenSSL
 RUN apt install openssl -y
 
+# firebase
+RUN npm install -g firebase-tools
+
 USER node
