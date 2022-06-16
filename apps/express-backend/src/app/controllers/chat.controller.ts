@@ -8,11 +8,11 @@ export class ChatController {
   getChats = async function (req, res) {
     const roomChats = [];
     const chats = await ChatModel.find();
-    for (let i = 0; i < chats.length; i++) {
-      if (chats[i].Room == req.params.id) {
-        roomChats.push(chats[i]);
+    for(const chat of chats) {
+      if (chat.Room == req.params.id) {
+        roomChats.push(chat);
       }
-    }
+    };
     res.status(201).send(roomChats);
   };
 }
