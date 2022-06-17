@@ -56,14 +56,23 @@ export class AuthService {
     const signature = keyutil.encrypt({ name: name }, privateKey);
     console.log(signature);
 
-    const serverKey = "";
+    const serverKey =
+      "-----BEGIN PUBLIC KEY-----MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAK1Fm9PdvDuH5jQFiXO6QlPRrhrVVt9zEq4zwhuAdOLc8EvI+YU6aE8I22lBonGGKI4GxdLXAnsIrzaG//Rc2tsCAwEAAQ==-----END PUBLIC KEY-----";
 
     return this.http
-      .post<[string, Person]>(this.ApiUrl, { name: name, signature: signature })
+      .post<any>(this.ApiUrl, { name: name, signature: signature })
       .pipe(
-        map(([signature, person]) => {
+        map((pakage) => {
+          const signature = pakage.signature;
+          const person = pakage.person;
           if (signature && person) {
-            const decrypt = keyutil.decrypt(signature, serverKey, person);
+            console.log(signature);
+            console.log(serverKey);
+            console.log(person);
+            const decrypt = keyutil.decrypt(signature, serverKey, {
+              person: person,
+            });
+            console.log(decrypt);
             if (decrypt) {
               this.currentPerson$.next(person);
               const user: User = {
@@ -72,7 +81,9 @@ export class AuthService {
                 PrivateKey: privateKey,
                 PublicKey: person.publicKey,
               };
+              console.log(user);
               this.saveUserToLocalStorage(user);
+              this.currentPerson$.next(person);
               return person;
             }
           }
