@@ -1,71 +1,69 @@
-import { IRoom, IChatMessage, IPerson } from "./interfaces";
-
 class Room {
-  _Id: String;
-  Streamer: IPerson;
-  Title: String;
-  IsLive: Boolean;
-  Viewers: Number;
+  _id: string;
+  streamer: Person;
+  title: string;
+  isLive: Boolean;
+  viewers: Number;
 
   constructor(
-    _Id: String,
-    Streamer: IPerson,
-    Title: String,
-    IsLive: Boolean,
-    Viewers: Number
+    _id: string,
+    streamer: Person,
+    title: string,
+    isLive: Boolean,
+    viewers: Number
   ) {
-    this._Id = _Id;
-    this.Streamer = Streamer;
-    this.Title = Title;
-    this.IsLive = IsLive;
-    this.Viewers = Viewers;
+    this._id = _id;
+    this.streamer = streamer;
+    this.title = title;
+    this.isLive = isLive;
+    this.viewers = viewers;
   }
 }
 
 class Person {
-  _Id: String;
-  Name: String;
-  PublicKey: String;
-  Satochi: Number;
-  Followed: [IRoom] | undefined;
+  _id: string;
+  name: string;
+  publicKey: string;
+  satochi: Number;
+  followed: [Room] | undefined;
 
   constructor(
-    _Id: String,
-    Name: String,
-    PublicKey: String,
-    Satochi: Number,
-    Followed: [IRoom]
+    _id: string,
+    name: string,
+    publicKey: string,
+    satochi: Number,
+    followed: [Room]
   ) {
-    this._Id = _Id;
-    this.Name = Name;
-    this.PublicKey = PublicKey;
-    this.Satochi = Satochi;
-    this.Followed = Followed;
+    this._id = _id;
+    this.name = name;
+    this.publicKey = publicKey;
+    this.satochi = satochi;
+    this.followed = followed;
   }
 }
 
 class ChatMessage {
-  _Id: String;
-  Person: IPerson;
-  Room: IRoom;
-  Message: String;
-  DateTime: Date;
-  Hash: String;
+  _id: string;
+  person: Person;
+  room: Room;
+  message: string;
+  dateTime: Date;
+  signature: string;
 
   constructor(
-    _Id: String,
-    Person: IPerson,
-    Room: IRoom,
-    Message: String,
-    DateTime: Date,
-    Hash: String
+    _id: string,
+    person: Person,
+    room: Room,
+    message: string,
+    dateTime: Date,
+    signature: string
   ) {
-    this._Id = _Id;
-    this.Person = Person;
-    this.Room = Room;
-    this.Message = Message;
-    this.DateTime = DateTime;
-    this.Hash = Hash;
+    this._id = _id;
+    this.person = person;
+    this.room = room;
+    this.message = message;
+    this.dateTime = dateTime;
+    this.signature = signature;
   }
 }
 

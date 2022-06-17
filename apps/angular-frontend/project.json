@@ -4,7 +4,7 @@
   "prefix": "the-circle",
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:browser",
+      "executor": "@nrwl/angular:webpack-browser",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/angular-frontend",
@@ -17,8 +17,14 @@
           "apps/angular-frontend/src/favicon.ico",
           "apps/angular-frontend/src/assets"
         ],
-        "styles": ["apps/angular-frontend/src/styles.scss", "./node_modules/bootstrap/dist/css/bootstrap.min.css"],
-        "scripts": ["./node_modules/bootstrap/dist/js/bootstrap.min.js"]
+        "styles": [
+          "apps/angular-frontend/src/styles.scss",
+          "./node_modules/bootstrap/dist/css/bootstrap.min.css"
+        ],
+        "scripts": ["./node_modules/bootstrap/dist/js/bootstrap.min.js"],
+        "customWebpackConfig": {
+          "path": "apps/angular-frontend/webpack.config.js"
+        }
       },
       "configurations": {
         "production": {
