@@ -44,19 +44,27 @@
           >
           <div class="active-bar"></div>
         </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [routerLink]="['/streamer']"
+            routerLinkActive="active-link"
+            >Streamer</a
+          >
+          <div class="active-bar"></div>
+        </li>
       </ul>
       <span class="navbar-right">
         <div class="text-right" *ngIf="!(loggInUser$ | async)">
           <button
             routerLink="/login"
             type="button"
-            class="btn btn-outline-light me-2"
-          >
+            class="btn btn-outline-light me-2">
             Login
           </button>
         </div>
         <div class="text-end" *ngIf="loggInUser$ | async as user">
-          <span class="px-2 text-white user">{{ user.Name }} </span>
+          <span class="px-2 text-white user">{{ user.name }} </span>
           <button
             type="button"
             class="btn btn-outline-light me-2"

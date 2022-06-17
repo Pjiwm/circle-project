@@ -75,7 +75,7 @@ For more information: [NX setup](https://nx.dev/getting-started/nx-setup)
 - Strict convention rules are not applied in any frontend Projects. Most components and boilerplate will be generated already.
 - No unused variables
 - Always make use of semicolons (;) at the end of a statement.
-- Use single quotes.
+- Use double quotes.
 - All functions must have a JSDoc comment.
 ```TS
    /**

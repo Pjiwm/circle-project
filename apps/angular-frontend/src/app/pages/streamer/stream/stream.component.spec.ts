@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { BrowseComponent } from "./browse.component";
+import { StreamComponent } from "./stream.component";
 
-describe("BrowseComponent", () => {
-  let component: BrowseComponent;
-  let fixture: ComponentFixture<BrowseComponent>;
+describe("StreamComponent", () => {
+  let component: StreamComponent;
+  let fixture: ComponentFixture<StreamComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [BrowseComponent],
+      declarations: [StreamComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(BrowseComponent);
+    fixture = TestBed.createComponent(StreamComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

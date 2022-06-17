@@ -1,26 +1,28 @@
-interface IRoom {
-    _Id: String
-    Streamer: IPerson;
-    Title: String;
-    IsLive: Boolean;
-    Viewers: Number;
+import { Document } from "mongoose";
+
+interface IRoom extends Document {
+  _id: String;
+  streamer: IPerson;
+  title: String;
+  isLive: Boolean;
+  viewers: Number;
 }
 
-interface IChatMessage {
-    _Id: String
-    Person: IPerson;
-    Room: IRoom;
-    Message: String;
-    DateTime: Date;
-    Hash: String;
+interface IChatMessage extends Document {
+  _id: String;
+  person: IPerson;
+  room: IRoom;
+  message: String;
+  dateTime: Date;
+  signature: String;
 }
 
-interface IPerson {
-    _Id: String
-    Name: String;
-    PublicKey: String;
-    Satochi: Number;
-    Followed: [IRoom] | undefined;
+interface IPerson extends Document {
+  _id: String;
+  name: String;
+  publicKey: String;
+  satochi: Number;
+  followed: [IRoom] | undefined;
 }
 
-export {IRoom,IChatMessage,IPerson}
+export { IRoom, IChatMessage, IPerson };
