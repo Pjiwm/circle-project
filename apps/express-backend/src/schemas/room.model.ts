@@ -2,26 +2,24 @@ import { Schema, model } from "mongoose";
 import { IRoom } from "../../../../libs/interfaces";
 
 const RoomSchema = new Schema<IRoom>({
-  Streamer: {
+  streamer: {
     type: Schema.Types.ObjectId,
     ref: "person",
     required: [true, "Person is required"],
   },
-  Title: {
+  title: {
     type: String,
     max: 120,
     required: [true, "Title is required"],
   },
-  IsLive: {
+  isLive: {
     type: Boolean,
     required: [true, "IsLive is required"],
   },
-  Viewers: {
+  viewers: {
     type: Number,
     required: [true, "viewers is required"],
   },
 });
 
-
 export const RoomModel = model<IRoom>("room", RoomSchema);
-

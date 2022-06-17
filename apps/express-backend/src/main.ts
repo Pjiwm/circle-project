@@ -4,9 +4,11 @@ import router from "./app/router/router";
 import errors = require("./app/helpers/errors");
 import mongoDB = require("./db.connection");
 import BodyParser = require("body-parser");
+import cors = require("cors");
 
 mongoDB.connectToMongo();
 app.use(BodyParser.json());
+app.use(cors());
 
 app.use("/api", router);
 

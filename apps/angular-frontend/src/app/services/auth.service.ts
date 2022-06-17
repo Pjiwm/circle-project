@@ -54,17 +54,17 @@ export class AuthService {
   login(name: string, privateKey: string): Observable<Person> {
     // hardcoded Login
     const person: Person = {
-      _Id: "1",
-      Name: "John Deere",
-      PublicKey: "12345",
-      Satochi: 1,
-      Followed: undefined,
+      _id: "1",
+      name: "John Deere",
+      publicKey: "12345",
+      satochi: 1,
+      followed: undefined,
     };
     const user: User = {
-      id: person._Id,
-      name: person.Name,
+      id: person._id,
+      name: person.name,
       PrivateKey: privateKey,
-      PublicKey: person.PublicKey,
+      PublicKey: person.publicKey,
     };
     this.currentPerson$.next(person);
     this.saveUserToLocalStorage(user);

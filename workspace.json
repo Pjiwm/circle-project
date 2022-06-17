@@ -4,6 +4,7 @@
   "projects": {
     "angular-frontend": "apps/angular-frontend",
     "angular-frontend-e2e": "apps/angular-frontend-e2e",
-    "express-backend": "apps/express-backend"
+    "express-backend": "apps/express-backend",
+    "node-media-server": "apps/node-media-server"
   }
 }

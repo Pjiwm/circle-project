@@ -1,28 +1,28 @@
 import { Document } from "mongoose";
 
 interface IRoom extends Document {
-  _Id: String;
-  Streamer: IPerson;
-  Title: String;
-  IsLive: Boolean;
-  Viewers: Number;
+  _id: String;
+  streamer: IPerson;
+  title: String;
+  isLive: Boolean;
+  viewers: Number;
 }
 
 interface IChatMessage extends Document {
-  _Id: String;
-  Person: IPerson;
-  Room: IRoom;
-  Message: String;
-  DateTime: Date;
-  Hash: String;
+  _id: String;
+  person: IPerson;
+  room: IRoom;
+  message: String;
+  dateTime: Date;
+  signature: String;
 }
 
 interface IPerson extends Document {
-  _Id: String;
-  Name: String;
-  PublicKey: String;
-  Satochi: Number;
-  Followed: [IRoom] | undefined;
+  _id: String;
+  name: String;
+  publicKey: String;
+  satochi: Number;
+  followed: [IRoom] | undefined;
 }
 
 export { IRoom, IChatMessage, IPerson };

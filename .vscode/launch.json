@@ -2,6 +2,12 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "serve node-media-server",
+            "command": "npx nx serve node-media-server",
+            "request": "launch",
+            "type": "node-terminal"
+        },
+        {
             "name": "serve frontend",
             "command": "npx nx serve angular-frontend",
             "request": "launch",
