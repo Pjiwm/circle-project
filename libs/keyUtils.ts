@@ -53,7 +53,7 @@ export class RsaService {
    * @returns {Array} contains public key on 0 and private key on 1
    */
   keyGen(): [string, string] {
-    const key = new NodeRSA({ b: 512 });
+    const key = new NodeRSA({ b: 1024 });
     const publicKey = key.exportKey("public");
     const privateKey = key.exportKey("private");
     return [publicKey, privateKey];

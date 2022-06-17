@@ -52,57 +52,37 @@ export class AuthService {
   }
 
   login(name: string, privateKey: string): Observable<Person> {
-    // hardcoded Login
-    const person: Person = {
-      _id: "1",
-      name: "John Deere",
-      publicKey: "12345",
-      satochi: 1,
-      followed: undefined,
-    };
-    const user: User = {
-      id: person._id,
-      name: person.name,
-      PrivateKey: privateKey,
-      PublicKey: person.publicKey,
-    };
-    this.currentPerson$.next(person);
-    this.saveUserToLocalStorage(user);
-    return of(person);
+    const keyutil = new RsaService();
+    const signature = keyutil.encrypt({ name: name }, privateKey);
+    console.log(signature);
 
-    ///////
-    // const publicKey =
-    //   "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDlOJu6TyygqxfWT7eLtGDwajtNFOb9I5XRb6khyfD1Yt3YiCgQWMNW649887VGJiGr/L5i2osbl8C9+WJTeucF+S76xFxdU6jE0NQ+Z+zEdhUTooNRaY5nZiu5PgDB0ED/ZKBUSLKL7eibMxZtMlUDHjm4gwQco1KRMDSmXSMkDwIDAQAB";
-    // const testPrivateKey =
-    //   "MIICXQIBAAKBgQDlOJu6TyygqxfWT7eLtGDwajtNFOb9I5XRb6khyfD1Yt3YiCgQWMNW649887VGJiGr/L5i2osbl8C9+WJTeucF+S76xFxdU6jE0NQ+Z+zEdhUTooNRaY5nZiu5PgDB0ED/ZKBUSLKL7eibMxZtMlUDHjm4gwQco1KRMDSmXSMkDwIDAQABAoGAfY9LpnuWK5Bs50UVep5c93SJdUi82u7yMx4iHFMc/Z2hfenfYEzu+57fI4fvxTQ//5DbzRR/XKb8ulNv6+CHyPF31xk7YOBfkGI8qjLoq06V+FyBfDSwL8KbLyeHm7KUZnLNQbk8yGLzB3iYKkRHlmUanQGaNMIJziWOkN+N9dECQQD0ONYRNZeuM8zd8XJTSdcIX4a3gy3GGCJxOzv16XHxD03GW6UNLmfPwenKu+cdrQeaqEixrCejXdAFz/7+BSMpAkEA8EaSOeP5Xr3ZrbiKzi6TGMwHMvC7HdJxaBJbVRfApFrE0/mPwmP5rN7QwjrMY+0+AbXcm8mRQyQ1+IGEembsdwJBAN6az8Rv7QnD/YBvi52POIlRSSIMV7SwWvSK4WSMnGb1ZBbhgdg57DXaspcwHsFV7hByQ5BvMtIduHcT14ECfcECQATeaTgjFnqE/lQ22Rk0eGaYO80cc643BXVGafNfd9fcvwBMnk0iGX0XRsOozVt5AzilpsLBYuApa66NcVHJpCECQQDTjI2AQhFc1yRnCU/YgDnSpJVm1nASoRUnU8Jfm3Ozuku7JUXcVpt08DFSceCEX9unCuMcT72rAQlLpdZir876";
-    // const keyutil = new RsaService();
+    const serverKey = "";
 
-    // const signature = keyutil.encrypt({ name: name }, testPrivateKey);
-    // console.log(signature);
-    // const decrypted = keyutil.decrypt(signature, publicKey, { name: name });
-    // console.log(decrypted);
-    // return this.http
-    //   .post<Person>(this.ApiUrl, { name: name, signature: signature })
-    //   .pipe(
-    //     map((person) => {
-    //       if (person) {
-    //         this.currentPerson$.next(person);
-    //         const user: User = {
-    //           id: person._Id,
-    //           name: person.Name,
-    //           PrivateKey: privateKey,
-    //           PublicKey: person.PublicKey,
-    //         };
-
-    //         this.saveUserToLocalStorage(user);
-    //       }
-    //       return person;
-    //     }),
-    //     catchError((error: any) => {
-    //       console.log("error:", error);
-    //       return of();
-    //     })
-    //   );
+    return this.http
+      .post<[string, Person]>(this.ApiUrl, { name: name, signature: signature })
+      .pipe(
+        map(([signature, person]) => {
+          if (signature && person) {
+            const decrypt = keyutil.decrypt(signature, serverKey, person);
+            if (decrypt) {
+              this.currentPerson$.next(person);
+              const user: User = {
+                id: person._id,
+                name: person.name,
+                PrivateKey: privateKey,
+                PublicKey: person.publicKey,
+              };
+              this.saveUserToLocalStorage(user);
+              return person;
+            }
+          }
+          return person;
+        }),
+        catchError((error: any) => {
+          console.log("error:", error);
+          return of();
+        })
+      );
   }
 
   logout(): void {
