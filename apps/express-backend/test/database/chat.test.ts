@@ -12,8 +12,8 @@ describe("Chat mongoose schema works", () => {
             dateTime: "2000-01-01T10:10:10.100z",
             signature: "98237503257"
         });
-        expect((chat.person = [1234]));
-        expect((chat.room = [1234]));
+        expect((chat.person = 1234));
+        expect((chat.room = 1234));
         expect((chat.message = "Nice stream"));
         expect((chat.dateTime = "2000-01-01T10:10:10.100z"));
         expect((chat.signature = "98237503257"));
