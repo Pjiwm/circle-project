@@ -1,14 +1,14 @@
 class Room {
-  _id: String;
+  _id: string;
   streamer: Person;
-  title: String;
+  title: string;
   isLive: Boolean;
   viewers: Number;
 
   constructor(
-    _id: String,
+    _id: string,
     streamer: Person,
-    title: String,
+    title: string,
     isLive: Boolean,
     viewers: Number
   ) {
@@ -21,16 +21,16 @@ class Room {
 }
 
 class Person {
-  _id: String;
-  name: String;
-  publicKey: String;
+  _id: string;
+  name: string;
+  publicKey: string;
   satochi: Number;
   followed: [Room] | undefined;
 
   constructor(
-    _id: String,
-    name: String,
-    publicKey: String,
+    _id: string,
+    name: string,
+    publicKey: string,
     satochi: Number,
     followed: [Room]
   ) {
@@ -43,20 +43,20 @@ class Person {
 }
 
 class ChatMessage {
-  _id: String;
+  _id: string;
   person: Person;
   room: Room;
-  message: String;
+  message: string;
   dateTime: Date;
-  signature: String;
+  signature: string;
 
   constructor(
-    _id: String,
+    _id: string,
     person: Person,
     room: Room,
-    message: String,
+    message: string,
     dateTime: Date,
-    signature: String
+    signature: string
   ) {
     this._id = _id;
     this.person = person;
