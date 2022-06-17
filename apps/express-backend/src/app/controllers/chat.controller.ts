@@ -9,7 +9,7 @@ export class ChatController {
     const roomChats = [];
     const chats = await ChatModel.find();
     for(const chat of chats) {
-      if (chat.Room == req.params.id) {
+      if (chat.room == req.params.id) {
         roomChats.push(chat);
       }
     };
