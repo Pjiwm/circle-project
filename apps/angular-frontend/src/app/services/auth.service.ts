@@ -22,7 +22,7 @@ import { environment } from "../../environments/environment";
 export class AuthService {
   public currentPerson$ = new BehaviorSubject<Person | undefined>(undefined);
   private readonly CURRENT_PERSON: string = "currentperson";
-  private ApiUrl = environment.APIURL + "login";
+  private ApiUrl = environment.APIURL + "auth/login";
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -52,56 +52,57 @@ export class AuthService {
   }
 
   login(name: string, privateKey: string): Observable<Person> {
-    //// hardcoded Login
-    // const person: Person = {
-    //   _Id: "1",
-    //   Name: "John Deere",
-    //   PublicKey: "12345",
-    //   Satochi: 1,
-    //   Followed: undefined,
-    // };
-    // const user: User = {
-    //   id: person._Id,
-    //   name: person.Name,
-    //   PrivateKey: privateKey,
-    //   PublicKey: person.PublicKey,
-    // };
-    // this.currentPerson$.next(person);
-    // this.saveUserToLocalStorage(user);
-    // return of(person);
+    // hardcoded Login
+    const person: Person = {
+      _Id: "1",
+      Name: "John Deere",
+      PublicKey: "12345",
+      Satochi: 1,
+      Followed: undefined,
+    };
+    const user: User = {
+      id: person._Id,
+      name: person.Name,
+      PrivateKey: privateKey,
+      PublicKey: person.PublicKey,
+    };
+    this.currentPerson$.next(person);
+    this.saveUserToLocalStorage(user);
+    return of(person);
 
     ///////
-    const publicKey =
-      "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDlOJu6TyygqxfWT7eLtGDwajtNFOb9I5XRb6khyfD1Yt3YiCgQWMNW649887VGJiGr/L5i2osbl8C9+WJTeucF+S76xFxdU6jE0NQ+Z+zEdhUTooNRaY5nZiu5PgDB0ED/ZKBUSLKL7eibMxZtMlUDHjm4gwQco1KRMDSmXSMkDwIDAQAB";
-    const testPrivateKey =
-      "MIICXQIBAAKBgQDlOJu6TyygqxfWT7eLtGDwajtNFOb9I5XRb6khyfD1Yt3YiCgQWMNW649887VGJiGr/L5i2osbl8C9+WJTeucF+S76xFxdU6jE0NQ+Z+zEdhUTooNRaY5nZiu5PgDB0ED/ZKBUSLKL7eibMxZtMlUDHjm4gwQco1KRMDSmXSMkDwIDAQABAoGAfY9LpnuWK5Bs50UVep5c93SJdUi82u7yMx4iHFMc/Z2hfenfYEzu+57fI4fvxTQ//5DbzRR/XKb8ulNv6+CHyPF31xk7YOBfkGI8qjLoq06V+FyBfDSwL8KbLyeHm7KUZnLNQbk8yGLzB3iYKkRHlmUanQGaNMIJziWOkN+N9dECQQD0ONYRNZeuM8zd8XJTSdcIX4a3gy3GGCJxOzv16XHxD03GW6UNLmfPwenKu+cdrQeaqEixrCejXdAFz/7+BSMpAkEA8EaSOeP5Xr3ZrbiKzi6TGMwHMvC7HdJxaBJbVRfApFrE0/mPwmP5rN7QwjrMY+0+AbXcm8mRQyQ1+IGEembsdwJBAN6az8Rv7QnD/YBvi52POIlRSSIMV7SwWvSK4WSMnGb1ZBbhgdg57DXaspcwHsFV7hByQ5BvMtIduHcT14ECfcECQATeaTgjFnqE/lQ22Rk0eGaYO80cc643BXVGafNfd9fcvwBMnk0iGX0XRsOozVt5AzilpsLBYuApa66NcVHJpCECQQDTjI2AQhFc1yRnCU/YgDnSpJVm1nASoRUnU8Jfm3Ozuku7JUXcVpt08DFSceCEX9unCuMcT72rAQlLpdZir876";
-    const keyutil = new RsaService();
-    const signature = keyutil.encrypt(name, testPrivateKey);
-    console.log(signature);
-    const decrypted = keyutil.decrypt(signature, publicKey, name);
-    console.log(decrypted);
-    return this.http
-      .post<Person>(this.ApiUrl, { name: name, signature: signature })
-      .pipe(
-        map((person) => {
-          if (person) {
-            this.currentPerson$.next(person);
-            const user: User = {
-              id: person._Id,
-              name: person.Name,
-              PrivateKey: privateKey,
-              PublicKey: person.PublicKey,
-            };
+    // const publicKey =
+    //   "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDlOJu6TyygqxfWT7eLtGDwajtNFOb9I5XRb6khyfD1Yt3YiCgQWMNW649887VGJiGr/L5i2osbl8C9+WJTeucF+S76xFxdU6jE0NQ+Z+zEdhUTooNRaY5nZiu5PgDB0ED/ZKBUSLKL7eibMxZtMlUDHjm4gwQco1KRMDSmXSMkDwIDAQAB";
+    // const testPrivateKey =
+    //   "MIICXQIBAAKBgQDlOJu6TyygqxfWT7eLtGDwajtNFOb9I5XRb6khyfD1Yt3YiCgQWMNW649887VGJiGr/L5i2osbl8C9+WJTeucF+S76xFxdU6jE0NQ+Z+zEdhUTooNRaY5nZiu5PgDB0ED/ZKBUSLKL7eibMxZtMlUDHjm4gwQco1KRMDSmXSMkDwIDAQABAoGAfY9LpnuWK5Bs50UVep5c93SJdUi82u7yMx4iHFMc/Z2hfenfYEzu+57fI4fvxTQ//5DbzRR/XKb8ulNv6+CHyPF31xk7YOBfkGI8qjLoq06V+FyBfDSwL8KbLyeHm7KUZnLNQbk8yGLzB3iYKkRHlmUanQGaNMIJziWOkN+N9dECQQD0ONYRNZeuM8zd8XJTSdcIX4a3gy3GGCJxOzv16XHxD03GW6UNLmfPwenKu+cdrQeaqEixrCejXdAFz/7+BSMpAkEA8EaSOeP5Xr3ZrbiKzi6TGMwHMvC7HdJxaBJbVRfApFrE0/mPwmP5rN7QwjrMY+0+AbXcm8mRQyQ1+IGEembsdwJBAN6az8Rv7QnD/YBvi52POIlRSSIMV7SwWvSK4WSMnGb1ZBbhgdg57DXaspcwHsFV7hByQ5BvMtIduHcT14ECfcECQATeaTgjFnqE/lQ22Rk0eGaYO80cc643BXVGafNfd9fcvwBMnk0iGX0XRsOozVt5AzilpsLBYuApa66NcVHJpCECQQDTjI2AQhFc1yRnCU/YgDnSpJVm1nASoRUnU8Jfm3Ozuku7JUXcVpt08DFSceCEX9unCuMcT72rAQlLpdZir876";
+    // const keyutil = new RsaService();
 
-            this.saveUserToLocalStorage(user);
-          }
-          return person;
-        }),
-        catchError((error: any) => {
-          console.log("error:", error);
-          return of();
-        })
-      );
+    // const signature = keyutil.encrypt({ name: name }, testPrivateKey);
+    // console.log(signature);
+    // const decrypted = keyutil.decrypt(signature, publicKey, { name: name });
+    // console.log(decrypted);
+    // return this.http
+    //   .post<Person>(this.ApiUrl, { name: name, signature: signature })
+    //   .pipe(
+    //     map((person) => {
+    //       if (person) {
+    //         this.currentPerson$.next(person);
+    //         const user: User = {
+    //           id: person._Id,
+    //           name: person.Name,
+    //           PrivateKey: privateKey,
+    //           PublicKey: person.PublicKey,
+    //         };
+
+    //         this.saveUserToLocalStorage(user);
+    //       }
+    //       return person;
+    //     }),
+    //     catchError((error: any) => {
+    //       console.log("error:", error);
+    //       return of();
+    //     })
+    //   );
   }
 
   logout(): void {
