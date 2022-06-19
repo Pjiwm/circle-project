@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild  } from "@angular/core";
+import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { PersonService } from "../../services/person.service";
 import { RoomService } from "../../services/room.service";
@@ -26,17 +26,15 @@ export class StreamListComponent implements OnInit {
   constructor(
     public router: Router,
     public PersonService: PersonService,
-    public RoomService: RoomService
-    ) {}
+    public RoomService: RoomService) { }
 
   ngOnInit(): void {
     if (this.router.url === "/browse") {
-      this.isBrowsePage = true
       // Browse page
       this.isBrowsePage = true;
       this.RoomService.getAll().subscribe((rooms) => {
-        if(rooms.length != 0) {
-          for(let room of rooms) {
+        if (rooms.length != 0) {
+          for (let room of rooms) {
             this.getStreamer(room);
           }
           this.rooms = rooms
@@ -46,8 +44,8 @@ export class StreamListComponent implements OnInit {
       // Followed page
       this.isBrowsePage = false;
       this.PersonService.getFollowed().subscribe((rooms) => {
-        if(rooms.length != 0) {
-          for(let room of rooms) {
+        if (rooms.length != 0) {
+          for (let room of rooms) {
             this.getStreamer(room)
           }
           this.rooms = rooms
@@ -56,46 +54,50 @@ export class StreamListComponent implements OnInit {
 
     }
   }
-    
+
   // Get Streamer based on room id
   getStreamer(room: Room): Room {
-      const temp = room.streamer as unknown
-      const name = temp as string
-      this.PersonService.getById(name).subscribe((person) => {
-        room.streamer = person;
-      })
-      return room
+    const temp = room.streamer as unknown
+    const name = temp as string
+    this.PersonService.getById(name).subscribe((person) => {
+      room.streamer = person;
+    })
+    return room
   }
 
   mouseOnHover(video: string) {
-    console.log("mouseOnHover for video:", video);
-    console.log(`mouseOnHover for avatar: ${video}-avatar`)
-    let card = document.getElementById(`${video}-avatar`)
-    this.hoveredVideo = video;
+    if (!this.playingStreamArray.includes(video)) {
+      console.log("mouseOnHover for video:", video);
+      console.log(`mouseOnHover for avatar: ${video}-avatar`)
+      console.log(this.playingStreamArray)
+      this.hoveredVideo = video;
 
-    setTimeout(() => {
-      let vid = document.getElementById(video) as HTMLVideoElement;
-      console.log("Element in hover?", vid);
-      vid.muted = true;
-      vid.play();
-    }, 300);
+      setTimeout(() => {
+        let vid = document.getElementById(video) as HTMLVideoElement;
+        console.log("Element in hover?", vid);
+        vid.muted = true;
+        vid.play();
+      }, 300);
 
-    setTimeout(() => {
-      let vid = document.getElementById(video) as HTMLVideoElement;
-      console.log("Element in hover?", vid);
-      vid.pause();
-      this.hoveredVideo = "";
-    }, 7000);
+      setTimeout(() => {
+        let vid = document.getElementById(video) as HTMLVideoElement;
+        console.log("Element in hover?", vid);
+        vid.pause();
+        this.hoveredVideo = "";
+      }, 7000);
+    }
   }
 
   mouseOnLeave(video: string) {
-    console.log("mouseOnLeave for video:", video);
-    console.log(`mouseOnLeave for avatar: ${video}-avatar`);
+    if (!this.playingStreamArray.includes(video)) {
+      console.log("mouseOnLeave for video:", video);
+      console.log(`mouseOnLeave for avatar: ${video}-avatar`);
+      console.log(this.playingStreamArray)
+      this.hoveredVideo = "";
 
-    this.hoveredVideo = "";
-
-    let vid = document.getElementById(video) as HTMLVideoElement
-    vid.pause();
+      let vid = document.getElementById(video) as HTMLVideoElement
+      vid.pause();
+    }
   }
 
   startStopVideo(video: string): void {
