@@ -47,7 +47,7 @@ app.use(errorMiddleware);
 
 // TODO implement https://stackoverflow.com/questions/21878178/hls-streaming-using-node-js
 app.listen(hlsPort, () => {
-  console.log(`Server listening on ${hlsPort}`);
+  logger.log(`Server listening on ${hlsPort}`);
 });
 
 // overkoepelend idee voor rtmp stream bestand afhandeling
@@ -86,11 +86,11 @@ const createFoldersForStreaming = (username, callback) => {
 
   // creating the folders
   if (!fs.existsSync(userRootInputTimestampsFolder)) {
-    console.log("creating", userRootInputTimestampsFolder);
+    logger.log("creating", userRootInputTimestampsFolder);
     fs.mkdirSync(userRootInputTimestampsFolder, { recursive: true });
   }
   if (!fs.existsSync(userRootOutputTimestampsFolder)) {
-    console.log("creating", userRootOutputTimestampsFolder);
+    logger.log("creating", userRootOutputTimestampsFolder);
     fs.mkdirSync(userRootOutputTimestampsFolder, { recursive: true });
   }
 
@@ -107,7 +107,8 @@ const createFoldersForStreaming = (username, callback) => {
  * @param username the username of the transparent person
  */
 const ffmpegInputToHLS = (inputFolder, outputFolder, username) => {
-  ffmpeg(`${inputFolder}/2022-06-16_11-43-40.mkv`, { timeout: 432000 })
+  // TODO dynamic input for ffmpeg
+  ffmpeg(`rtmp://localhost/live/person`, { timeout: 432000 })
     .addOptions([
       "-profile:v baseline", // baseline profile (level 3.0) for H264 video codec
       "-level 3.0",
