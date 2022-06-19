@@ -1,7 +1,54 @@
-const ffmpeg = require("fluent-ffmpeg");
-const fs = require("fs");
+// express
 const express = require("express");
 const app = express();
+const cors = require("cors");
+
+// routes
+const streamsRouter = require("./routes/streams");
+
+// middleware
+const notFoundMiddleware = require("./middleware/not-found");
+const errorMiddleware = require("./middleware/error-handler");
+
+// ffmpeg
+const ffmpeg = require("fluent-ffmpeg");
+const fs = require("fs");
+
+// misc
+const logger = require("tracer").console();
+
+// global declarations
+const nmsPort = process.env.PORT || 8000;
+const hlsPort = process.env.PORT || 8100;
+
+app.use(cors());
+
+// all requests go through here first
+app.get("*", (req, res, next) => {
+  const reqMethod = req.method;
+  const reqUrl = req.url;
+  logger.log(`${reqMethod} request at ${reqUrl}`);
+  next();
+});
+
+app.get("/", (req, res) => {
+  res.send("You've reached the media backend");
+});
+
+// define routes
+app.use("/api/v1/streams", streamsRouter);
+
+// define middleware
+app.use(notFoundMiddleware);
+app.use(errorMiddleware);
+
+// TODO make express able to serve archived content based on url
+// TODO make /streams/${username} default to the currently available LIVEstream (if not live then get error saying person is not livestreaming)
+
+// TODO implement https://stackoverflow.com/questions/21878178/hls-streaming-using-node-js
+app.listen(hlsPort, () => {
+  console.log(`Server listening on ${hlsPort}`);
+});
 
 // overkoepelend idee voor rtmp stream bestand afhandeling
 // 1. Maak de root folder voor ffmpeg input
