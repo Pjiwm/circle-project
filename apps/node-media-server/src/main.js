@@ -107,6 +107,8 @@ const createFoldersForStreaming = (username, callback) => {
  * @param username the username of the transparent person
  */
 const ffmpegInputToHLS = (inputFolder, outputFolder, username) => {
+  logger.log(`ffmpeg input folder: ${inputFolder}`);
+  logger.log(`ffmpeg output folder: ${outputFolder}`);
   // TODO dynamic input for ffmpeg
   ffmpeg(`rtmp://localhost/live/person`, { timeout: 432000 })
     .addOptions([
@@ -120,10 +122,10 @@ const ffmpegInputToHLS = (inputFolder, outputFolder, username) => {
     ])
     .output(`${outputFolder}/${username}.m3u8`)
     .on("error", function (err, stdout, stderr) {
-      console.log("Cannot process video: " + err.message);
+      logger.log("Cannot process video: " + err.message);
     })
     .on("end", function (stdout, stderr) {
-      console.log("Transcoding succeeded!");
+      logger.log("Transcoding succeeded!");
     })
     .run();
 };
