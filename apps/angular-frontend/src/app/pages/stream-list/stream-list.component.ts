@@ -19,7 +19,6 @@ export class StreamListComponent implements OnInit {
   hoveredVideo = "";
   playedVideo = ""
   playingStreamArray: string[] = [];
-  @ViewChild('videoPlayer') videoPlayer: ElementRef;
   persons: Person[];
   rooms: Room[] = [];
 
@@ -74,16 +73,18 @@ export class StreamListComponent implements OnInit {
 
       setTimeout(() => {
         let vid = document.getElementById(video) as HTMLVideoElement;
-        console.log("Element in hover?", vid);
+        console.log("Element in hover play preview?", vid);
         vid.muted = true;
         vid.play();
       }, 300);
 
       setTimeout(() => {
         let vid = document.getElementById(video) as HTMLVideoElement;
-        console.log("Element in hover?", vid);
-        vid.pause();
-        this.hoveredVideo = "";
+        console.log("Element in hover 7 sec preview?", vid);
+        if (vid != null) {
+            vid.pause();
+            this.hoveredVideo = "";
+        }
       }, 7000);
     }
   }
@@ -93,10 +94,10 @@ export class StreamListComponent implements OnInit {
       console.log("mouseOnLeave for video:", video);
       console.log(`mouseOnLeave for avatar: ${video}-avatar`);
       console.log(this.playingStreamArray)
-      this.hoveredVideo = "";
 
       let vid = document.getElementById(video) as HTMLVideoElement
       vid.pause();
+      this.hoveredVideo = "";
     }
   }
 
@@ -157,15 +158,15 @@ export class StreamListComponent implements OnInit {
   //   // this.videoPlayer.nativeElement.
   // }
 
-  makeBig() {
-    this.videoPlayer.nativeElement.width = 620;
-  }
+  // makeBig() {
+  //   this.videoPlayer.nativeElement.width = 620;
+  // }
 
-  makeSmall() {
-    this.videoPlayer.nativeElement.width = 380;
-  }
+  // makeSmall() {
+  //   this.videoPlayer.nativeElement.width = 380;
+  // }
 
-  makeNormal() {
-    this.videoPlayer.nativeElement.width = 480;
-  }
+  // makeNormal() {
+  //   this.videoPlayer.nativeElement.width = 480;
+  // }
 }
