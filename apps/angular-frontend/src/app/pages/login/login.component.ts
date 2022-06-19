@@ -57,6 +57,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           } else {
             this.noUserFound = true;
             console.log(this.noUserFound);
+            this.router.navigate(['/login']);
           }
           this.submitted = false;
         });
