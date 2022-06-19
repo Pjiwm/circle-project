@@ -1,0 +1,178 @@
+<!DOCTYPE html><html class="default"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>the-circle</title><meta name="description" content="Documentation for the-circle"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><script>document.body.classList.add(localStorage.getItem("tsd-theme") || "os")</script><header><div class="tsd-page-toolbar"><div class="container"><div class="table-wrap"><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption">Search</label><input type="text" id="tsd-search-field"/></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">the-circle</a></div><div class="table-cell" id="tsd-widgets"><div id="tsd-filter"><a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a><div class="tsd-filter-group"><div class="tsd-select" id="tsd-filter-visibility"><span class="tsd-select-label">All</span><ul class="tsd-select-list"><li data-value="public">Public</li><li data-value="protected">Public/Protected</li><li data-value="private" class="selected">All</li></ul></div> <input type="checkbox" id="tsd-filter-inherited" checked/><label class="tsd-widget" for="tsd-filter-inherited">Inherited</label><input type="checkbox" id="tsd-filter-externals" checked/><label class="tsd-widget" for="tsd-filter-externals">Externals</label></div></div><a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a></div></div></div></div><div class="tsd-page-title"><div class="container"><h1> the-circle </h1></div></div></header><div class="container container-main"><div class="row"><div class="col-8 col-content"><div class="tsd-panel tsd-typography">
+<a href="#setup" id="setup" style="color: inherit; text-decoration: none;">
+  <h1>Setup</h1>
+</a>
+<p>Clone the project: </p>
+<pre><code><span class="hl-0">git</span><span class="hl-1"> </span><span class="hl-0">clone</span><span class="hl-1"> </span><span class="hl-2">https</span><span class="hl-1">:</span><span class="hl-3">//github.com/Pjiwm/circle-project/</span>
+</code></pre>
+
+<a href="#docker-setup" id="docker-setup" style="color: inherit; text-decoration: none;">
+  <h2>Docker Setup</h2>
+</a>
+
+<a href="#if-you-do-not-have-docker-installed-yet-but-want-to-use-the-docker-setup" id="if-you-do-not-have-docker-installed-yet-but-want-to-use-the-docker-setup" style="color: inherit; text-decoration: none;">
+  <h3>If you do not have Docker installed yet, but want to use the Docker setup:</h3>
+</a>
+<p>If you Are on windows 10/11 Home: </p>
+<ol>
+<li>Install WSL: <a href="https://docs.microsoft.com/en-us/windows/wsl/install">WSL installation guide</a></li>
+<li>Restart your computer,  and run in powershell:</li>
+</ol>
+<pre><code><span class="hl-4">WSL</span><span class="hl-1"> -</span><span class="hl-0">l</span><span class="hl-1"> </span>
+</code></pre>
+<ol start="3">
+<li>If you receive any errors troubleshoot.</li>
+<li>If Windows did not install a default distro (Ubuntu) Install one from the MS store: <a href="https://apps.microsoft.com/store/detail/ubuntu/9PDXGNCFSCZV?hl=en-us&amp;gl=US">Ubuntu from MS store</a></li>
+<li>For a more comfortable working environment get Windows Terminal and set Ubuntu as your default CLI: <a href="https://apps.microsoft.com/store/detail/ubuntu/9PDXGNCFSCZV?hl=en-us&amp;gl=US">Windows Terminal from MS store</a></li>
+<li>Install Docker: <a href="https://www.docker.com/">Docker</a></li>
+<li>Restart computer</li>
+<li>Open Docker-Desktop open settings and got to: <code>Resources &gt; WSL Integration</code> Enable Ubuntu and press refresh</li>
+<li>Open Windows Terminal or Ubuntu and see if the docker command is working.</li>
+</ol>
+<p>If you are on Linux, Mac or Windows 10/11 Pro:</p>
+<ol>
+<li>Install Docker</li>
+<li>Run Docker in a CLI to see if it works</li>
+</ol>
+
+<a href="#when-docker-is-installed" id="when-docker-is-installed" style="color: inherit; text-decoration: none;">
+  <h3>When Docker is installed:</h3>
+</a>
+<ol>
+<li>navigate to the repo in a terminal or inside your IDE&#39;s CLI</li>
+<li>Copy and paste <code>sample.env</code> (to keep it on the repo) and rename it to <code>.env</code></li>
+<li>run <code>docker-compose build</code></li>
+<li>run <code>docker-compose up</code></li>
+</ol>
+
+<a href="#using-remote-containers-with-vscode" id="using-remote-containers-with-vscode" style="color: inherit; text-decoration: none;">
+  <h3>Using remote containers with VSCode</h3>
+</a>
+<p>For an optimal dev environment use the Remote containers extensions.</p>
+<ol>
+<li>Open VSCode in this project</li>
+<li>Install Remote - Containers from Microsoft (ms-vscode-remote.remote-containers)</li>
+<li>Copy and paste <code>sample.env</code> (to keep it on the repo) and rename it to <code>.env</code></li>
+<li>Open the command pallet <code>ctrl</code> + <code>shift</code> + <code>p</code> and run <code>&gt; Remote Containers: Open Folder in container..</code></li>
+<li>You should now be inside the container within VSCode.</li>
+</ol>
+
+<a href="#regular-setup" id="regular-setup" style="color: inherit; text-decoration: none;">
+  <h2>Regular Setup</h2>
+</a>
+<ol>
+<li>Install Node 16: <a href="https://docs.npmjs.com/downloading-and-installing-node-js-and-npm">guide</a></li>
+<li>Install NX globally with <code>npm install -g nx</code></li>
+<li>Copy and paste <code>sample.env</code> (to keep it on the repo) and rename it to <code>.env</code></li>
+<li>Setup a local MariaDB server or any other MySQL server.</li>
+<li>Use a tool like Xamp or phpMyAdmin to manage your local databases.</li>
+<li>Install OpenSSL on Windows.</li>
+</ol>
+
+<a href="#useful-nx-commands" id="useful-nx-commands" style="color: inherit; text-decoration: none;">
+  <h3>Useful NX commands</h3>
+</a>
+<p>Remember, you can always use the NX console!</p>
+
+<a href="#angular-commands" id="angular-commands" style="color: inherit; text-decoration: none;">
+  <h4>Angular Commands</h4>
+</a>
+<p>Generating a component: <code>npx nx g @nrwl/angular:component &lt;name&gt; --project frontend</code></p>
+<p>Generating a service: <code>npx nx g @nrwl/angular:service &lt;name&gt; --project frontend</code></p>
+
+<a href="#linting" id="linting" style="color: inherit; text-decoration: none;">
+  <h4>Linting</h4>
+</a>
+<p>To lint your code: <code>npx nx lint --fix express-backend</code></p>
+
+<a href="#working-environment" id="working-environment" style="color: inherit; text-decoration: none;">
+  <h2>Working environment</h2>
+</a>
+
+<a href="#managing-the-project-in-your-editoride" id="managing-the-project-in-your-editoride" style="color: inherit; text-decoration: none;">
+  <h3>Managing the project in your editor/IDE</h3>
+</a>
+<p>Open the project in your editor/IDE preferably VSCode due to extensions used for linting and the NX gui extension.</p>
+<ul>
+<li>If you do not use VSCode make sure you can use ESLint linting and optionally an extension for NX. Otherwise you have to use the NX CLI. 
+(If you use og Vim, Nano or <a href="https://en.wikipedia.org/wiki/Ed_(text_editor)">Ed</a> have fun 💀)</li>
+<li>If you use Docker with remote containers all extensions should be installed already.</li>
+<li>If you are not using Docker but are using VSCode make sure to install the recommended extensions.
+Set prettier as your formatter, this will make sure you&#39;re not making any linting errors.</li>
+</ul>
+
+<a href="#project-structure" id="project-structure" style="color: inherit; text-decoration: none;">
+  <h3>Project structure</h3>
+</a>
+<p>This repository is an NX monorepo. This means different projects backend, frontend etc. are all in the same workspace area.
+in the <code>apps</code> directory the different projects can be found. The <code>libs</code> directory can be used to put resources in that will be reused over different apps.
+Running tests, building, serving, generating new components, linting etc. can all be done using NX commands.
+In VSCode simply navigate to the left. There should be a logo with the letters NX. Using this extension running any NX command will become fairly easy.
+For more information: <a href="https://nx.dev/getting-started/nx-setup">NX setup</a></p>
+
+<a href="#contribution-rules" id="contribution-rules" style="color: inherit; text-decoration: none;">
+  <h1>Contribution rules</h1>
+</a>
+
+<a href="#code-conventions" id="code-conventions" style="color: inherit; text-decoration: none;">
+  <h2>Code conventions</h2>
+</a>
+<ul>
+<li>Strict convention rules are not applied in any frontend Projects. Most components and boilerplate will be generated already.</li>
+<li>No unused variables</li>
+<li>Always make use of semicolons (;) at the end of a statement.</li>
+<li>Use double quotes.</li>
+<li>All functions must have a JSDoc comment.</li>
+</ul>
+<pre><code class="language-TS"><span class="hl-1">   </span><span class="hl-3">/**</span><br/><span class="hl-3">    * I am a JSDoc, I describe the function below me.</span><br/><span class="hl-3">    * This function calls someone SUS!</span><br/><span class="hl-3">    * </span><span class="hl-5">@param</span><span class="hl-3"> </span><span class="hl-0">person</span><span class="hl-3"> - The person who&#39;s gonna be sus.</span><br/><span class="hl-3">    */</span><br/><span class="hl-1">  </span><span class="hl-5">function</span><span class="hl-1"> </span><span class="hl-6">amongUs</span><span class="hl-1">(</span><span class="hl-0">person</span><span class="hl-1">: </span><span class="hl-7">any</span><span class="hl-1">): </span><span class="hl-7">void</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-0">console</span><span class="hl-1">.</span><span class="hl-6">log</span><span class="hl-1">(</span><span class="hl-8">`</span><span class="hl-5">${</span><span class="hl-0">person</span><span class="hl-5">}</span><span class="hl-8"> is sus`</span><span class="hl-1">);</span><br/><span class="hl-1">  }</span>
+</code></pre>
+<ul>
+<li>No unused functions</li>
+<li>When you use an ESLint Ignore statement add an explanation.</li>
+</ul>
+
+<a href="#what-happens-when-code-is-committed-that-does-not-follow-the-code-conventions" id="what-happens-when-code-is-committed-that-does-not-follow-the-code-conventions" style="color: inherit; text-decoration: none;">
+  <h3>What happens when code is committed that does not follow the code conventions?</h3>
+</a>
+<p>When code is committed that contains linting errors it will fail whilst running in the pipeline.
+Your pull request will fail and can therefor not be pr&#39;d back to dev or main.</p>
+
+<a href="#git-and-github-rules" id="git-and-github-rules" style="color: inherit; text-decoration: none;">
+  <h2>Git and Github rules</h2>
+</a>
+<ul>
+<li>Do not push directly to Dev or Main.</li>
+<li>Use Milestones for user stories.</li>
+<li>Use an issue per problem you&#39;ll tackle.</li>
+<li>Add corresponding Milestones (user stories) to your issue.</li>
+<li>Add fitting labels to your issue (bugfix, new feature, documentation etc.)</li>
+<li>For every new problem you&#39;ll solve you work on a different feature or bug-fix branch. (feature/stream-window, bug-fix/centered-div)</li>
+<li>When done with a branch create a pull request with your pushed branch.</li>
+<li>in the description write: Closes #Issue number of issue you&#39;ve solved. This way Issues will automatically be closed after the pull request has been submitted.</li>
+<li>Every pull request needs at least one code review.</li>
+<li>Only use <code>feature</code> and <code>bug-fix</code> branches.</li>
+<li>Do your code reviews seriously.</li>
+<li>Do not review/submit pull requests that are still running CI tests.</li>
+<li>Assign yourself and other people if necessary to the assignee&#39;s tab in a pull request.</li>
+<li>Feel free to request reviewers in a pull request.</li>
+<li>Make sure not to commit big chunks of changes, commit in small steps.</li>
+</ul>
+
+<a href="#working-lean" id="working-lean" style="color: inherit; text-decoration: none;">
+  <h1>Working Lean</h1>
+</a>
+<ul>
+<li>Make use of the github projects kanban board.</li>
+<li>The boards can be found in this repo&#39;s projects tab &gt; Projects (classic)</li>
+<li>Always assign yourself first before working on any tasks.</li>
+<li>Make sure to update the tasks status. (in progress, testing done)</li>
+<li>WIP-Limits:<ul>
+<li>Kanban-backlog 10</li>
+<li>under development 6</li>
+<li>under test 4</li>
+<li>done (waiting for acceptance by PO) 3</li>
+<li>accepted by PO ∞</li>
+</ul>
+</li>
+</ul>
+</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Modules</a></li><li class=" tsd-kind-module"><a href="modules/app_controllers_chat_controller.html">app/controllers/chat.controller</a></li><li class=" tsd-kind-module"><a href="modules/app_controllers_crud_controller.html">app/controllers/crud.controller</a></li><li class=" tsd-kind-module"><a href="modules/app_controllers_security_conrtoller.html">app/controllers/security.conrtoller</a></li><li class=" tsd-kind-module"><a href="modules/db_connection.html">db.connection</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>
