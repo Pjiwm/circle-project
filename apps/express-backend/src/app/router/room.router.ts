@@ -9,7 +9,7 @@ const chatcontroller = new ChatController();
 const roomcontroller = new RoomController();
 routes.get("", roomcontroller.getAll);
 routes.get("/:id", roomcontroller.getById);
-routes.put("/:id", controller.update);
+routes.put("/:id", roomcontroller.update);
 routes.get("/:id/chats", chatcontroller.getChats);
 
 //development
