@@ -2,6 +2,7 @@ import { RsaService } from "../../../../../libs/keyUtils";
 const rsaService = new RsaService();
 import { PRIVATE_SERVER_KEY } from "./../../../../../libs/key"; 
 import { RoomModel } from "../../schemas/room.model";
+import { PersonModel } from "../../schemas/person.model";
 import { Person, Room } from "../../../../../libs/models";
 export class RoomController {
 
@@ -29,4 +30,35 @@ export class RoomController {
           next(err);
         }
       };
+
+      update = async ({ body, params }: any, res, next): Promise<void> => {
+        try {
+
+
+
+          // const personPromise = await PersonModel.findById(body.person._id);
+          // const person: Person = new Person(personPromise._id, personPromise.name, personPromise.publicKey, personPromise.satochi, personPromise.followed);
+  
+          // const decryptedMessage = rsaService.decrypt(body.signature,person.publicKey,{body});;
+          // if (decryptedMessage) {
+          //   const chat = new ChatModel(body);
+          //   await chat.save();
+          //   const signature = rsaService.encrypt({ _id: chat.id },process.env.PRIVATEKEY_SERVER);
+          //   res.status(201).send({ signature: signature, _id: chat.id });
+          // } else {
+          //   res.status(418).send({ Message: "Object not integer"});
+          // }
+
+
+
+          await RoomModel.findByIdAndUpdate({ _id: params.id }, body);
+          res.send({
+            message: "updated",
+            object: await RoomModel.findById(params.id),
+          });
+        } catch (err) {
+          next(err);
+        }
+      };
+
 }
