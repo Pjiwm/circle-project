@@ -11,6 +11,8 @@ services:
       - .env
     environment:
       MONGO_DB_CONNECTION: ${MONGO_DB_CONNECTION}
+      PRIVATEKEY_SERVER: ${PRIVATEKEY_SERVER}
+      PUBLICKEY_SERVER: ${PUBLICKEY_SERVER}
     depends_on:
       - mongo
   mongo:

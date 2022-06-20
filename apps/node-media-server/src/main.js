@@ -1,7 +1,54 @@
-const ffmpeg = require("fluent-ffmpeg");
-const fs = require("fs");
+// express
 const express = require("express");
 const app = express();
+const cors = require("cors");
+
+// routes
+const streamsRouter = require("./routes/streams");
+
+// middleware
+const notFoundMiddleware = require("./middleware/not-found");
+const errorMiddleware = require("./middleware/error-handler");
+
+// ffmpeg
+const ffmpeg = require("fluent-ffmpeg");
+const fs = require("fs");
+
+// misc
+const logger = require("tracer").console();
+
+// global declarations
+const nmsPort = process.env.PORT || 8000;
+const hlsPort = process.env.PORT || 8100;
+
+app.use(cors());
+
+// all requests go through here first
+app.get("*", (req, res, next) => {
+  const reqMethod = req.method;
+  const reqUrl = req.url;
+  logger.log(`${reqMethod} request at ${reqUrl}`);
+  next();
+});
+
+app.get("/", (req, res) => {
+  res.send("You've reached the media backend");
+});
+
+// define routes
+app.use("/api/v1/streams", streamsRouter);
+
+// define middleware
+app.use(notFoundMiddleware);
+app.use(errorMiddleware);
+
+// TODO make express able to serve archived content based on url
+// TODO make /streams/${username} default to the currently available LIVEstream (if not live then get error saying person is not livestreaming)
+
+// TODO implement https://stackoverflow.com/questions/21878178/hls-streaming-using-node-js
+app.listen(hlsPort, () => {
+  logger.log(`Server listening on ${hlsPort}`);
+});
 
 // overkoepelend idee voor rtmp stream bestand afhandeling
 // 1. Maak de root folder voor ffmpeg input
@@ -39,11 +86,11 @@ const createFoldersForStreaming = (username, callback) => {
 
   // creating the folders
   if (!fs.existsSync(userRootInputTimestampsFolder)) {
-    console.log("creating", userRootInputTimestampsFolder);
+    logger.log("creating", userRootInputTimestampsFolder);
     fs.mkdirSync(userRootInputTimestampsFolder, { recursive: true });
   }
   if (!fs.existsSync(userRootOutputTimestampsFolder)) {
-    console.log("creating", userRootOutputTimestampsFolder);
+    logger.log("creating", userRootOutputTimestampsFolder);
     fs.mkdirSync(userRootOutputTimestampsFolder, { recursive: true });
   }
 
@@ -60,7 +107,10 @@ const createFoldersForStreaming = (username, callback) => {
  * @param username the username of the transparent person
  */
 const ffmpegInputToHLS = (inputFolder, outputFolder, username) => {
-  ffmpeg(`${inputFolder}/2022-06-16_11-43-40.mkv`, { timeout: 432000 })
+  logger.log(`ffmpeg input folder: ${inputFolder}`);
+  logger.log(`ffmpeg output folder: ${outputFolder}`);
+  // TODO dynamic input for ffmpeg
+  ffmpeg(`rtmp://localhost/live/person`, { timeout: 432000 })
     .addOptions([
       "-profile:v baseline", // baseline profile (level 3.0) for H264 video codec
       "-level 3.0",
@@ -72,14 +122,18 @@ const ffmpegInputToHLS = (inputFolder, outputFolder, username) => {
     ])
     .output(`${outputFolder}/${username}.m3u8`)
     .on("error", function (err, stdout, stderr) {
-      console.log("Cannot process video: " + err.message);
+      logger.log("Cannot process video: " + err.message);
     })
     .on("end", function (stdout, stderr) {
-      console.log("Transcoding succeeded!");
+      logger.log("Transcoding succeeded!");
     })
     .run();
 };
 
+/**
+ * Transcode current stream and put output in folder based on username
+ * @param username The username of the transparent person
+ */
 const transcodeStream = (username) => {
   createFoldersForStreaming(username, (mediaFolders) => {
     ffmpegInputToHLS(
@@ -90,15 +144,30 @@ const transcodeStream = (username) => {
   });
 };
 
-// const username = "sylvester";
-// transcodeStream(username);
+// NMS for handling incoming rtmp stream
+const NodeMediaServer = require("node-media-server");
 
-// TODO make express able to serve archived content based on url
-// TODO make /streams/${username} default to the last available LIVEstream (if not live then get error saying person is not livestreaming)
+const config = {
+  rtmp: {
+    port: 1935,
+    chunk_size: 5000,
+    gop_cache: true,
+    ping: 30,
+    ping_timeout: 60,
+  },
+  http: {
+    port: nmsPort,
+    allow_origin: "*",
+  },
+};
 
-// https://stackoverflow.com/questions/21878178/hls-streaming-using-node-js
-app.use(
-  express.static("/home/sylvester/Desktop/sylvester-streams/2022-5-16_14-56/")
-);
-app.listen(8000);
-console.log("listening on port 8000");
+const nms = new NodeMediaServer(config);
+nms.run();
+
+nms.on("postPublish", (id, StreamPath, args) => {
+  logger.log(
+    "[NodeEvent on postPublish]",
+    `id=${id} StreamPath=${StreamPath} args=${JSON.stringify(args)}` // get some info about the stream
+  );
+  transcodeStream("sylvester"); // transcode the rtmp stream to hls
+});

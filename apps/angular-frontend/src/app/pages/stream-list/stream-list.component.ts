@@ -43,6 +43,7 @@ export class StreamListComponent implements OnInit {
       // Followed page
       this.isBrowsePage = false;
       this.PersonService.getFollowed().subscribe((rooms) => {
+        console.log("Rooms:" + rooms)
         if (rooms.length != 0) {
           for (let room of rooms) {
             this.getStreamer(room)
@@ -61,6 +62,7 @@ export class StreamListComponent implements OnInit {
     this.PersonService.getById(name).subscribe((person) => {
       room.streamer = person;
     })
+    console.log(room)
     return room
   }
 
@@ -81,7 +83,8 @@ export class StreamListComponent implements OnInit {
       setTimeout(() => {
         let vid = document.getElementById(video) as HTMLVideoElement;
         console.log("Element in hover 7 sec preview?", vid);
-        if (vid != null) {
+        if (vid != null && !this.playingStreamArray.includes(video)) {
+          this.playingStreamArray.includes(video)
             vid.pause();
             this.hoveredVideo = "";
         }

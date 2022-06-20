@@ -1,1 +1,27 @@
-<div class="sidenav chat">x</div>
+<div class="sidenav chat scrollwrapper">
+  <div class="chatmessages scrollable-child mt-5">
+    <p *ngFor="let chatMessage of chatMessages" class="m-2" ><b>{{ chatMessage.person.name }}:</b> {{ chatMessage.message }}<br><hr></p>
+  </div>
+  <div class="chatinput">
+    <form #f="ngForm" (ngSubmit)="send(f.value)">
+      <div class="form-group">
+        <input
+          #message="ngModel"
+          [(ngModel)]="chatMessage.message"
+          name="message"
+          id="message"
+          type="text"
+          class="form-control chattext"
+          required
+        />
+      </div>
+      <button
+        class="btn btn-primary btn-send btn-bold"
+        (click)="send(f.value)"
+        type="button"
+      >
+        Stuur
+      </button>
+    </form>
+  </div>
+</div>
