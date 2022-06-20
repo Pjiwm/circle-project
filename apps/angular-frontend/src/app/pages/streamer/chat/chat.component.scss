@@ -53,6 +53,12 @@
 
 }
 
+.btn-bold {
+    &:hover {
+        font-weight: bold;
+    }
+}
+
 .scrollwrapper {
     display: flex;
     position: relative;

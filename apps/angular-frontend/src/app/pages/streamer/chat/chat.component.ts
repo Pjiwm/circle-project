@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from "@angula
 import { FormControl, FormGroup } from "@angular/forms";
 // import NodeRSA from "encrypt-rsa";
 import { Observable } from "rxjs";
-import { Chat } from '../../../models/Chat';
+import { ChatMessage } from '../../../../../../../libs/models'
 import { ChatService } from "../../../services/ChatService";
 
 @Component({
@@ -13,28 +13,28 @@ import { ChatService } from "../../../services/ChatService";
 export class ChatComponent implements OnInit, AfterViewInit {
   initialized: boolean = false;
   @ViewChild('message', { read: ElementRef }) private chatbox: ElementRef;
-  chatMessage: Chat = {} as Chat;
-  chatMessages: Chat[] = [];
+  chatMessage: ChatMessage = {} as ChatMessage;
+  chatMessages: ChatMessage[] = [];
 
   constructor(private chatService: ChatService) { }
 
   ngOnInit(): void {
   }
 
-  send(message: Chat): void {
+  send(message: ChatMessage): void {
     if (message.message) {
       let jsonObj = JSON.parse(localStorage.getItem('currentperson'))
-      message.username = jsonObj.name;
-      message.timestamp = new Date();
-      message.streamer = jsonObj.name;
+      message.person.name = jsonObj.name;
+      message.dateTime = new Date();
+      message.room.streamer.name = 'test-streamer';
       //message.signature = this.chatService.getSignature(message.username, message.message, message.timestamp, message.streamer, jsonObj)
       this.chatMessages.push(message);
-      for (let o of this.chatMessages) {
-        console.log("username: " + o.username);
-        console.log("message: " + o.message);
-        console.log("timestamp: " + o.timestamp);
-        console.log("streamer: " + o.streamer);
-        console.log("signature: " + o.signature);
+      for (let m of this.chatMessages) {
+        console.log("username: " + m.person.name);
+        console.log("message: " + m.message);
+        console.log("timestamp: " + m.dateTime);
+        console.log("streamer: " + m.room.streamer.name);
+        console.log("signature: " + m.signature);
       }
 
       if (this.initialized == true) {
