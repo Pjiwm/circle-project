@@ -46,12 +46,14 @@ export class RoomService {
         map((response: any) => {
           const signature = response.signature;
           const rooms = response.rooms;
+
           if(signature && rooms) {
             const decrypt = keyutil.decrypt(
               signature.toString(),
               PUBLIC_SERVER_KEY,
               { rooms: rooms }
             );
+
             if (decrypt) {
                 let UUID: string = decrypt as string;
                 if (this.authService.isReplayAttack(UUID)) {
