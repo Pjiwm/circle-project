@@ -56,8 +56,8 @@ export class RsaService {
     const key = new NodeRSA({ b: 1024 });
     const publicKey = key.exportKey("public");
     const privateKey = key.exportKey("private");
-    publicKey.replace("/n", "");
-    privateKey.replace("/n", "");
+    publicKey.replace("\n", "");
+    privateKey.replace("\n", "");
     return [publicKey, privateKey];
   }
 
