@@ -125,7 +125,7 @@ export class AuthService {
     localStorage.setItem(this.CURRENT_PERSON, JSON.stringify(user));
   }
 
-  private saveUUIDToLocalStorage(UUID: string): void {
+  public saveUUIDToLocalStorage(UUID: string): void {
     let existingUUIDS = this.getUUIDSFromLocalStorage();
     existingUUIDS.push(UUID);
     localStorage.setItem(this.UUIDS, JSON.stringify(existingUUIDS));
