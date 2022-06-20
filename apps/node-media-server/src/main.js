@@ -75,10 +75,12 @@ const createFoldersForStreaming = (username, callback) => {
 
   // define timestamp folders for these paths so later stream dont overwrite older streams
   const currentTime = new Date();
-  const userRootInputTimestampsFolder = `${userRootInputFolder}/${currentTime.getFullYear()}-${currentTime.getMonth()}-${currentTime.getDate()}_${currentTime.getHours()}-${currentTime.getMinutes()}`; // assuming the user can only start one stream per minute (might need redesigning)
+  // const userRootInputTimestampsFolder = `${userRootInputFolder}/${currentTime.getFullYear()}-${currentTime.getMonth()}-${currentTime.getDate()}_${currentTime.getHours()}-${currentTime.getMinutes()}`; // assuming the user can only start one stream per minute (might need redesigning)
+  const userRootInputTimestampsFolder = `${userRootInputFolder}/${currentTime}`;
 
   // define folder used for input to ffmpeg based on the user
-  const userRootOutputTimestampsFolder = `${userRootOutputFolder}/${currentTime.getFullYear()}-${currentTime.getMonth()}-${currentTime.getDate()}_${currentTime.getHours()}-${currentTime.getMinutes()}`;
+  // const userRootOutputTimestampsFolder = `${userRootOutputFolder}/${currentTime.getFullYear()}-${currentTime.getMonth()}-${currentTime.getDate()}_${currentTime.getHours()}-${currentTime.getMinutes()}`;
+  const userRootOutputTimestampsFolder = `${userRootOutputFolder}/${currentTime}`;
 
   // creating the folders
   if (!fs.existsSync(userRootInputTimestampsFolder)) {
