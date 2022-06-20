@@ -1,6 +1,6 @@
 import { RsaService } from "../../../../../libs/keyUtils";
 const rsaService = new RsaService();
-import { PUBLIC_SERVER_KEY, PRIVATE_SERVER_KEY } from "./../../../../../libs/key"; 
+import { PRIVATE_SERVER_KEY } from "./../../../../../libs/key"; 
 import { RoomModel } from "../../schemas/room.model";
 import { PersonModel } from "../../schemas/person.model";
 import { Person, Room } from "../../../../../libs/models";
@@ -24,7 +24,7 @@ export class RoomController {
           for(const roomPromise of roomsPromise) {
               rooms.push(new Room(roomPromise._id,roomPromise.streamer,roomPromise.title,roomPromise.isLive,roomPromise.viewers));
           };
-          const signature = rsaService.encrypt({ rooms: rooms}, PUBLIC_SERVER_KEY);
+          const signature = rsaService.encrypt({ rooms: rooms}, PRIVATE_SERVER_KEY);
           res.status(200).send({ signature: signature, rooms: rooms });
         } catch (err) {
           next(err);
