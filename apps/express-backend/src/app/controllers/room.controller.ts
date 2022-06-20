@@ -33,11 +33,8 @@ export class RoomController {
 
       update = async ({ body, params }: any, res, next): Promise<void> => {
         try {
-
-
-
-          // const personPromise = await PersonModel.findById(body.person._id);
-          // const person: Person = new Person(personPromise._id, personPromise.name, personPromise.publicKey, personPromise.satochi, personPromise.followed);
+          const personPromise = await PersonModel.findById(body.streamer._id);
+          const person: Person = new Person(personPromise._id, personPromise.name, personPromise.publicKey, personPromise.satochi, personPromise.followed);
   
           // const decryptedMessage = rsaService.decrypt(body.signature,person.publicKey,{body});;
           // if (decryptedMessage) {
