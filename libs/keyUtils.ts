@@ -22,7 +22,7 @@ export class RsaService {
   encrypt(object: object, privateKey: string): string {
     let encrypt = new NodeRSA();
     encrypt = encrypt.importKey(privateKey, "private");
-    const unsigned = [hash(object), uuidv4()];
+    const unsigned = [hash(JSON.stringify(object)), uuidv4()];
     return encrypt.encryptPrivate(unsigned, "base64");
   }
 
@@ -36,7 +36,7 @@ export class RsaService {
   decrypt(cypher: string, publicKey: string, object: object): string | boolean {
     let decrypt = new NodeRSA();
     decrypt = decrypt.importKey(publicKey, "public");
-    const objectHash = hash(object);
+    const objectHash = hash(JSON.stringify(object));
 
     let [decryptedHash, UUID] = decrypt.decryptPublic(cypher, "json");
     const isValid = objectHash === decryptedHash;
@@ -57,5 +57,17 @@ export class RsaService {
     const publicKey = key.exportKey("public");
     const privateKey = key.exportKey("private");
     return [publicKey, privateKey];
+  }
+
+  isValidPrivateKey(privateKey: string) : boolean {
+    let key = new NodeRSA();
+    key = key.importKey(privateKey, "private");
+    return key.isPrivate();
+  }
+
+  isValidPublicKey(publicKey: string) : boolean {
+    let key = new NodeRSA();
+    key = key.importKey(publicKey, "public");
+    return key.isPublic();
   }
 }

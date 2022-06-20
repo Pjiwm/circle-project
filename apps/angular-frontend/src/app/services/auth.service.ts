@@ -13,7 +13,7 @@ import {
 import { Room, Person } from "../../../../../libs/models";
 import { RsaService } from "../../../../../libs/keyUtils";
 import { User } from "../models/user";
-
+import { PUBLIC_SERVER_KEY } from "../../../../../libs/key";
 import { environment } from "../../environments/environment";
 
 @Injectable({
@@ -22,6 +22,7 @@ import { environment } from "../../environments/environment";
 export class AuthService {
   public currentPerson$ = new BehaviorSubject<Person | undefined>(undefined);
   private readonly CURRENT_PERSON: string = "currentperson";
+  private readonly UUIDS: string = "UUIDS";
   private ApiUrl = environment.APIURL + "auth/login";
 
   httpOptions = {
@@ -53,36 +54,48 @@ export class AuthService {
 
   login(name: string, privateKey: string): Observable<Person> {
     const keyutil = new RsaService();
-    const signature = keyutil.encrypt({ name: name }, privateKey);
-    console.log(signature);
+    if (keyutil.isValidPrivateKey(privateKey)) {
+      const signature = keyutil.encrypt({ name: name }, privateKey);
 
-    const serverKey = "";
-
-    return this.http
-      .post<[string, Person]>(this.ApiUrl, { name: name, signature: signature })
-      .pipe(
-        map(([signature, person]) => {
-          if (signature && person) {
-            const decrypt = keyutil.decrypt(signature, serverKey, person);
-            if (decrypt) {
-              this.currentPerson$.next(person);
-              const user: User = {
-                id: person._id,
-                name: person.name,
-                PrivateKey: privateKey,
-                PublicKey: person.publicKey,
-              };
-              this.saveUserToLocalStorage(user);
-              return person;
+      return this.http
+        .post<any>(this.ApiUrl, { name: name, signature: signature })
+        .pipe(
+          map((pakage) => {
+            const signatureP = pakage.signature;
+            const person = pakage.person;
+            if (signatureP && person) {
+              const decrypt = keyutil.decrypt(
+                signatureP.toString(),
+                PUBLIC_SERVER_KEY,
+                { person: person }
+              );
+              if (decrypt) {
+                let UUID: string = decrypt as string;
+                if (this.isReplayAttack(UUID)) {
+                  console.log("this is a replay attack");
+                  return null;
+                }
+                const user: User = {
+                  id: person._id,
+                  name: person.name,
+                  PrivateKey: privateKey,
+                  PublicKey: person.publicKey,
+                };
+                this.saveUUIDToLocalStorage(UUID);
+                this.saveUserToLocalStorage(user);
+                this.currentPerson$.next(person);
+                return person;
+              }
             }
-          }
-          return person;
-        }),
-        catchError((error: any) => {
-          console.log("error:", error);
-          return of();
-        })
-      );
+            return null;
+          }),
+          catchError((error: any) => {
+            console.log("error:", error);
+            return of();
+          })
+        );
+    }
+    return of();
   }
 
   logout(): void {
@@ -110,5 +123,22 @@ export class AuthService {
 
   private saveUserToLocalStorage(user: User): void {
     localStorage.setItem(this.CURRENT_PERSON, JSON.stringify(user));
+  }
+
+  private saveUUIDToLocalStorage(UUID: string): void {
+    let existingUUIDS = this.getUUIDSFromLocalStorage();
+    existingUUIDS.push(UUID);
+    localStorage.setItem(this.UUIDS, JSON.stringify(existingUUIDS));
+  }
+
+  public getUUIDSFromLocalStorage(): [string] {
+    let existingUUIDS = JSON.parse(localStorage.getItem(this.UUIDS));
+    if (existingUUIDS == null) existingUUIDS = [];
+    return existingUUIDS;
+  }
+
+  public isReplayAttack(UUID: string): boolean {
+    let existingUUIDS = this.getUUIDSFromLocalStorage();
+    return existingUUIDS.includes(UUID);
   }
 }
