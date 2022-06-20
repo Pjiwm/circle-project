@@ -3,6 +3,7 @@ const rsaService = new RsaService();
 import { PersonModel } from "../../schemas/person.model";
 import { Person, ChatMessage } from "../../../../../libs/models";
 import { ChatModel } from "../../schemas/chat.model";
+import { PRIVATE_SERVER_KEY } from "./../../../../../libs/key"; 
 
 export class ChatController {
   /**
@@ -18,7 +19,7 @@ export class ChatController {
         roomChats.push(new ChatMessage(chat._id, chat.person, chat.room, chat.message, chat.dateTime,chat.signature));
       }
     };
-    const signature = rsaService.encrypt({ roomChats },process.env.PRIVATEKEY_SERVER);
+    const signature = rsaService.encrypt({ roomChats },PRIVATE_SERVER_KEY);
     res.status(200).send({ signature: signature, chats: roomChats });
   };
 
@@ -36,7 +37,7 @@ export class ChatController {
         if (decryptedMessage) {
           const chat = new ChatModel(body);
           await chat.save();
-          const signature = rsaService.encrypt({ _id: chat.id },process.env.PRIVATEKEY_SERVER);
+          const signature = rsaService.encrypt({ _id: chat.id },PRIVATE_SERVER_KEY);
           res.status(201).send({ signature: signature, _id: chat.id });
         } else {
           res.status(418).send({ Message: "Object not integer"});
