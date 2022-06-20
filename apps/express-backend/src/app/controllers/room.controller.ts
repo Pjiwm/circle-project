@@ -1,6 +1,6 @@
 import { RsaService } from "../../../../../libs/keyUtils";
 const rsaService = new RsaService();
-
+import { PUBLIC_SERVER_KEY, PRIVATE_SERVER_KEY } from "./../../../../../libs/key"; 
 import { RoomModel } from "../../schemas/room.model";
 import { Person, Room } from "../../../../../libs/models";
 export class RoomController {
@@ -9,13 +9,13 @@ export class RoomController {
         try {
           const roomPromise = await RoomModel.findById(params.id);
           const room = new Room(roomPromise._id,roomPromise.streamer,roomPromise.title,roomPromise.isLive,roomPromise.viewers);
-          const signature = rsaService.encrypt({ room: room },process.env.PRIVATEKEY_SERVER);
+          const signature = rsaService.encrypt({ room: room },PRIVATE_SERVER_KEY);
           res.status(201).send({ signature: signature, room: room });
         } catch (err) {
           next(err);
         }
       };
-      
+
       getAll = async (req, res, next): Promise<void> => {
         const rooms = [];
         try {
@@ -23,7 +23,7 @@ export class RoomController {
           for(const roomPromise of roomsPromise) {
               rooms.push(new Room(roomPromise._id,roomPromise.streamer,roomPromise.title,roomPromise.isLive,roomPromise.viewers));
           };
-          const signature = rsaService.encrypt({ rooms: rooms },process.env.PRIVATEKEY_SERVER);
+          const signature = rsaService.encrypt({ rooms: rooms}, PUBLIC_SERVER_KEY);
           res.status(201).send({ signature: signature, rooms: rooms });
         } catch (err) {
           next(err);
