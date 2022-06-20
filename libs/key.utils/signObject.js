@@ -1,7 +1,7 @@
 // Required node_modules
-import hash from 'object-hash';
-import NodeRSA from 'node-rsa';
-import crypto from 'crypto'
+import hash from "object-hash";
+import NodeRSA from "node-rsa";
+import crypto from "crypto";
 
 /**
  * Creates digital signature with a hash and a UUID.
@@ -11,9 +11,9 @@ import crypto from 'crypto'
  */
 
 export default function signObject(object, privateKeyString) {
-    let privateKey = new NodeRSA
-    privateKey = privateKey.importKey(privateKeyString);
-    const unsigned = [hash(object), crypto.randomUUID()];
-    console.log("signObject: object is signed");
-    return privateKey.encryptPrivate(unsigned, 'base64');
+  let privateKey = new NodeRSA();
+  privateKey = privateKey.importKey(privateKeyString);
+  const unsigned = [hash(object), crypto.randomUUID()];
+  console.log("signObject: object is signed");
+  return privateKey.encryptPrivate(unsigned, "base64");
 }
