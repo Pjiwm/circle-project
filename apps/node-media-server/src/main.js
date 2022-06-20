@@ -18,8 +18,8 @@ const fs = require("fs");
 const logger = require("tracer").console();
 
 // global declarations
-const nmsPort = process.env.PORT || 8000;
-const hlsPort = process.env.PORT || 8100;
+const nmsPort = process.env.NMS_PORT;
+const hlsPort = process.env.HLS_PORT;
 
 app.use(cors());
 
@@ -64,14 +64,10 @@ app.listen(hlsPort, () => {
  */
 const createFoldersForStreaming = (username, callback) => {
   // define root folder containing the to be transcoded files
-  const ffmpegRootInputFolder =
-    process.env.FFMPEG_ROOT_INPUT_FOLDER ||
-    `/home/${process.env.USER}/Videos/ScreenRecordings`; // deze USER variabele is de linux user, niet de user van de webapp
+  const ffmpegRootInputFolder = process.env.FFMPEG_ROOT_INPUT_FOLDER;
 
   // define root folder containing the transcoded files
-  const ffmpegRootOutputFolder =
-    process.env.FFMPEG_ROOT_OUTPUT_FOLDER ||
-    `/home/${process.env.USER}/Desktop`;
+  const ffmpegRootOutputFolder = process.env.FFMPEG_ROOT_OUTPUT_FOLDER;
 
   // define user specific paths
   const userRootInputFolder = `${ffmpegRootInputFolder}/${username}-streams`;
