@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-import { Chat } from '../models/Chat';
+import { ChatMessage } from '../../../../../libs/models';
 import * as shajs from 'sha.js';
 
 @Injectable({
