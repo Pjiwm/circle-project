@@ -11,8 +11,13 @@ export class SecurityController {
    */
   createKeys = async function (req, res) {
     const keys = rsaService.keyGen();
-    res.status(201).send({ PrivateKey: keys[1], PublicKey: keys[0] });
+    const privatekey = JSON.stringify(keys[1]);
+    const publickey = JSON.stringify(keys[0]);
+    console.log(keys);
+    res.status(201).send({ privateKey: privatekey, publicKey: publickey });
   };
+
+  
   login = async function (req, res, next) {
     try {
       const personPromise: Person = await PersonModel.findOne({
@@ -36,6 +41,8 @@ export class SecurityController {
       if (decryptedMessage) {
         const signature = rsaService.encrypt({ person: person }, PRIVATE_SERVER_KEY);
         res.status(200).send({ signature: signature, person: person });
+      } else {
+        res.status(418).send({ Message: "Object not integer"});
       }
     } catch (err) {
       next(err);
