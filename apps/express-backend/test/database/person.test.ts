@@ -1,26 +1,37 @@
+import { request } from "http";
 import { PersonModel } from "../../src/schemas/person.model";
-describe("Chat mongoose schema works", () => {
-  let person;
-  it("Creates a chat model", async () => {
-    person = await new PersonModel({
-      Name: "Mr. Bean",
-      PublicKey: "123456789",
-      Satochi: 100,
+import * as router from "express";
+const routes = router.Router();
+import person from "../../src/app/router/person.router";
+
+describe("Check person endpoints", () => {
+  it("Get all persons", async () => {
+    const response = await fetch("http://localhost:3000/api/persons/", { 
+      method: "GET"
     });
-    expect((person.Name = "Mr. Bean"));
-    expect((person.PublicKey = "123456789"));
-    expect((person.Satochi = 100));
+    console.log(response.body);
+    expect(response.status).toBe(200);
   });
 
-//   TODO advanced object test.
-//   it("Adds a follower to an existing person", async () => {
-//     const streamer = await new PersonModel({
+  it("Get single persons by ID", async () => {
+    const response = await fetch("http://localhost:3000/api/persons/62a9a6d2eb3430181f489291", { 
+      method: "GET"
+    });
+    console.log(response.body);
+    expect(response.status).toBe(200);
+  });
 
-//     await PersonModel.updateOne(
-//       { _id: person._id },
-//       { $push: { Followed: { $each: [{ _id: "123456789" }] } } }
-//     );
-//     console.log(person.Followed);
-//     expect((person.Followed = [{ _id: "123456789" }]));
-//   });
+  // it("Create Person", async () => {
+  //   const response = await fetch("http://localhost:3000/api/persons/", { 
+  //     method: "POST",
+  //     body: JSON.stringify({
+  //       name: "Testman",
+  //       publicKey: "testkey",
+  //       satochi: 0,
+  //       followed: []
+  //   })
+  //   });
+  //   console.log(response.body);
+  //   expect(response.status).toBe(200);
+  // });
 });
