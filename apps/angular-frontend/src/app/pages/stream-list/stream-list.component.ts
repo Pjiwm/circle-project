@@ -81,7 +81,8 @@ export class StreamListComponent implements OnInit {
       setTimeout(() => {
         let vid = document.getElementById(video) as HTMLVideoElement;
         console.log("Element in hover 7 sec preview?", vid);
-        if (vid != null) {
+        if (vid != null && !this.playingStreamArray.includes(video)) {
+          this.playingStreamArray.includes(video)
             vid.pause();
             this.hoveredVideo = "";
         }

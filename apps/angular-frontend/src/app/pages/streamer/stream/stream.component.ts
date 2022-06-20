@@ -18,8 +18,6 @@ import { faPause, faPlay, faStop } from "@fortawesome/free-solid-svg-icons";
 })
 export class StreamComponent implements OnInit, AfterViewInit {
   @ViewChild("parentCam") parentCam: ElementRef;
-  
-
   FaPlay = faPlay;
   FaPause = faPause;
   FaStop = faStop;
@@ -28,10 +26,12 @@ export class StreamComponent implements OnInit, AfterViewInit {
   webcam_width = 200;
   measureCam = 100;
   initialized = false;
-
+  displayWelcomeMessage = true;
+  videoSource1 = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'
+  ;
   @HostListener("window:resize", ["$event"])
   getScreenSize(event?) {
-    if(this.initialized) {
+    if (this.initialized) {
       let measureCam = this.parentCam.nativeElement.offsetWidth;
       console.log("Div Width is: " + measureCam);
       this.webcam_width = measureCam;
@@ -51,6 +51,9 @@ export class StreamComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.WebcamOn = false;
+    setTimeout(() => {
+      this.displayWelcomeMessage = false;
+    }, 4000);
   }
 
   Start(): void {
