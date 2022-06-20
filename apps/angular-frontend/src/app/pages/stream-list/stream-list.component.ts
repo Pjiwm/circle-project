@@ -3,6 +3,8 @@ import { Router } from "@angular/router";
 import { PersonService } from "../../services/person.service";
 import { RoomService } from "../../services/room.service";
 import { Person, Room } from "../../../../../../libs/models";
+import { Location } from '@angular/common'
+import { faPause, faPlay, faStop, faArrowRight, faArrowRightLong, faDoorOpen } from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: "the-circle-stream-list",
@@ -11,21 +13,23 @@ import { Person, Room } from "../../../../../../libs/models";
 })
 export class StreamListComponent implements OnInit {
   isBrowsePage: boolean;
-  videoClicked = false;
-  isPlaying = false;
   videoSource1 = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
   videoSource2 = 'https://jsoncompare.org/LearningContainer/SampleFiles/Video/MP4/sample-mp4-file.mp4';
-  isVideo = false;
   hoveredVideo = "";
-  playedVideo = ""
   playingStreamArray: string[] = [];
   persons: Person[];
   rooms: Room[] = [];
+  FaPlay = faPlay;
+  FaPause = faPause;
+  FaStop = faStop;
+  FaArrowRight = faArrowRightLong;
+  FaDoorOpen = faDoorOpen;
 
   constructor(
     public router: Router,
     public PersonService: PersonService,
-    public RoomService: RoomService) { }
+    public RoomService: RoomService,
+    private location: Location) { }
 
   ngOnInit(): void {
     if (this.router.url === "/browse") {
@@ -50,7 +54,6 @@ export class StreamListComponent implements OnInit {
           this.rooms = rooms
         }
       });
-
     }
   }
 
@@ -130,6 +133,10 @@ export class StreamListComponent implements OnInit {
         console.log(this.playingStreamArray);
       }
     }, 300);
+  }
+
+  previousPage() {
+    this.location.back();
   }
 
   // startStopVideo(video: string): void {

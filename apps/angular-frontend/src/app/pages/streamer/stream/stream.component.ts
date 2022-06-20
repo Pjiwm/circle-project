@@ -8,8 +8,9 @@ import {
 } from "@angular/core";
 import { WebcamImage } from "ngx-webcam";
 import { Subject } from "rxjs";
-import { StreamService } from "../../../services/StreamService";
-import { faPause, faPlay, faStop } from "@fortawesome/free-solid-svg-icons";
+import { RoomService } from "../../../services/room.service";
+import { faPause, faPlay, faStop, faArrowLeft, faArrowLeftLong, faArrowRightLong, faDoorOpen } from "@fortawesome/free-solid-svg-icons";
+import { Location } from '@angular/common'
 
 @Component({
   selector: "the-circle-stream",
@@ -21,6 +22,9 @@ export class StreamComponent implements OnInit, AfterViewInit {
   FaPlay = faPlay;
   FaPause = faPause;
   FaStop = faStop;
+  FaArrowLeft = faArrowLeftLong;
+  FaArrowRight = faArrowRightLong;
+  FaDoorOpen = faDoorOpen;
   WebcamOn = false;
   screenWidth: any;
   webcam_width = 200;
@@ -45,7 +49,8 @@ export class StreamComponent implements OnInit, AfterViewInit {
   public webcamImage: WebcamImage | null = null;
   private trigger: Subject<void> = new Subject<void>();
 
-  constructor(private streamService: StreamService) {
+  constructor(private roomService: RoomService,
+    private location: Location) {
     this.getScreenSize();
   }
 
@@ -54,6 +59,10 @@ export class StreamComponent implements OnInit, AfterViewInit {
     setTimeout(() => {
       this.displayWelcomeMessage = false;
     }, 4000);
+  }
+
+  previousPage() {
+    this.location.back();
   }
 
   Start(): void {

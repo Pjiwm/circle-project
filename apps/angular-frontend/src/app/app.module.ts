@@ -1,7 +1,6 @@
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { StreamComponent } from "./pages/streamer/stream/stream.component";
-import { StreamService } from "./services/StreamService";
 import { HttpClientModule } from "@angular/common/http";
 import { WebcamModule } from "ngx-webcam";
 import { ChatComponent } from "./pages/streamer/chat/chat.component";
@@ -38,7 +37,7 @@ import { StreamListComponent } from './pages/stream-list/stream-list.component';
     ReactiveFormsModule,
     NgbModule,
   ],
-  providers: [LoggedInAuthGuard, StreamService],
+  providers: [LoggedInAuthGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
