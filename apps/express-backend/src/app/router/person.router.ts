@@ -8,7 +8,7 @@ const controller: CrudController = new CrudController(PersonModel);
 
 routes.get("", controller.getAll);
 routes.get("/:id", personcontroller.getById);
-routes.put("/:id", controller.update);
+routes.put("/:id", personcontroller.update);
 
 //development
 routes.post("", controller.create);
