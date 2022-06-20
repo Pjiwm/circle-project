@@ -1,4 +1,15 @@
 <div class="container-fluid">
+  <!-- <h1 *ngIf="!isBrowsePage" class="pb-5">Streams</h1>
+  <div *ngIf="!isBrowsePage" class="video-container">
+    <video class="video-frame" (click)="startVideo()" #videoPlayer>
+      <source src="{{videoSource}}" type="video/mp4">
+    </video>
+  </div> 
+  <button (click)="makeBig()">Big</button>
+	<button (click)="makeSmall()">Small</button>
+	<button (click)="makeNormal()">Normal</button> 
+  <p>Video clicked: {{videoClicked}}</p>-->
+
   <h1 *ngIf="!isBrowsePage" class="pb-5">Volgend</h1>
   <h1 *ngIf="isBrowsePage" class="pb-5">Bladeren</h1>
   <div class="row card-row">
@@ -73,16 +84,29 @@
       </a>
     </div>
     <div class="col-12 col-md-6 col-lg-4 col-xl-3 pb-4">
-      <a class="d-block position-relative" routerLink="/">
+      <a class="d-block position-relative">
         <div class="card h-100">
           <div class="position-relative">
             <div class="live active">
               <span>Live</span>
             </div>
-            <img class="card-img-top" src="https://via.placeholder.com/350" />
+            <div (mouseenter)="mouseOnHover('video-1')" (mouseleave)="mouseOnLeave('video-1')">
+              <img *ngIf="!(hoveredVideo == 'video-1' || playingStreamArray.includes('video-1'))" id="video-1-avatar" class="card-img-top" src="https://via.placeholder.com/350" />
+
+              <video *ngIf="hoveredVideo == 'video-1' || playingStreamArray.includes('video-1')" id="video-1" class="video-frame-2">
+                <source src="{{videoSource1}}" type="video/mp4">
+              </video>
+            </div>
+            <!-- <video *ngIf="isVideo" id="myVideo" class="video-frame-2" (click)="startStopVideo()" #videoPlayer>
+              <source src="{{videoSource}}" type="video/mp4">
+            </video> -->
             <div class="viewer-count">
               <span>764.938 kijkers</span>
             </div>
+            <!-- <div *ngIf="!isVideo" class="viewer-count">
+              <span>764.938 kijkers</span>
+            </div> -->
+
           </div>
           <div class="card-body">
             <h5 class="card-title">Streamer naam</h5>
@@ -90,22 +114,41 @@
               This is a longer card with supporting text below as a natural
               lead-in to additional content.
             </p>
+            <!-- <div *ngIf="isVideo" class="viewer-count position-relative">
+              <span>764.938 kijkers</span>
+            </div> -->
+            <button class="btn btn-danger" (click)="startStopVideo('video-1')">Play/Stop</button>
+            <button class="btn btn-warning"(click)="startStopVideo('video-1')">Chat</button>
+            <button class="btn btn-info" routerLink="1">Ga naar room ></button>
           </div>
         </div>
         <div class="card-border"></div>
       </a>
     </div>
     <div class="col-12 col-md-6 col-lg-4 col-xl-3 pb-4">
-      <a class="d-block position-relative" routerLink="/">
+      <a class="d-block position-relative">
         <div class="card h-100">
           <div class="position-relative">
-            <div class="live">
+            <div class="live active">
               <span>Live</span>
             </div>
-            <img class="card-img-top" src="https://via.placeholder.com/350" />
-            <div class="viewer-count">
-              <span>0 kijkers</span>
+            <div (mouseenter)="mouseOnHover('video-2')" (mouseleave)="mouseOnLeave('video-2')">
+              <img *ngIf="!(hoveredVideo == 'video-2' || playingStreamArray.includes('video-2'))" id="video-2-avatar" class="card-img-top" src="https://via.placeholder.com/350" />
+
+              <video *ngIf="hoveredVideo == 'video-2'|| playingStreamArray.includes('video-2')" id="video-2" class="video-frame-2">
+                <source src="{{videoSource2}}" type="video/mp4">
+              </video>
             </div>
+            <!-- <video *ngIf="isVideo" id="myVideo" class="video-frame-2" (click)="startStopVideo()" #videoPlayer>
+              <source src="{{videoSource}}" type="video/mp4">
+            </video> -->
+            <div class="viewer-count">
+              <span>764.938 kijkers</span>
+            </div>
+            <!-- <div *ngIf="!isVideo" class="viewer-count">
+              <span>764.938 kijkers</span>
+            </div> -->
+
           </div>
           <div class="card-body">
             <h5 class="card-title">Streamer naam</h5>
@@ -113,29 +156,12 @@
               This is a longer card with supporting text below as a natural
               lead-in to additional content.
             </p>
-          </div>
-        </div>
-        <div class="card-border"></div>
-      </a>
-    </div>
-    <div class="col-12 col-md-6 col-lg-4 col-xl-3 pb-4">
-      <a class="d-block position-relative" routerLink="/">
-        <div class="card h-100">
-          <div class="position-relative">
-            <div class="live">
-              <span>Live</span>
-            </div>
-            <img class="card-img-top" src="https://via.placeholder.com/350" />
-            <div class="viewer-count">
-              <span>0 kijkers</span>
-            </div>
-          </div>
-          <div class="card-body">
-            <h5 class="card-title">Streamer naam</h5>
-            <p class="card-text">
-              This is a longer card with supporting text below as a natural
-              lead-in to additional content.
-            </p>
+            <!-- <div *ngIf="isVideo" class="viewer-count position-relative">
+              <span>764.938 kijkers</span>
+            </div> -->
+            <button class="btn btn-danger" (click)="startStopVideo('video-2')">Play/Stop</button>
+            <button class="btn btn-warning"(click)="startStopVideo('video-1')">Chat</button>
+            <button class="btn btn-info" routerLink="2">Ga naar room ></button>
           </div>
         </div>
         <div class="card-border"></div>
