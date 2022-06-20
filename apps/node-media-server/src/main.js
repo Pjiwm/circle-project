@@ -170,6 +170,6 @@ nms.on("postPublish", (id, StreamPath, args) => {
     `id=${id} StreamPath=${StreamPath} args=${JSON.stringify(args)}` // get some info about the stream
   );
 
-  const username = StreamPath.slice(6) // extract username from StreamPath
+  const username = StreamPath.slice(6); // extract username from StreamPath
   transcodeStream(username); // transcode the rtmp stream to hls
 });
