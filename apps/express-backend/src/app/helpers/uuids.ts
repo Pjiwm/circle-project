@@ -5,6 +5,7 @@ export class UUIDHelper {
     try {
       const exists = new uuidModel({ uuid: uuid });
       await exists.save();
+      return true;
     } catch (err) {
         return false;
     }
