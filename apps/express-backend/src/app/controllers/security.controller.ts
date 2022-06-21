@@ -1,4 +1,6 @@
 import { RsaService } from "../../../../../libs/keyUtils";
+import { UUIDHelper } from "../helpers/uuids";
+const uuidHelper = new UUIDHelper();
 const rsaService = new RsaService();
 import { PersonModel } from "../../schemas/person.model";
 import { Person } from "../../../../../libs/models";
@@ -35,9 +37,10 @@ export class SecurityController {
         person.publicKey,
         { name: req.body.name }
       );
-      if (decryptedMessage) {
-        const signature = rsaService.encrypt({ person: person }, PRIVATE_SERVER_KEY);
-        res.status(200).send({ signature: signature, person: person });
+      const uuidCheck = await uuidHelper.check(decryptedMessage);
+      if (decryptedMessage && uuidCheck) {
+          const signature = rsaService.encrypt({ person: person }, PRIVATE_SERVER_KEY);
+          res.status(200).send({ signature: signature, person: person });
       } else {
         res.status(418).send({ Message: "Object not integer"});
       }

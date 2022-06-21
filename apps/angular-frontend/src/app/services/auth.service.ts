@@ -56,13 +56,12 @@ export class AuthService {
     const keyutil = new RsaService();
     if (keyutil.isValidPrivateKey(privateKey)) {
       const signature = keyutil.encrypt({ name: name }, privateKey);
-
+      console.log(signature);
       return this.http
         .post<any>(this.ApiUrl, { name: name, signature: signature })
         .pipe(
           map((pakage) => {
             const signatureP = pakage.signature;
-            console.log(signatureP)
             const person = pakage.person;
             if (signatureP && person) {
               const decrypt = keyutil.decrypt(
