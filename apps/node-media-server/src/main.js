@@ -16,6 +16,7 @@ const fs = require("fs");
 
 // misc
 const logger = require("tracer").console();
+const { getLatestDateFromDirectory } = require("./utils/get-latest-date");
 
 // global declarations
 const nmsPort = process.env.NMS_PORT;
@@ -99,6 +100,25 @@ const createFoldersForStreaming = (username, callback) => {
 };
 
 /**
+ * Create or delete a file in the stream output folder denoting whether the user is live.
+ * A present file means live, no file means not live.
+ * It will also make an API call to the follower backend to set the correct value of the boolean
+ * @param outputFolder folder to place the file in
+ * @param {boolean} isLive boolean whether user is live or not. true means the file will be created, false means the file will be deleted
+ */
+const userIsLive = (outputFolder, isLive) => {
+  if (isLive === false) {
+    fs.rmSync(`${outputFolder}/_user_is_live`);
+
+    // make the api call so the other server also knows we're not live anymore
+  } else {
+    fs.writeFileSync(`${outputFolder}/_user_is_live`, "We'll do it live!");
+
+    // make the api call so the other server also knows we're live
+  }
+};
+
+/**
  * Converts ffmpeg input to an HLS stream
  * @param inputFolder folder containing input media for ffmpeg
  * @param outputFolder folder for ffmpeg output
@@ -129,17 +149,28 @@ const ffmpegInputToHLS = (inputFolder, outputFolder, username) => {
 };
 
 /**
- * Transcode current stream and put output in folder based on username
+ * Handle stream based on username and live status
  * @param username The username of the transparent person
+ * @param {boolean} isLive Whether user is live or not
  */
-const transcodeStream = (username) => {
-  createFoldersForStreaming(username, (mediaFolders) => {
-    ffmpegInputToHLS(
-      mediaFolders.userRootInputTimestampsFolder,
-      mediaFolders.userRootOutputTimestampsFolder,
-      username
-    );
-  });
+const handleStream = (username, isLive) => {
+  if (isLive === true) {
+    createFoldersForStreaming(username, (mediaFolders) => {
+      ffmpegInputToHLS(
+        mediaFolders.userRootInputTimestampsFolder,
+        mediaFolders.userRootOutputTimestampsFolder,
+        username
+      );
+    });
+    getLatestDateFromDirectory(username, (error, result) => {
+      userIsLive(result.path, true);
+    });
+  }
+  if (isLive === false) {
+    getLatestDateFromDirectory(username, (error, result) => {
+      userIsLive(result.path, false);
+    });
+  }
 };
 
 // NMS for handling incoming rtmp stream
@@ -163,11 +194,11 @@ const nms = new NodeMediaServer(config);
 nms.run();
 
 nms.on("postPublish", (id, StreamPath, args) => {
-  logger.log(
-    "[NodeEvent on postPublish]",
-    `id=${id} StreamPath=${StreamPath} args=${JSON.stringify(args)}` // get some info about the stream
-  );
-
   const username = StreamPath.slice(6); // extract username from StreamPath
-  transcodeStream(username); // transcode the rtmp stream to hls
+  handleStream(username, true); // transcode the rtmp stream to hls
+});
+
+nms.on("donePublish", (id, StreamPath, args) => {
+  const username = StreamPath.slice(6); // extract username from StreamPath
+  handleStream(username, false); // set streaming status to false
 });
