@@ -1,3 +1,9 @@
+<!-- <button class="btn btn-info btn-hover-transition mb-2 fw-bold" (click)="previousPage()" title="Vorige pagina"><fa-icon [icon]="FaArrowLeft" class="icon align-middle"></fa-icon> Terug</button> -->
+<!-- <button class="btn btn-info btn-hover-transition mb-2 fw-bold" (click)="previousPage()" title="Vorige pagina"><fa-icon [icon]="FaArrowLeft" class="icon align-middle"></fa-icon> <fa-icon [icon]="FaDoorOpen" class="icon align-middle"></fa-icon> </button> -->
+<p class="text-light p-2 bg-dark rounded w-100">
+  <button class="btn btn-danger btn-hover-transition fw-bold" (click)="previousPage()" title="Vorige pagina"><fa-icon [icon]="FaArrowLeft" class="icon align-middle"></fa-icon> <fa-icon [icon]="FaDoorOpen" class="icon align-middle"></fa-icon> </button>
+  <span class="ms-2">Streamer NAAM HIER</span>
+</p>
 <div class="row g-0 h-100 stream-chat-window">
   <div class="text-center col-sm-9 stream-container">
     <video id="video-1" class="video-frame-2 w-100 h-100 align-middle" controls autoplay>
@@ -8,9 +14,6 @@
     <the-circle-chat></the-circle-chat>
   </div>
 </div>
-<p class="text-light p-2 bg-dark rounded w-50">Welkom bij streamer
-  NAAM HIER
-</p>
 <!-- *ngIf="displayWelcomeMessage"  -->
 
 <!-- <footer id="footer">

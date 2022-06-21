@@ -12,7 +12,7 @@ const routes: Routes = [
   {
     path: "following", pathMatch: "full", component: StreamListComponent, canActivate: [LoggedInAuthGuard]
   },
-  { path: "following/:id", pathMatch: "full", component: StreamComponent, canActivate: [LoggedInAuthGuard], },
+  { path: "room/:id", pathMatch: "full", component: StreamComponent, canActivate: [LoggedInAuthGuard], },
   { path: "**", component: PageNotFoundComponent },
 ];
 
