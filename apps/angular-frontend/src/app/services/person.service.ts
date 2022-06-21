@@ -6,6 +6,7 @@ import { Observable, map } from "rxjs";
 import { AuthService } from "./auth.service";
 import { PUBLIC_SERVER_KEY } from "libs/key";
 import { RsaService } from "../../../../../libs/keyUtils";
+import { User } from "../models/user";
 
 @Injectable({
   providedIn: "root",
@@ -23,30 +24,18 @@ export class PersonService {
   constructor(public http: HttpClient, public authService:AuthService) {}
 
   getById(id:string): Observable<Person> {
-    return this.http
-      .get<Person>(`${this.baseUrl}/persons/${id}`, { headers: this.headers })
-      .pipe(
-        map((response: any) => {
-          return response;
-        })
-      );
-  }
-
-  getFollowed(): Observable<Room[]> {
     const keyutil = new RsaService();
-    this.authService.getPersonFromLocalStorage().subscribe((person) => {
-      console.log(person);
-      return this.http
-      .get<Person[]>(`${this.baseUrl}/persons/${person._id}`, { headers: this.headers })
+    return this.http
+      .get<any>(`${this.baseUrl}/persons/${id}`, { headers: this.headers })
       .pipe(
         map((response: any) => {
           const signature = response.signature;
-          const followed = response.followed;
-          if(signature && followed) {
+          const person = response.person;
+          if(signature && person) {
             const decrypt = keyutil.decrypt(
               signature.toString(),
               PUBLIC_SERVER_KEY,
-              { followed: followed }
+              { person: person }
             );
             if (decrypt) {
               let UUID: string = decrypt as string;
@@ -55,13 +44,44 @@ export class PersonService {
                 return null;
               }
               this.authService.saveUUIDToLocalStorage(UUID);
-              return followed
+              return person;
+            }
+          }
+          return null;
+        })
+      );
+  }
+
+  getFollowed(): Observable<Room[]> {
+    const keyutil = new RsaService();
+    console.log(this.authService.currentPerson$.value._id)
+     return this.http
+     .get<Person[]>(`${this.baseUrl}/persons/${this.authService.currentPerson$.value._id}`, { headers: this.headers })
+      .pipe(
+        map((response: any) => {
+          console.log(response);
+          const signature = response.signature;
+          const followed = response.person.followed;
+          if(signature && followed) {
+            const decrypt = keyutil.decrypt(
+              signature.toString(),
+              PUBLIC_SERVER_KEY,
+              { person: response.person }
+            );
+            if (decrypt) {
+              let UUID: string = decrypt as string;
+              if (this.authService.isReplayAttack(UUID)) {
+                console.log("this is a replay attack");
+                return null;
+              }
+              this.authService.saveUUIDToLocalStorage(UUID);
+              console.log("Followed: " + followed)
+              return followed;
             }
           }
           return null
         })
       );
-    })
-    return null
+
   }
 }
