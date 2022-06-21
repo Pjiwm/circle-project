@@ -157,6 +157,10 @@ const handleStream = (username, isLive) => {
     });
     getLatestDateFromDirectory(username, (error, result) => {
       userIsLive(result.path, true);
+
+      // serve streams
+      logger.log(`Serving: ${result.path}`);
+      app.use(`/${username}-streams`, express.static(`${result.path}`));
     });
   }
   if (isLive === false) {
