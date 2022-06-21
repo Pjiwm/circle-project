@@ -20,16 +20,16 @@
         }
     }
 
-    // .card-border {
-    //     position: absolute;
-    //     width: 100%;
-    //     height: 100%;
-    //     left: 0;
-    //     top: 0;
-    //     border: 3px dashed rgb(76, 76, 76);
-    //     z-index: -1;
-    //     border-radius: 0.25rem;
-    // }
+    .card-border {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        border: 3px dashed rgb(76, 76, 76);
+        z-index: -1;
+        border-radius: 0.25rem;
+    }
 }
 
 .pf-picture {
