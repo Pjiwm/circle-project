@@ -1,8 +1,10 @@
 const express = require("express");
 const router = express.Router();
 
-const { getLivestreamManifestByUsername } = require("../controllers/streams");
+const {
+  getLivestreamManifestSignatureByUsername,
+} = require("../controllers/streams");
 
-router.route("/:username").get(getLivestreamManifestByUsername);
+router.route("/:username").get(getLivestreamManifestSignatureByUsername);
 
 module.exports = router;
