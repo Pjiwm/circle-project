@@ -7,6 +7,7 @@ const PersonSchema = new Schema<IPerson>({
     type: String,
     max: 120,
     required: [true, "Name is required"],
+    unique: true
   },
   publicKey: {
     type: String,
@@ -17,7 +18,8 @@ const PersonSchema = new Schema<IPerson>({
     required: [true, "Satochi is required"],
   },
   followed: {
-    type: [RoomModel.schema],
+    type: [Schema.Types.ObjectId],
+    ref: "room",
   },
 });
 

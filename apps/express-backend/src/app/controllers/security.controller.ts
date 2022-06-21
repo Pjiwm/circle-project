@@ -2,6 +2,7 @@ import { RsaService } from "../../../../../libs/keyUtils";
 const rsaService = new RsaService();
 import { PersonModel } from "../../schemas/person.model";
 import { Person } from "../../../../../libs/models";
+import { PRIVATE_SERVER_KEY } from "../../../../../libs/key";
 
 export class SecurityController {
   /**
@@ -10,8 +11,10 @@ export class SecurityController {
    */
   createKeys = async function (req, res) {
     const keys = rsaService.keyGen();
-    res.status(201).send({ PrivateKey: keys[1], PublicKey: keys[0] });
+    res.status(201).send({ privateKey: keys[1], publicKey: keys[0] });
   };
+
+  
   login = async function (req, res, next) {
     try {
       const personPromise: Person = await PersonModel.findOne({
@@ -19,12 +22,24 @@ export class SecurityController {
       }).exec();
 
       // Convert promise to object
-      const person: Person = new Person(personPromise._id, personPromise.name, personPromise.publicKey, personPromise.satochi, personPromise.followed);
+      const person: Person = new Person(
+        personPromise._id,
+        personPromise.name,
+        personPromise.publicKey,
+        personPromise.satochi,
+        personPromise.followed
+      );
 
-      const decryptedMessage = rsaService.decrypt(req.body.signature,person.publicKey,{name: req.body.name});;
+      const decryptedMessage = rsaService.decrypt(
+        req.body.signature,
+        person.publicKey,
+        { name: req.body.name }
+      );
       if (decryptedMessage) {
-        const signature = rsaService.encrypt({person: person},process.env.PRIVATEKEY_SERVER);
+        const signature = rsaService.encrypt({ person: person }, PRIVATE_SERVER_KEY);
         res.status(200).send({ signature: signature, person: person });
+      } else {
+        res.status(418).send({ Message: "Object not integer"});
       }
     } catch (err) {
       next(err);

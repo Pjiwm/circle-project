@@ -3,11 +3,13 @@ const routes = router.Router();
 import { CrudController } from "../controllers/crud.controller";
 import { RoomModel } from "../../schemas/room.model";
 import { ChatController } from "../controllers/chat.controller";
+import { RoomController } from "../controllers/room.controller";
 const controller: CrudController = new CrudController(RoomModel);
 const chatcontroller = new ChatController();
-routes.get("", controller.getAll);
-routes.get("/:id", controller.getById);
-routes.put("/:id", controller.update);
+const roomcontroller = new RoomController();
+routes.get("", roomcontroller.getAll);
+routes.get("/:id", roomcontroller.getById);
+routes.put("/:id", roomcontroller.update);
 routes.get("/:id/chats", chatcontroller.getChats);
 
 //development

@@ -11,12 +11,14 @@ services:
       - .env
     environment:
       MONGO_DB_CONNECTION: ${MONGO_DB_CONNECTION}
+      PRIVATEKEY_SERVER: ${PRIVATEKEY_SERVER}
+      PUBLICKEY_SERVER: ${PUBLICKEY_SERVER}
     depends_on:
       - mongo
   mongo:
     container_name: circle_mongo
     image: mongo
     ports:
-      - 27017:2707
+      - 27017:27017
     volumes:
       - ./data/db:/data/db

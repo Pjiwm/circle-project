@@ -62,4 +62,16 @@ export class RsaService {
     const privateKey = key.exportKey("pkcs8-private-pem");
     return [publicKey, privateKey];
   }
+
+  isValidPrivateKey(privateKey: string) : boolean {
+    let key = new NodeRSA();
+    key = key.importKey(privateKey, "private");
+    return key.isPrivate();
+  }
+
+  isValidPublicKey(publicKey: string) : boolean {
+    let key = new NodeRSA();
+    key = key.importKey(publicKey, "public");
+    return key.isPublic();
+  }
 }

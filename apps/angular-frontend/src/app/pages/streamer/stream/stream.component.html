@@ -1,20 +1,30 @@
-<div class="row g-0 rowdiv">
-  <div class="text-center col-sm-9 camera-div" #parentCam>
-    <div class="cam" *ngIf="WebcamOn">
-      <webcam [width]="webcam_width"> </webcam>
-    </div>
-
-    <div class="cam" *ngIf="!WebcamOn">
-      <p class="text-light">You are currently offline</p>
-    </div>    
+<!-- <button class="btn btn-info btn-hover-transition mb-2 fw-bold" (click)="previousPage()" title="Vorige pagina"><fa-icon [icon]="FaArrowLeft" class="icon align-middle"></fa-icon> Terug</button> -->
+<!-- <button class="btn btn-info btn-hover-transition mb-2 fw-bold" (click)="previousPage()" title="Vorige pagina"><fa-icon [icon]="FaArrowLeft" class="icon align-middle"></fa-icon> <fa-icon [icon]="FaDoorOpen" class="icon align-middle"></fa-icon> </button> -->
+<p class="text-light p-2 bg-dark rounded w-100">
+  <button class="btn btn-secondary btn-hover-transition fw-bold" (click)="previousPage()" title="Vorige pagina"><fa-icon [icon]="FaArrowLeft" class="icon align-middle"></fa-icon> <fa-icon [icon]="FaDoorOpen" class="icon align-middle"></fa-icon> </button>
+  <span class="ms-2">Streamer {{room.streamer.name}}</span>
+</p>
+<div class="row g-0 h-100 stream-chat-window">
+  <div class="text-center col-sm-9 stream-container">
+    <video id="video-1" class="video-frame-2 w-100 h-100 align-middle" controls autoplay>
+      <source src="{{videoSource1}}" type="video/mp4">
+    </video>
   </div>
   <div class="col-sm-3">
     <the-circle-chat></the-circle-chat>
   </div>
 </div>
 
-<footer id="footer">
-    <div class="text-center">
+<p class="my-2 p-2 bg-light rounded border-4">{{room.title}}</p>
+<div class="d-inline-block flex-grow-1 ms-2">
+  <p class="sidenav-text fw-bold m-0">{{ room.streamer.name }}</p>
+  <fa-icon [icon]="FaEye" class="icon fa-lg pe-2"></fa-icon>
+  <p class="sidenav-text fw-bold d-inline-block m-0">{{ room.viewers }}</p>
+</div>
+<!-- *ngIf="displayWelcomeMessage"  -->
+
+<!-- <footer id="footer">
+  <div class="text-center">
     <button class="btn btn-streaming" (click)="Start()">
       <fa-icon [icon]="FaPlay" class="icon fa-lg pe-2"></fa-icon> Start Your
       Live stream
@@ -28,7 +38,5 @@
       <fa-icon [icon]="FaPause" class="icon fa-lg pe-2"></fa-icon> Pause your
       Live stream
     </button>
-
-</div>
-</footer>
-
+  </div>
+</footer> -->

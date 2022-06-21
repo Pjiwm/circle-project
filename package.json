@@ -43,14 +43,15 @@
     "jsencrypt": "^3.2.1",
     "mongoose": "^6.3.8",
     "ngx-webcam": "^0.4.1",
-    "node-media-server": "^2.3.12",
     "node-rsa": "^1.1.1",
     "object-hash": "^3.0.0",
     "os-browserify": "^0.3.0",
-    "patch-package": "^6.4.7",
     "process": "^0.11.10",
+    "node-media-server": "^2.3.12",
+    "patch-package": "^6.4.7",
     "rxjs": "~7.4.0",
     "sha1": "^1.1.1",
+    "tracer": "^1.1.5",
     "stream": "^0.0.2",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
@@ -99,6 +100,7 @@
     "prettier": "^2.5.1",
     "ts-jest": "27.1.4",
     "ts-node": "9.1.1",
+    "typedoc": "^0.22.17",
     "typescript": "~4.4.0"
   }
 }

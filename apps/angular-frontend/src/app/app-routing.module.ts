@@ -9,8 +9,10 @@ import { StreamListComponent } from "./pages/stream-list/stream-list.component";
 const routes: Routes = [
   { path: "login", pathMatch: "full", component: LoginComponent },
   { path: "browse", pathMatch: "full", component: StreamListComponent, canActivate: [LoggedInAuthGuard], },
-  { path: "following", pathMatch: "full", component: StreamListComponent, canActivate: [LoggedInAuthGuard], },
-  { path: "streamer", pathMatch: "full", component: StreamComponent, canActivate: [LoggedInAuthGuard], },
+  {
+    path: "following", pathMatch: "full", component: StreamListComponent, canActivate: [LoggedInAuthGuard]
+  },
+  { path: "room/:id", pathMatch: "full", component: StreamComponent, canActivate: [LoggedInAuthGuard], },
   { path: "**", component: PageNotFoundComponent },
 ];
 
@@ -18,4 +20,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
