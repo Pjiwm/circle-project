@@ -1,4 +1,4 @@
-import * as hash from "object-hash";
+import * as hash from "sha1";
 import * as NodeRSA from "node-rsa";
 import { v4 as uuidv4 } from "uuid";
 
@@ -19,25 +19,29 @@ export class RsaService {
    * @param {string} object for hash compare
    * @returns {string} returns digital signature
    */
-  encrypt(object: object, privateKey: string): string {
+  encrypt(object: object | string, privateKey: string): string {
     let encrypt = new NodeRSA();
-    encrypt = encrypt.importKey(privateKey, "private");
-    const unsigned = [hash(object), uuidv4()];
-    return encrypt.encryptPrivate(unsigned, "base64");
+    encrypt = encrypt.importKey(privateKey, "pkcs8-private-pem");
+    console.log('hash: ' + hash(object))
+    const unsigned = JSON.stringify([hash(object), uuidv4()]);
+    return encrypt.encryptPrivate(Buffer.from(unsigned,"utf-8"), "base64","utf8");
+  }
+
+  encryptJson(object: object, privateKey: string): string {
+    return this.encrypt(JSON.stringify(object),privateKey);
   }
 
   /**
    * Decrypts cypher with publickey, returns uuid if publickey is valid.
-   * @param {string} cypher, encrypted hash
+   * @param {object} cypher, encrypted hash
    * @param {string} publicKey
    * @param {string} object for hash compare
    * @returns {string | boolean} returns UUID if decrypting with public key is valid, else return false
    */
-  decrypt(cypher: string, publicKey: string, object: object): string | boolean {
+  decrypt(cypher: string | Buffer, publicKey: string, object: object): string | boolean {
     let decrypt = new NodeRSA();
-    decrypt = decrypt.importKey(publicKey, "public");
+    decrypt = decrypt.importKey(publicKey, "pkcs8-public-pem");
     const objectHash = hash(object);
-
     let [decryptedHash, UUID] = decrypt.decryptPublic(cypher, "json");
     const isValid = objectHash === decryptedHash;
     if (isValid) {
@@ -53,9 +57,9 @@ export class RsaService {
    * @returns {Array} contains public key on 0 and private key on 1
    */
   keyGen(): [string, string] {
-    const key = new NodeRSA({ b: 1024 });
-    const publicKey = key.exportKey("public");
-    const privateKey = key.exportKey("private");
+    const key = new NodeRSA({b: 1024});
+    const publicKey = key.exportKey("pkcs8-public-pem");
+    const privateKey = key.exportKey("pkcs8-private-pem");
     return [publicKey, privateKey];
   }
 }
