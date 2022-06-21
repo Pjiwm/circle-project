@@ -4,7 +4,7 @@ import { PersonService } from "../../services/person.service";
 import { RoomService } from "../../services/room.service";
 import { Person, Room } from "../../../../../../libs/models";
 import { Location } from '@angular/common'
-import { faPause, faPlay, faStop, faArrowRight, faArrowRightLong, faDoorOpen } from "@fortawesome/free-solid-svg-icons";
+import { faPlay, faStop, faArrowRightLong, faDoorOpen } from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: "the-circle-stream-list",
@@ -20,7 +20,6 @@ export class StreamListComponent implements OnInit {
   persons: Person[];
   rooms: Room[] = [];
   FaPlay = faPlay;
-  FaPause = faPause;
   FaStop = faStop;
   FaArrowRight = faArrowRightLong;
   FaDoorOpen = faDoorOpen;
@@ -73,22 +72,26 @@ export class StreamListComponent implements OnInit {
       console.log("mouseOnHover for video:", video);
       console.log(`mouseOnHover for avatar: ${video}-avatar`)
       console.log(this.playingStreamArray)
-      this.hoveredVideo = video;
+
+      setTimeout(() => {
+        this.hoveredVideo = video;
+      }, 300);
 
       setTimeout(() => {
         let vid = document.getElementById(video) as HTMLVideoElement;
         console.log("Element in hover play preview?", vid);
-        vid.muted = true;
-        vid.play();
-      }, 300);
+        if (vid != null && !this.playingStreamArray.includes(video)) {
+          vid.muted = true;
+          vid.play();
+        }
+      }, 600);
 
       setTimeout(() => {
         let vid = document.getElementById(video) as HTMLVideoElement;
         console.log("Element in hover 7 sec preview?", vid);
         if (vid != null && !this.playingStreamArray.includes(video)) {
-          this.playingStreamArray.includes(video)
-            vid.pause();
-            this.hoveredVideo = "";
+          vid.pause();
+          this.hoveredVideo = "";
         }
       }, 7000);
     }
@@ -99,10 +102,11 @@ export class StreamListComponent implements OnInit {
       console.log("mouseOnLeave for video:", video);
       console.log(`mouseOnLeave for avatar: ${video}-avatar`);
       console.log(this.playingStreamArray)
-
-      let vid = document.getElementById(video) as HTMLVideoElement
-      vid.pause();
-      this.hoveredVideo = "";
+      setTimeout(() => {
+        let vid = document.getElementById(video) as HTMLVideoElement
+        vid.pause();
+        this.hoveredVideo = "";
+      }, 330);
     }
   }
 
@@ -140,4 +144,16 @@ export class StreamListComponent implements OnInit {
     this.location.back();
   }
 
+  getLink(isLive: Boolean, roomId: string): string {
+    if (isLive) {
+      console.log('aaaaaaaaaaa', ".room/" + roomId)
+      return "/room/" + roomId
+    }
+    
+    if(this.router.url == '/following') {
+      return "/following";
+    } else {
+      return "/browse";
+    }
+  }
 }
