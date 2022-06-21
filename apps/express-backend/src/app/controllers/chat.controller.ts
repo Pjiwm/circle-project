@@ -35,6 +35,7 @@ export class ChatController {
 
         const decryptedMessage = rsaService.decrypt(body.signature,person.publicKey,{body});;
         if (decryptedMessage) {
+          
           const chat = new ChatModel(body);
           await chat.save();
           const signature = rsaService.encrypt({ _id: chat.id },PRIVATE_SERVER_KEY);
