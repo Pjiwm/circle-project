@@ -1,4 +1,5 @@
 import { RsaService } from "./keyUtils";
+import {PUBLIC_SERVER_KEY,PRIVATE_SERVER_KEY} from "./key"
 
 export function demo() {
     let rsaService : RsaService = new RsaService();
@@ -15,4 +16,12 @@ export function demo() {
     console.log(encryptTest);
     console.log("encrypted by nodersa: ", encrypted);
     console.log("encrypted: ", rsaService.decrypt(Buffer.from(encrypted,'base64'),publicKey,jsonObject));
+}
+export function serverEncryptTest(){
+    let privateKey = PRIVATE_SERVER_KEY
+    let publicKey = PUBLIC_SERVER_KEY
+    let rsaService : RsaService = new RsaService();
+    const encrypted = rsaService.encrypt({test:"hello"},privateKey);
+    const decrypted = rsaService.decrypt(encrypted,publicKey,{test:"hello"});
+    console.log(decrypted)
 }

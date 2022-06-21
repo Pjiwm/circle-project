@@ -65,13 +65,13 @@ export class RsaService {
 
   isValidPrivateKey(privateKey: string) : boolean {
     let key = new NodeRSA();
-    key = key.importKey(privateKey, "private");
+    key = key.importKey(privateKey, "pkcs8-private-pem");
     return key.isPrivate();
   }
 
   isValidPublicKey(publicKey: string) : boolean {
     let key = new NodeRSA();
-    key = key.importKey(publicKey, "public");
+    key = key.importKey(publicKey, "pkcs8-public-pem");
     return key.isPublic();
   }
 }
