@@ -3,24 +3,35 @@
         text-decoration: none;
         color: #000;
     }
+
     .card {
         position: relative;
-        transition: 0.25s ease;
+        transition: 0.3s ease;
+
         &:hover {
             transform: translate(-10px, -10px);
+            box-shadow:
+                0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+                0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+                0 12.5px 10px rgba(0, 0, 0, 0.06),
+                0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+                0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+                0 100px 80px rgba(0, 0, 0, 0.12) // background-color: #ffffff;
         }
     }
-    .card-border {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        left: 0;
-        top: 0;
-        border: 3px dashed rgb(76, 76, 76);
-        z-index: -1;
-        border-radius: 0.25rem;
-    }
+
+    // .card-border {
+    //     position: absolute;
+    //     width: 100%;
+    //     height: 100%;
+    //     left: 0;
+    //     top: 0;
+    //     border: 3px dashed rgb(76, 76, 76);
+    //     z-index: -1;
+    //     border-radius: 0.25rem;
+    // }
 }
+
 .pf-picture {
     width: 150px;
     height: 150px;
@@ -32,15 +43,17 @@
 
 .viewer-count {
     position: absolute;
-    background-color: rgba(0,0,0,0.7);
+    background-color: rgba(0, 0, 0, 0.7);
     bottom: 10px;
     left: 10px;
     color: #fff;
     border-radius: 3px;
+
     span {
         padding: 3px 5px;
     }
-    .test{
+
+    .test {
         margin: 100px;
     }
 }
@@ -55,8 +68,10 @@
     border-radius: 3px;
     font-weight: bold;
     text-transform: uppercase;
+
     &.active {
-        background-color: #C6002A;;
+        background-color: #C6002A;
+        ;
     }
 }
 
@@ -80,7 +95,7 @@
 
 .video-frame-2 {
     width: 100%;
-    height: 300px;
+    height: 290.5px;
     // height: 100%;
     background-color: #000;
     border-radius: 0.25rem;
