@@ -62,6 +62,7 @@ export class AuthService {
         .pipe(
           map((pakage) => {
             const signatureP = pakage.signature;
+            console.log(signatureP)
             const person = pakage.person;
             if (signatureP && person) {
               const decrypt = keyutil.decrypt(

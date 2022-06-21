@@ -11,10 +11,7 @@ export class SecurityController {
    */
   createKeys = async function (req, res) {
     const keys = rsaService.keyGen();
-    const privatekey = JSON.stringify(keys[1]);
-    const publickey = JSON.stringify(keys[0]);
-    console.log(keys);
-    res.status(201).send({ privateKey: privatekey, publicKey: publickey });
+    res.status(201).send({ privateKey: keys[1], publicKey: keys[0] });
   };
 
   
