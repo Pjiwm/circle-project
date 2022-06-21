@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import * as autoPopulate from "mongoose-autopopulate";
 import { IPerson } from "../../../../libs/interfaces";
 import { RoomModel } from "./room.model";
 
@@ -7,7 +8,7 @@ const PersonSchema = new Schema<IPerson>({
     type: String,
     max: 120,
     required: [true, "Name is required"],
-    unique: true
+    unique: true,
   },
   publicKey: {
     type: String,
@@ -20,7 +21,11 @@ const PersonSchema = new Schema<IPerson>({
   followed: {
     type: [Schema.Types.ObjectId],
     ref: "room",
+    autopopulate: true
   },
 });
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+PersonSchema.plugin(require("mongoose-autopopulate"));
 
 export const PersonModel = model<IPerson>("person", PersonSchema);

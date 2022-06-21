@@ -1,4 +1,6 @@
 import { RsaService } from "../../../../../libs/keyUtils";
+import { UUIDHelper } from "../helpers/uuids";
+const uuidHelper = new UUIDHelper();
 const rsaService = new RsaService();
 import { PRIVATE_SERVER_KEY } from "./../../../../../libs/key"; 
 import { RoomModel } from "../../schemas/room.model";
@@ -37,7 +39,8 @@ export class RoomController {
           const person: Person = new Person(personPromise._id, personPromise.name, personPromise.publicKey, personPromise.satochi, personPromise.followed);
   
           const decryptedMessage = rsaService.decrypt(body.signature,person.publicKey,{room : body.room});;
-          if (decryptedMessage) {
+          const uuidCheck = await uuidHelper.check(decryptedMessage);
+          if (decryptedMessage && uuidCheck) {
             await RoomModel.findByIdAndUpdate({ _id: params.id }, body.room);
             const signature = rsaService.encrypt({ room: body.room },PRIVATE_SERVER_KEY);
             res.status(200).send({ signature: signature, room: body.room });
