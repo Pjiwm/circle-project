@@ -1,5 +1,7 @@
 const logger = require("tracer").console();
-const fs = require("fs");
+const {
+  getLatestDateFromDirectory,
+} = require("../../../../libs/get-latest-date");
 
 /**
  * Get the manifest of the livestream by username of the transparent person
