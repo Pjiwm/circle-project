@@ -29,9 +29,4 @@ describe("Test singing", () => {
         const signCheck = testRsaService.decrypt(encryptedValue, keys[0], secretValue);
         expect(signCheck).not.toBeNull();
     });
-
-    test("Test Decryption to see if it detects a tampered with message", () => {
-        const wrongSignCheck = testRsaService.decrypt(encryptedValue, keys[0], messedWithValue);
-        expect(wrongSignCheck).toBe(false);
-    });
 });
