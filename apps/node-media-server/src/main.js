@@ -6,17 +6,13 @@ const cors = require("cors");
 // routes
 const streamsRouter = require("./routes/streams");
 
-// middleware
-const notFoundMiddleware = require("./middleware/not-found");
-const errorMiddleware = require("./middleware/error-handler");
-
 // ffmpeg
 const ffmpeg = require("fluent-ffmpeg");
 const fs = require("fs");
 
 // misc
 const logger = require("tracer").console();
-const { getLatestDateFromDirectory } = require("./utils/get-latest-date");
+const { getLatestDateFromDirectory } = require("../../../libs/get-latest-date");
 
 // global declarations
 const nmsPort = process.env.NMS_PORT;
@@ -25,12 +21,13 @@ const hlsPort = process.env.HLS_PORT;
 app.use(cors());
 
 // all requests go through here first
-app.get("*", (req, res, next) => {
-  const reqMethod = req.method;
-  const reqUrl = req.url;
-  logger.log(`${reqMethod} request at ${reqUrl}`);
-  next();
-});
+// disabled because it clutters the logs
+// app.get("*", (req, res, next) => {
+//   const reqMethod = req.method;
+//   const reqUrl = req.url;
+//   logger.log(`${reqMethod} request at ${reqUrl}`);
+//   next();
+// });
 
 app.get("/", (req, res) => {
   res.send("You've reached the media backend");
@@ -38,10 +35,6 @@ app.get("/", (req, res) => {
 
 // define routes
 app.use("/api/v1/streams", streamsRouter);
-
-// define middleware
-app.use(notFoundMiddleware);
-app.use(errorMiddleware);
 
 // TODO make express able to serve archived content based on url
 // TODO make /streams/${username} default to the currently available LIVEstream (if not live then get error saying person is not livestreaming)
