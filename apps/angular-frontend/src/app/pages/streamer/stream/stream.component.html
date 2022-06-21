@@ -2,7 +2,7 @@
 <!-- <button class="btn btn-info btn-hover-transition mb-2 fw-bold" (click)="previousPage()" title="Vorige pagina"><fa-icon [icon]="FaArrowLeft" class="icon align-middle"></fa-icon> <fa-icon [icon]="FaDoorOpen" class="icon align-middle"></fa-icon> </button> -->
 <p class="text-light p-2 bg-dark rounded w-100">
   <button class="btn btn-secondary btn-hover-transition fw-bold" (click)="previousPage()" title="Vorige pagina"><fa-icon [icon]="FaArrowLeft" class="icon align-middle"></fa-icon> <fa-icon [icon]="FaDoorOpen" class="icon align-middle"></fa-icon> </button>
-  <span class="ms-2">Streamer NAAM HIER</span>
+  <span class="ms-2">Streamer {{room.streamer.name}}</span>
 </p>
 <div class="row g-0 h-100 stream-chat-window">
   <div class="text-center col-sm-9 stream-container">
@@ -13,6 +13,13 @@
   <div class="col-sm-3">
     <the-circle-chat></the-circle-chat>
   </div>
+</div>
+
+<p class="my-2 p-2 bg-light rounded border-4">{{room.title}}</p>
+<div class="d-inline-block flex-grow-1 ms-2">
+  <p class="sidenav-text fw-bold m-0">{{ room.streamer.name }}</p>
+  <fa-icon [icon]="FaEye" class="icon fa-lg pe-2"></fa-icon>
+  <p class="sidenav-text fw-bold d-inline-block m-0">{{ room.viewers }}</p>
 </div>
 <!-- *ngIf="displayWelcomeMessage"  -->
 

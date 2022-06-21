@@ -6,10 +6,12 @@ import {
   ElementRef,
   HostListener
 } from "@angular/core";
-import { WebcamImage } from "ngx-webcam";
+import { ActivatedRoute } from '@angular/router';
 import { Subject } from "rxjs";
+import { Room } from "../../../../../../../libs/models";
 import { RoomService } from "../../../services/room.service";
-import { faPause, faPlay, faStop, faArrowLeft, faArrowLeftLong, faArrowRightLong, faDoorOpen } from "@fortawesome/free-solid-svg-icons";
+import { PersonService } from "../../../services/person.service";
+import { faPause, faPlay, faStop, faArrowLeft, faArrowLeftLong, faDoorOpen, faEye } from "@fortawesome/free-solid-svg-icons";
 import { Location } from '@angular/common'
 
 @Component({
@@ -19,20 +21,21 @@ import { Location } from '@angular/common'
 })
 export class StreamComponent implements OnInit, AfterViewInit {
   @ViewChild("parentCam") parentCam: ElementRef;
+
+  room: Room;
   FaPlay = faPlay;
   FaPause = faPause;
   FaStop = faStop;
   FaArrowLeft = faArrowLeftLong;
-  FaArrowRight = faArrowRightLong;
   FaDoorOpen = faDoorOpen;
+  FaEye = faEye;
   WebcamOn = false;
   screenWidth: any;
   webcam_width = 200;
   measureCam = 100;
   initialized = false;
   displayWelcomeMessage = true;
-  videoSource1 = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'
-  ;
+  videoSource1 = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
   @HostListener("window:resize", ["$event"])
   getScreenSize(event?) {
     if (this.initialized) {
@@ -46,19 +49,28 @@ export class StreamComponent implements OnInit, AfterViewInit {
     }
   }
 
-  public webcamImage: WebcamImage | null = null;
   private trigger: Subject<void> = new Subject<void>();
 
-  constructor(private roomService: RoomService,
+  constructor(private route: ActivatedRoute, private roomService: RoomService, private personService: PersonService,
     private location: Location) {
     this.getScreenSize();
   }
 
   ngOnInit(): void {
-    this.WebcamOn = false;
-    setTimeout(() => {
-      this.displayWelcomeMessage = false;
-    }, 4000);
+    this.route.paramMap.subscribe((params) => {
+      console.log('Room with ID:', params.get('id'));
+      this.roomService.getById(params.get('id')).subscribe((room) => {
+        console.log('Room:', room);
+        this.room = room;
+        this.personService.getById(room.streamer as unknown as string).subscribe((person) => {
+          console.log('Streamer with ID:', person._id);
+          this.room.streamer = person;
+        })
+      });
+    });
+    // setTimeout(() => {
+    //   this.displayWelcomeMessage = false;
+    // }, 4000);
   }
 
   previousPage() {
