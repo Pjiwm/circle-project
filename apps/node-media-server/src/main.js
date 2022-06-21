@@ -13,6 +13,7 @@ const fs = require("fs");
 // misc
 const logger = require("tracer").console();
 const { getLatestDateFromDirectory } = require("../../../libs/get-latest-date");
+const mongoDB = require("./db-connection");
 
 // global declarations
 const nmsPort = process.env.NMS_PORT;
@@ -38,11 +39,21 @@ app.use("/api/v1/streams", streamsRouter);
 
 // TODO make express able to serve archived content based on url
 // TODO make /streams/${username} default to the currently available LIVEstream (if not live then get error saying person is not livestreaming)
-
 // TODO implement https://stackoverflow.com/questions/21878178/hls-streaming-using-node-js
-app.listen(hlsPort, () => {
-  logger.log(`Server listening on ${hlsPort}`);
-});
+
+const start = async () => {
+  // connectDB
+  try {
+    await mongoDB();
+    app.listen(hlsPort, () => {
+      logger.log(`Server listening on ${hlsPort}`);
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+start();
 
 // overkoepelend idee voor rtmp stream bestand afhandeling
 // 1. Maak de root folder voor ffmpeg input
