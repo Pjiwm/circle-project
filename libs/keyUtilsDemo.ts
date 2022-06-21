@@ -25,3 +25,13 @@ export function serverEncryptTest(){
     const decrypted = rsaService.decrypt(encrypted,publicKey,{test:"hello"});
     console.log(decrypted)
 }
+//
+/**
+   * @description Generates keys and puts them in the console. Easiest way to use this is to put it on the top of ngOnInit in login.component.ts: import { keyGenLog } from '../../../../../../libs/keyUtilsDemo';
+   */
+export function keyGenLog(){
+    let rsaService : RsaService = new RsaService();
+    const [publicKey,privateKey] = rsaService.keyGen();
+    console.log(publicKey);
+    console.log(privateKey);
+}
