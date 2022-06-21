@@ -24,6 +24,7 @@ export class RoomService {
   constructor(public http: HttpClient, public authService:AuthService ) { }
 
   getById(id:string): Observable<Room> {
+    const keyutil = new RsaService();
     return this.http
       .get<any>(`${this.baseUrl}/rooms/${id}`, { headers: this.headers })
       .pipe(
@@ -31,7 +32,20 @@ export class RoomService {
           const signature = response.signature;
           const room = response.room;
           if(signature && room) {
-
+            const decrypt = keyutil.decrypt(
+              signature.toString(),
+              PUBLIC_SERVER_KEY,
+              { room: room }
+            );
+            if (decrypt) {
+              let UUID: string = decrypt as string;
+              if (this.authService.isReplayAttack(UUID)) {
+                console.log("this is a replay attack");
+                return null;
+              }
+              this.authService.saveUUIDToLocalStorage(UUID);
+              return room
+            }
           }
           return response;
         })
@@ -64,6 +78,7 @@ export class RoomService {
                 return rooms
               }
             } 
+            return null;
           }
         )
       );

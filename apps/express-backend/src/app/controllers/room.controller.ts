@@ -10,8 +10,8 @@ export class RoomController {
         try {
           const roomPromise = await RoomModel.findById(params.id);
           const room = new Room(roomPromise._id,roomPromise.streamer,roomPromise.title,roomPromise.isLive,roomPromise.viewers);
-          const signature = rsaService.encrypt({ room: room }, PRIVATE_SERVER_KEY);
-          res.status(201).send({ signature: signature, room: room });
+          const signature = rsaService.encrypt({ room: room },PRIVATE_SERVER_KEY);
+          res.status(200).send({ signature: signature, room: room });
         } catch (err) {
           next(err);
         }
@@ -25,7 +25,7 @@ export class RoomController {
               rooms.push(new Room(roomPromise._id,roomPromise.streamer,roomPromise.title,roomPromise.isLive,roomPromise.viewers));
           };
           const signature = rsaService.encrypt({ rooms: rooms}, PRIVATE_SERVER_KEY);
-          res.status(201).send({ signature: signature, rooms: rooms });
+          res.status(200).send({ signature: signature, rooms: rooms });
         } catch (err) {
           next(err);
         }
@@ -33,32 +33,19 @@ export class RoomController {
 
       update = async ({ body, params }: any, res, next): Promise<void> => {
         try {
-
-
-
-          // const personPromise = await PersonModel.findById(body.person._id);
-          // const person: Person = new Person(personPromise._id, personPromise.name, personPromise.publicKey, personPromise.satochi, personPromise.followed);
+          const personPromise = await PersonModel.findById(body.streamer._id);
+          const person: Person = new Person(personPromise._id, personPromise.name, personPromise.publicKey, personPromise.satochi, personPromise.followed);
   
-          // const decryptedMessage = rsaService.decrypt(body.signature,person.publicKey,{body});;
-          // if (decryptedMessage) {
-          //   const chat = new ChatModel(body);
-          //   await chat.save();
-          //   const signature = rsaService.encrypt({ _id: chat.id },process.env.PRIVATEKEY_SERVER);
-          //   res.status(201).send({ signature: signature, _id: chat.id });
-          // } else {
-          //   res.status(418).send({ Message: "Object not integer"});
-          // }
-
-
-
-          await RoomModel.findByIdAndUpdate({ _id: params.id }, body);
-          res.send({
-            message: "updated",
-            object: await RoomModel.findById(params.id),
-          });
+          const decryptedMessage = rsaService.decrypt(body.signature,person.publicKey,{room : body.room});;
+          if (decryptedMessage) {
+            await RoomModel.findByIdAndUpdate({ _id: params.id }, body.room);
+            const signature = rsaService.encrypt({ room: body.room },PRIVATE_SERVER_KEY);
+            res.status(200).send({ signature: signature, room: body.room });
+          } else {
+            res.status(418).send({ Message: "Object not integer"});
+          }
         } catch (err) {
           next(err);
         }
       };
-
 }

@@ -1,6 +1,6 @@
 import * as router from "express";
 const routes = router.Router();
-import { SecurityController } from "../controllers/security.conrtoller";
+import { SecurityController } from "../controllers/security.controller";
 const securitycontroller = new SecurityController();
 
 routes.post("/keys", securitycontroller.createKeys);

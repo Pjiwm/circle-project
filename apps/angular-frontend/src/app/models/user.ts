@@ -1,13 +1,13 @@
 export class User {
-  id: String;
+  _id: String;
   name: String;
-  PrivateKey: String;
-  PublicKey: String;
+  privateKey: String;
+  publicKey: String;
 
   constructor(id: String, name: String, publicKey: String, privateKey: String) {
-    this.id = id;
+    this._id = id;
     this.name = name;
-    this.PrivateKey = privateKey;
-    this.PublicKey = publicKey;
+    this.privateKey = privateKey;
+    this.publicKey = publicKey;
   }
 }

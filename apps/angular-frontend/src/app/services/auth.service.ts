@@ -76,10 +76,10 @@ export class AuthService {
                   return null;
                 }
                 const user: User = {
-                  id: person._id,
+                  _id: person._id,
                   name: person.name,
-                  PrivateKey: privateKey,
-                  PublicKey: person.publicKey,
+                  privateKey: privateKey,
+                  publicKey: person.publicKey,
                 };
                 this.saveUUIDToLocalStorage(UUID);
                 this.saveUserToLocalStorage(user);

@@ -64,6 +64,7 @@ export class StreamListComponent implements OnInit {
     this.PersonService.getById(name).subscribe((person) => {
       room.streamer = person;
     })
+    console.log(room)
     return room
   }
 
