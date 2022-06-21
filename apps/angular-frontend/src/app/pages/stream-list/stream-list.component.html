@@ -31,7 +31,6 @@
                   <source src="{{videoSource1}}" type="video/mp4">
                 </video>
               </div>
-
             </div>
 
             <div *ngIf="room.isLive" class="viewer-count">
@@ -53,7 +52,7 @@
           <fa-icon *ngIf="playingStreamArray.includes(room._id)" [icon]="FaStop" class="icon"></fa-icon> 
         </button>
         <!-- <button class="btn btn-info btn-hover-transition w-50 fw-bold" [routerLink]="['/room', room._id]" [disabled]="!room.isLive" title="Bekijk room van {{room.streamer.name}}">Room <fa-icon [icon]="FaArrowRight" class="icon align-middle"></fa-icon></button></div> -->
-        <button class="btn btn-info btn-hover-transition w-50 fw-bold" [routerLink]="['/room', room._id]" [disabled]="!room.isLive" title="Bekijk room van {{room.streamer.name}}"><fa-icon [icon]="FaArrowRight" class="icon align-middle"></fa-icon><fa-icon [icon]="FaDoorOpen" class="icon align-middle"></fa-icon></button></div>
+        <button class="btn btn-secondary btn-hover-transition w-50 fw-bold text-black" [routerLink]="['/room', room._id]" [disabled]="!room.isLive" title="Bekijk room van {{room.streamer.name}}"><fa-icon [icon]="FaArrowRight" class="icon align-middle"></fa-icon><fa-icon [icon]="FaDoorOpen" class="icon align-middle"></fa-icon></button></div>
       </div>
       <!-- <div class="d-block card-border"></div> -->
     </div>

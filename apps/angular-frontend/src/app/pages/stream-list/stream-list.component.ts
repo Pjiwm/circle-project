@@ -36,7 +36,7 @@ export class StreamListComponent implements OnInit {
       // Browse page
       this.isBrowsePage = true;
       this.RoomService.getAll().subscribe((rooms) => {
-        if (rooms.length != 0) {
+        if (rooms.length != null) {
           for (let room of rooms) {
             this.getStreamer(room);
           }
@@ -47,8 +47,7 @@ export class StreamListComponent implements OnInit {
       // Followed page
       this.isBrowsePage = false;
       this.PersonService.getFollowed().subscribe((rooms) => {
-        console.log("Rooms:" + rooms)
-        if (rooms.length != 0) {
+        if (rooms.length != null) {
           for (let room of rooms) {
             this.getStreamer(room)
           }
@@ -141,42 +140,4 @@ export class StreamListComponent implements OnInit {
     this.location.back();
   }
 
-  // startStopVideo(video: string): void {
-  //   // this.videoClicked = true;
-  //   if (!this.isPlaying) {
-  //     console.log(`Video ${video} played`)
-  //     this.isVideo = true;
-  //     this.isPlaying = true;
-  //     setTimeout(() => {
-  //       this.videoPlayer.nativeElement.play();
-  //     }, 500);
-  //   } else {
-  //     console.log('Video paused')
-  //     // const vid = document.getElementById("myVideo") as HTMLVideoElement
-  //     // vid.pause();
-  //     // this.videoPlayer.nativeElement.currentTime = 0;
-  //     this.videoPlayer.nativeElement.pause();
-  //     this.isVideo = false;
-  //     this.isPlaying = false;
-  //   }
-  // }
-
-  // stopVideo(): void {
-  //   this.videoClicked = false;
-  //   this.isVideo = false;
-  //   this.videoPlayer.nativeElement.pause();
-  //   // this.videoPlayer.nativeElement.
-  // }
-
-  // makeBig() {
-  //   this.videoPlayer.nativeElement.width = 620;
-  // }
-
-  // makeSmall() {
-  //   this.videoPlayer.nativeElement.width = 380;
-  // }
-
-  // makeNormal() {
-  //   this.videoPlayer.nativeElement.width = 480;
-  // }
 }
