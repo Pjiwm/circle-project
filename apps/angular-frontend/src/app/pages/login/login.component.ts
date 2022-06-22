@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Person } from "../../../../../../libs/models"
 import { AuthService } from '../../services/auth.service';
+import { keyGenLog, serverEncryptTest } from '../../../../../../libs/keyUtilsDemo';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    
+    serverEncryptTest();
     this.initForm();
     this.authService.getPersonFromLocalStorage().subscribe((user: Person) => {
       if (user) {
