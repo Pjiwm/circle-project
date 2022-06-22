@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
+    
     this.initForm();
     this.authService.getPersonFromLocalStorage().subscribe((user: Person) => {
       if (user) {

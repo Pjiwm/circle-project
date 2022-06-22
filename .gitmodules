@@ -1,0 +1,3 @@
+[submodule "apps/android-streaming-app"]
+	path = apps/android-streaming-app
+	url = https://github.com/Pjiwm/circle-android

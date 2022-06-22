@@ -5,129 +5,18 @@
   <hr class="m-0 red"/>
   </div>
   <div class="streamer-list">
-    <div class="sidenav-item p-2" title="Bekijk transparante persoon">
-      <a class="d-block" routerLink="following/1" routerLinkActive="active-link">
-        <p class="sidenav-text fw-bold m-0">Mae Holland</p>
-        <fa-icon [icon]="FaEye" class="icon fa-lg pe-2"></fa-icon>
-        <p class="sidenav-text fw-bold d-inline-block m-0">1.000.000</p>
+    <div *ngFor="let room of rooms" class="sidenav-item p-2" title="Bekijk transparante persoon">
+      <a class="d-block" [routerLink]="['/room', room._id]" routerLinkActive="active-link">
+        <img class="streamer-pf d-inline-block" [src]="'https://avatars.dicebear.com/api/adventurer-neutral/' + room.streamer._id + '.svg'" />
+        <div class="d-inline-block flex-grow-1 ms-2">
+          <p class="sidenav-text fw-bold m-0">{{ room.streamer.name }}</p>
+          <fa-icon *ngIf="room.viewers > 0" [icon]="FaEye" class="icon fa-lg pe-2"></fa-icon>
+          <p *ngIf="room.viewers > 0" class="sidenav-text fw-bold d-inline-block m-0">{{ room.viewers }}</p>
+          <p *ngIf="room.viewers == 0" class="sidenav-text fw-bold d-inline-block m-0">Offline</p>
+        </div>
       </a>
     </div>
 
-    <div class="sidenav-item p-2" title="Bekijk transparante persoon">
-      <a class="d-block" routerLink="following/2" routerLinkActive="active-link">
-        <p class="sidenav-text fw-bold m-0">Tom Holland</p>
-        <fa-icon [icon]="FaEye" class="icon fa-lg pe-2"></fa-icon>
-        <p class="sidenav-text fw-bold d-inline-block m-0">964.463</p>
-      </a>
-    </div>
-
-    <div class="sidenav-item p-2" title="Bekijk transparante persoon">
-      <a class="d-block" routerLink="edit" routerLinkActive="active-link">
-        <p class="sidenav-text fw-bold m-0">Dave Holland</p>
-        <fa-icon [icon]="FaEye" class="icon fa-lg pe-2"></fa-icon>
-        <p class="sidenav-text fw-bold d-inline-block m-0">4.000.000</p>
-      </a>
-    </div>
-
-    <div class="sidenav-item p-2" title="Bekijk transparante persoon">
-      <a class="d-block" routerLink="edit" routerLinkActive="active-link">
-        <p class="sidenav-text fw-bold m-0">Willem Holland</p>
-        <fa-icon [icon]="FaEye" class="icon fa-lg pe-2"></fa-icon>
-        <p class="sidenav-text fw-bold d-inline-block m-0">17</p>
-      </a>
-    </div>
-
-    <div class="sidenav-item p-2" title="Bekijk transparante persoon">
-      <a class="d-block" routerLink="edit" routerLinkActive="active-link">
-        <p class="sidenav-text fw-bold m-0">Mae Holland</p>
-        <fa-icon [icon]="FaEye" class="icon fa-lg pe-2"></fa-icon>
-        <p class="sidenav-text fw-bold d-inline-block m-0">1.000.000</p>
-      </a>
-    </div>
-
-    <div class="sidenav-item p-2" title="Bekijk transparante persoon">
-      <a class="d-block" routerLink="edit" routerLinkActive="active-link">
-        <p class="sidenav-text fw-bold m-0">Tom Holland</p>
-        <fa-icon [icon]="FaEye" class="icon fa-lg pe-2"></fa-icon>
-        <p class="sidenav-text fw-bold d-inline-block m-0">964.463</p>
-      </a>
-    </div>
-
-    <div class="sidenav-item p-2" title="Bekijk transparante persoon">
-      <a class="d-block" routerLink="edit" routerLinkActive="active-link">
-        <p class="sidenav-text fw-bold m-0">Dave Holland</p>
-        <fa-icon [icon]="FaEye" class="icon fa-lg pe-2"></fa-icon>
-        <p class="sidenav-text fw-bold d-inline-block m-0">4.000.000</p>
-      </a>
-    </div>
-
-    <div class="sidenav-item p-2" title="Bekijk transparante persoon">
-      <a class="d-block" routerLink="edit" routerLinkActive="active-link">
-        <p class="sidenav-text fw-bold m-0">Willem Holland</p>
-        <fa-icon [icon]="FaEye" class="icon fa-lg pe-2"></fa-icon>
-        <p class="sidenav-text fw-bold d-inline-block m-0">17</p>
-      </a>
-    </div>
-
-    <div class="sidenav-item p-2" title="Bekijk transparante persoon">
-      <a class="d-block" routerLink="edit" routerLinkActive="active-link">
-        <p class="sidenav-text fw-bold m-0">Mae Holland</p>
-        <fa-icon [icon]="FaEye" class="icon fa-lg pe-2"></fa-icon>
-        <p class="sidenav-text fw-bold d-inline-block m-0">1.000.000</p>
-      </a>
-    </div>
-
-    <div class="sidenav-item p-2" title="Bekijk transparante persoon">
-      <a class="d-block" routerLink="edit" routerLinkActive="active-link">
-        <p class="sidenav-text fw-bold m-0">Tom Holland</p>
-        <fa-icon [icon]="FaEye" class="icon fa-lg pe-2"></fa-icon>
-        <p class="sidenav-text fw-bold d-inline-block m-0">964.463</p>
-      </a>
-    </div>
-
-    <div class="sidenav-item p-2" title="Bekijk transparante persoon">
-      <a class="d-block" routerLink="edit" routerLinkActive="active-link">
-        <p class="sidenav-text fw-bold m-0">Dave Holland</p>
-        <fa-icon [icon]="FaEye" class="icon fa-lg pe-2"></fa-icon>
-        <p class="sidenav-text fw-bold d-inline-block m-0">4.000.000</p>
-      </a>
-    </div>
-
-    <div class="sidenav-item p-2" title="Bekijk transparante persoon">
-      <a class="d-block" routerLink="edit" routerLinkActive="active-link">
-        <p class="sidenav-text fw-bold m-0">Willem Holland</p>
-        <fa-icon [icon]="FaEye" class="icon fa-lg pe-2"></fa-icon>
-        <p class="sidenav-text fw-bold d-inline-block m-0">17</p>
-      </a>
-    </div>
-    <div class="sidenav-item p-2" title="Bekijk transparante persoon">
-      <a class="d-block" routerLink="edit" routerLinkActive="active-link">
-        <p class="sidenav-text fw-bold m-0">Dave Holland</p>
-        <fa-icon [icon]="FaEye" class="icon fa-lg pe-2"></fa-icon>
-        <p class="sidenav-text fw-bold d-inline-block m-0">4.000.000</p>
-      </a>
-    </div>
-    <div class="sidenav-item p-2" title="Bekijk transparante persoon">
-      <a class="d-block" routerLink="edit" routerLinkActive="active-link">
-        <p class="sidenav-text fw-bold m-0">Dave Holland</p>
-        <fa-icon [icon]="FaEye" class="icon fa-lg pe-2"></fa-icon>
-        <p class="sidenav-text fw-bold d-inline-block m-0">4.000.000</p>
-      </a>
-    </div>
-    <div class="sidenav-item p-2" title="Bekijk transparante persoon">
-      <a class="d-block" routerLink="edit" routerLinkActive="active-link">
-        <p class="sidenav-text fw-bold m-0">Dave Holland</p>
-        <fa-icon [icon]="FaEye" class="icon fa-lg pe-2"></fa-icon>
-        <p class="sidenav-text fw-bold d-inline-block m-0">4.000.000</p>
-      </a>
-    </div>
-    <div class="sidenav-item p-2" title="Bekijk transparante persoon">
-      <a class="d-block" routerLink="edit" routerLinkActive="active-link">
-        <p class="sidenav-text fw-bold m-0">Dave Holland</p>
-        <fa-icon [icon]="FaEye" class="icon fa-lg pe-2"></fa-icon>
-        <p class="sidenav-text fw-bold d-inline-block m-0">4.000.000</p>
-      </a>
-    </div>
   </div>
 </div>
 

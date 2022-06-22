@@ -1,4 +1,6 @@
 import { RsaService } from "../../../../../libs/keyUtils";
+import { UUIDHelper } from "../helpers/uuids";
+const uuidHelper = new UUIDHelper();
 const rsaService = new RsaService();
 import { PersonModel } from "../../schemas/person.model";
 import { Person, ChatMessage } from "../../../../../libs/models";
@@ -34,7 +36,8 @@ export class ChatController {
         const person: Person = new Person(personPromise._id, personPromise.name, personPromise.publicKey, personPromise.satochi, personPromise.followed);
 
         const decryptedMessage = rsaService.decrypt(body.signature,person.publicKey,{body});;
-        if (decryptedMessage) {
+        const uuidCheck = await uuidHelper.check(decryptedMessage);
+        if (decryptedMessage && uuidCheck) {
           const chat = new ChatModel(body);
           await chat.save();
           const signature = rsaService.encrypt({ _id: chat.id },PRIVATE_SERVER_KEY);

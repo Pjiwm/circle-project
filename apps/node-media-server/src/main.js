@@ -6,30 +6,28 @@ const cors = require("cors");
 // routes
 const streamsRouter = require("./routes/streams");
 
-// middleware
-const notFoundMiddleware = require("./middleware/not-found");
-const errorMiddleware = require("./middleware/error-handler");
-
 // ffmpeg
 const ffmpeg = require("fluent-ffmpeg");
 const fs = require("fs");
 
 // misc
 const logger = require("tracer").console();
+const { getLatestDateFromDirectory } = require("../../../libs/get-latest-date");
 
 // global declarations
-const nmsPort = process.env.PORT || 8000;
-const hlsPort = process.env.PORT || 8100;
+const nmsPort = process.env.NMS_PORT;
+const hlsPort = process.env.HLS_PORT;
 
 app.use(cors());
 
 // all requests go through here first
-app.get("*", (req, res, next) => {
-  const reqMethod = req.method;
-  const reqUrl = req.url;
-  logger.log(`${reqMethod} request at ${reqUrl}`);
-  next();
-});
+// disabled because it clutters the logs
+// app.get("*", (req, res, next) => {
+//   const reqMethod = req.method;
+//   const reqUrl = req.url;
+//   logger.log(`${reqMethod} request at ${reqUrl}`);
+//   next();
+// });
 
 app.get("/", (req, res) => {
   res.send("You've reached the media backend");
@@ -37,10 +35,6 @@ app.get("/", (req, res) => {
 
 // define routes
 app.use("/api/v1/streams", streamsRouter);
-
-// define middleware
-app.use(notFoundMiddleware);
-app.use(errorMiddleware);
 
 // TODO make express able to serve archived content based on url
 // TODO make /streams/${username} default to the currently available LIVEstream (if not live then get error saying person is not livestreaming)
@@ -64,14 +58,10 @@ app.listen(hlsPort, () => {
  */
 const createFoldersForStreaming = (username, callback) => {
   // define root folder containing the to be transcoded files
-  const ffmpegRootInputFolder =
-    process.env.FFMPEG_ROOT_INPUT_FOLDER ||
-    `/home/${process.env.USER}/Videos/ScreenRecordings`; // deze USER variabele is de linux user, niet de user van de webapp
+  const ffmpegRootInputFolder = process.env.FFMPEG_ROOT_INPUT_FOLDER;
 
   // define root folder containing the transcoded files
-  const ffmpegRootOutputFolder =
-    process.env.FFMPEG_ROOT_OUTPUT_FOLDER ||
-    `/home/${process.env.USER}/Desktop`;
+  const ffmpegRootOutputFolder = process.env.FFMPEG_ROOT_OUTPUT_FOLDER;
 
   // define user specific paths
   const userRootInputFolder = `${ffmpegRootInputFolder}/${username}-streams`;
@@ -79,10 +69,12 @@ const createFoldersForStreaming = (username, callback) => {
 
   // define timestamp folders for these paths so later stream dont overwrite older streams
   const currentTime = new Date();
-  const userRootInputTimestampsFolder = `${userRootInputFolder}/${currentTime.getFullYear()}-${currentTime.getMonth()}-${currentTime.getDate()}_${currentTime.getHours()}-${currentTime.getMinutes()}`; // assuming the user can only start one stream per minute (might need redesigning)
+  // const userRootInputTimestampsFolder = `${userRootInputFolder}/${currentTime.getFullYear()}-${currentTime.getMonth()}-${currentTime.getDate()}_${currentTime.getHours()}-${currentTime.getMinutes()}`; // assuming the user can only start one stream per minute (might need redesigning)
+  const userRootInputTimestampsFolder = `${userRootInputFolder}/${currentTime}`;
 
   // define folder used for input to ffmpeg based on the user
-  const userRootOutputTimestampsFolder = `${userRootOutputFolder}/${currentTime.getFullYear()}-${currentTime.getMonth()}-${currentTime.getDate()}_${currentTime.getHours()}-${currentTime.getMinutes()}`;
+  // const userRootOutputTimestampsFolder = `${userRootOutputFolder}/${currentTime.getFullYear()}-${currentTime.getMonth()}-${currentTime.getDate()}_${currentTime.getHours()}-${currentTime.getMinutes()}`;
+  const userRootOutputTimestampsFolder = `${userRootOutputFolder}/${currentTime}`;
 
   // creating the folders
   if (!fs.existsSync(userRootInputTimestampsFolder)) {
@@ -98,6 +90,25 @@ const createFoldersForStreaming = (username, callback) => {
     userRootInputTimestampsFolder,
     userRootOutputTimestampsFolder,
   });
+};
+
+/**
+ * Create or delete a file in the stream output folder denoting whether the user is live.
+ * A present file means live, no file means not live.
+ * It will also make an API call to the follower backend to set the correct value of the boolean
+ * @param outputFolder folder to place the file in
+ * @param {boolean} isLive boolean whether user is live or not. true means the file will be created, false means the file will be deleted
+ */
+const userIsLive = (outputFolder, isLive) => {
+  if (isLive === false) {
+    fs.rmSync(`${outputFolder}/_user_is_live`);
+
+    // make the api call so the other server also knows we're not live anymore
+  } else {
+    fs.writeFileSync(`${outputFolder}/_user_is_live`, "We'll do it live!");
+
+    // make the api call so the other server also knows we're live
+  }
 };
 
 /**
@@ -131,17 +142,32 @@ const ffmpegInputToHLS = (inputFolder, outputFolder, username) => {
 };
 
 /**
- * Transcode current stream and put output in folder based on username
+ * Handle stream based on username and live status
  * @param username The username of the transparent person
+ * @param {boolean} isLive Whether user is live or not
  */
-const transcodeStream = (username) => {
-  createFoldersForStreaming(username, (mediaFolders) => {
-    ffmpegInputToHLS(
-      mediaFolders.userRootInputTimestampsFolder,
-      mediaFolders.userRootOutputTimestampsFolder,
-      username
-    );
-  });
+const handleStream = (username, isLive) => {
+  if (isLive === true) {
+    createFoldersForStreaming(username, (mediaFolders) => {
+      ffmpegInputToHLS(
+        mediaFolders.userRootInputTimestampsFolder,
+        mediaFolders.userRootOutputTimestampsFolder,
+        username
+      );
+    });
+    getLatestDateFromDirectory(username, (error, result) => {
+      userIsLive(result.path, true);
+
+      // serve streams
+      logger.log(`Serving: ${result.path}`);
+      app.use(`/${username}-streams`, express.static(`${result.path}`));
+    });
+  }
+  if (isLive === false) {
+    getLatestDateFromDirectory(username, (error, result) => {
+      userIsLive(result.path, false);
+    });
+  }
 };
 
 // NMS for handling incoming rtmp stream
@@ -165,9 +191,11 @@ const nms = new NodeMediaServer(config);
 nms.run();
 
 nms.on("postPublish", (id, StreamPath, args) => {
-  logger.log(
-    "[NodeEvent on postPublish]",
-    `id=${id} StreamPath=${StreamPath} args=${JSON.stringify(args)}` // get some info about the stream
-  );
-  transcodeStream("sylvester"); // transcode the rtmp stream to hls
+  const username = StreamPath.slice(6); // extract username from StreamPath
+  handleStream(username, true); // transcode the rtmp stream to hls
+});
+
+nms.on("donePublish", (id, StreamPath, args) => {
+  const username = StreamPath.slice(6); // extract username from StreamPath
+  handleStream(username, false); // set streaming status to false
 });
