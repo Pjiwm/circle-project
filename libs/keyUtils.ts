@@ -21,7 +21,7 @@ export class RsaService {
    */
   encrypt(object: object | string, privateKey: string): string {
     let encrypt = new NodeRSA();
-    encrypt = encrypt.importKey(privateKey, "pkcs8-private-pem");
+    encrypt = encrypt.importKey(this.sanatiseKey(privateKey), "pkcs8-private-pem");
     console.log('hash: ' + hash(object))
     let hashString = typeof object === "string" ? hash(object) : hash(JSON.stringify(object))
     const unsigned = JSON.stringify([hashString, uuidv4()]);
@@ -37,7 +37,7 @@ export class RsaService {
    */
   decrypt(cypher: string | Buffer, publicKey: string, object: object | string): string | boolean {
     let decrypt = new NodeRSA();
-    decrypt = decrypt.importKey(publicKey, "pkcs8-public-pem");
+    decrypt = decrypt.importKey(this.sanatiseKey(publicKey), "pkcs8-public-pem");
     let objectHash = typeof object === "string" ? hash(object) : hash(JSON.stringify(object))
     let [decryptedHash, UUID] = decrypt.decryptPublic(cypher, "json");
     const isValid = objectHash === decryptedHash;
