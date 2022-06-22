@@ -39,6 +39,7 @@
     "express": "4.17.2",
     "fluent-ffmpeg": "^2.1.2",
     "hls-server": "^1.5.0",
+    "hls.js": "^1.1.5-0.canary.8437",
     "https-browserify": "^1.0.0",
     "jsencrypt": "^3.2.1",
     "mongoose": "^6.3.8",

@@ -1,7 +1,11 @@
 <!-- <button class="btn btn-info btn-hover-transition mb-2 fw-bold" (click)="previousPage()" title="Vorige pagina"><fa-icon [icon]="FaArrowLeft" class="icon align-middle"></fa-icon> Terug</button> -->
 <!-- <button class="btn btn-info btn-hover-transition mb-2 fw-bold" (click)="previousPage()" title="Vorige pagina"><fa-icon [icon]="FaArrowLeft" class="icon align-middle"></fa-icon> <fa-icon [icon]="FaDoorOpen" class="icon align-middle"></fa-icon> </button> -->
 <span class="text-light p-2 w-100 p-3 my-5">
-  <button class="btn btn-outline-primary btn-hover-transition" (click)="previousPage()" title="Vorige pagina">
+  <button
+    class="btn btn-outline-primary btn-hover-transition"
+    (click)="previousPage()"
+    title="Vorige pagina"
+  >
     <fa-icon [icon]="FaArrowLeft" class="icon align-middle fw-bold"></fa-icon>
     <fa-icon [icon]="FaDoorOpen" class="icon align-middle fw-bold"></fa-icon>
     <span class="ms-2">Terug</span>
@@ -10,9 +14,16 @@
 
 <div class="row g-0 h-100 stream-chat-window my-3">
   <div class="text-center col-sm-9 stream-container">
-    <video id="video-1" class="video-frame-2 w-100 h-100 align-middle" controls autoplay>
-      <source src="{{videoSource1}}" type="video/mp4">
-    </video>
+    <!-- <video controls autoplay playsinline width="250"  >
+
+    </video> -->
+    <!-- <video id="video-stream controls autoplay"></video> -->
+    <video
+      class="video-frame-2 w-100 h-100 align-middle"
+      #videoStream
+      controls
+      autoplay
+    ></video>
   </div>
   <div class="col-sm-3">
     <the-circle-chat></the-circle-chat>
@@ -21,7 +32,7 @@
 
 <div class="d-inline-block flex-grow-1 ms-2 my-2 p-3">
   <h2 class="fw-bold m-0">{{ room.streamer.name }}</h2>
-  <p class="m-0">{{room.title}}</p>
+  <p class="m-0">{{ room.title }}</p>
   <fa-icon [icon]="FaEye" class="icon fa-lg pe-2 eye-icon"></fa-icon>
   <p class="fw-bold d-inline-block m-0">{{ room.viewers }}</p>
   <button (click)="followRoom()">Volgen</button>

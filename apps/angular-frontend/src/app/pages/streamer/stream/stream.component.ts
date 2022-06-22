@@ -1,6 +1,7 @@
 import {
   Component,
-  OnInit
+  OnInit,
+  ViewChild, ElementRef
 } from "@angular/core";
 import { ActivatedRoute } from '@angular/router';
 import { Room } from "../../../../../../../libs/models";
@@ -10,6 +11,7 @@ import { FollowService } from "../../../services/follow.service";
 import { AuthService } from "../../../services/auth.service";
 import { faPlay, faStop, faArrowLeftLong, faDoorOpen, faEye } from "@fortawesome/free-solid-svg-icons";
 import { Location } from '@angular/common'
+import  Hls  from 'hls.js';
 
 @Component({
   selector: "the-circle-stream",
@@ -27,12 +29,30 @@ export class StreamComponent implements OnInit {
   FaEye = faEye;
   displayWelcomeMessage = true;
   isFollowed = false;
+  @ViewChild("videoStream",{static: true}) videostream: ElementRef;
 
   constructor(private route: ActivatedRoute, private roomService: RoomService, private personService: PersonService,
     private location: Location, private authService: AuthService, private followService: FollowService) {
   }
 
   ngOnInit(): void {
+
+    if (Hls.isSupported()) {
+      // var video = document.getElementById('video');
+      var hls = new Hls();
+      // bind them together
+      hls.attachMedia(this.videostream.nativeElement);
+      hls.on(Hls.Events.MEDIA_ATTACHED, function () {
+        console.log('video and hls.js are now bound together !');
+        hls.loadSource(`http://127.0.0.1:8100/Maarten-streams/Maarten.m3u8`);
+        hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
+          console.log(
+            'manifest loaded, found ' + data.levels.length + ' quality level'
+          );
+        });
+      });
+    }
+
     this.route.paramMap.subscribe((params) => {
       console.log('Room with ID:', params.get('id'));
       this.roomService.getById(params.get('id')).subscribe((room) => {
