@@ -5,6 +5,8 @@ const {
   getLivestreamManifestSignatureByUsername,
 } = require("../controllers/streams");
 
-router.route("/:username").get(getLivestreamManifestSignatureByUsername);
+router
+  .route("/:username/manifest-signature")
+  .get(getLivestreamManifestSignatureByUsername);
 
 module.exports = router;

@@ -35,10 +35,6 @@ app.use(cors());
 //   next();
 // });
 
-app.get("/", (req, res) => {
-  res.send("You've reached the media backend");
-});
-
 // define routes
 app.use("/api/v1/streams", streamsRouter);
 
