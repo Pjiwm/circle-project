@@ -2,6 +2,7 @@ import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { PersonService } from "../../services/person.service";
 import { RoomService } from "../../services/room.service";
+import { FollowService } from "../../services/follow.service";
 import { Person, Room } from "../../../../../../libs/models";
 import { Location } from '@angular/common'
 import { faPlay, faStop, faArrowRightLong, faDoorOpen } from "@fortawesome/free-solid-svg-icons";
@@ -19,6 +20,7 @@ export class StreamListComponent implements OnInit {
   playingStreamArray: string[] = [];
   persons: Person[];
   rooms: Room[] = [];
+  followedRoomsIds: string[] = [];
   FaPlay = faPlay;
   FaStop = faStop;
   FaArrowRight = faArrowRightLong;
@@ -26,41 +28,58 @@ export class StreamListComponent implements OnInit {
 
   constructor(
     public router: Router,
-    public PersonService: PersonService,
-    public RoomService: RoomService,
+    public personService: PersonService,
+    public roomService: RoomService,
+    public followService: FollowService,
     private location: Location) { }
 
   ngOnInit(): void {
-    if (this.router.url === "/browse") {
-      // Browse page
-      this.isBrowsePage = true;
-      this.RoomService.getAll().subscribe((rooms) => {
-        if (rooms.length != null) {
-          for (let room of rooms) {
-            this.getStreamer(room);
+    this.personService.getFollowed().subscribe((followedRooms) => {
+      followedRooms.forEach(room => {
+        this.followedRoomsIds.push(room._id);
+      });
+
+      if (this.router.url === "/browse") {
+        // Browse page
+        this.isBrowsePage = true;
+        this.roomService.getAll().subscribe((rooms) => {
+          if (rooms.length != null) {
+            for (let room of rooms) {
+              this.getStreamer(room);
+            }
+            this.rooms = rooms
           }
-          this.rooms = rooms
-        }
-      })
-    } else {
-      // Followed page
-      this.isBrowsePage = false;
-      this.PersonService.getFollowed().subscribe((rooms) => {
-        if (rooms.length != null) {
-          for (let room of rooms) {
+
+          this.followService.getEmittedFollowers().subscribe(value => {
+            this.followedRoomsIds = [];
+    
+            value.forEach(room => {
+              this.followedRoomsIds.push(room._id)
+            });
+          });
+        })
+      } else {
+        // Followed page
+        this.isBrowsePage = false;
+        if (followedRooms.length != null) {
+          for (let room of followedRooms) {
             this.getStreamer(room)
           }
-          this.rooms = rooms
+          this.rooms = followedRooms;
         }
-      });
-    }
+
+        this.followService.getEmittedFollowers().subscribe(value => {
+          this.rooms = value;
+        });
+      }
+    });
   }
 
   // Get Streamer based on room id
   getStreamer(room: Room): Room {
     const temp = room.streamer as unknown
     const name = temp as string
-    this.PersonService.getById(name).subscribe((person) => {
+    this.personService.getById(name).subscribe((person) => {
       room.streamer = person;
     })
     console.log(room)
@@ -140,17 +159,24 @@ export class StreamListComponent implements OnInit {
     }, 300);
   }
 
+  followRoom(room: Room): void {
+    this.followService.followRoom(room);
+  }
+
+  unfollowRoom(room: Room) {
+    this.followService.unfollowRoom(room);
+  }
+
   previousPage() {
     this.location.back();
   }
 
   getLink(isLive: Boolean, roomId: string): string {
     if (isLive) {
-      console.log('aaaaaaaaaaa', ".room/" + roomId)
       return "/room/" + roomId
     }
-    
-    if(this.router.url == '/following') {
+
+    if (this.router.url == '/following') {
       return "/following";
     } else {
       return "/browse";
