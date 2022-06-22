@@ -23,12 +23,9 @@ export class RsaService {
     let encrypt = new NodeRSA();
     encrypt = encrypt.importKey(privateKey, "pkcs8-private-pem");
     console.log('hash: ' + hash(object))
-    const unsigned = JSON.stringify([hash(object), uuidv4()]);
+    let hashString = typeof object === "string" ? hash(object) : hash(JSON.stringify(object))
+    const unsigned = JSON.stringify([hashString, uuidv4()]);
     return encrypt.encryptPrivate(Buffer.from(unsigned,"utf-8"), "base64","utf8");
-  }
-
-  encryptJson(object: object, privateKey: string): string {
-    return this.encrypt(JSON.stringify(object),privateKey);
   }
 
   /**
@@ -38,10 +35,10 @@ export class RsaService {
    * @param {string} object for hash compare
    * @returns {string | boolean} returns UUID if decrypting with public key is valid, else return false
    */
-  decrypt(cypher: string | Buffer, publicKey: string, object: object): string | boolean {
+  decrypt(cypher: string | Buffer, publicKey: string, object: object | string): string | boolean {
     let decrypt = new NodeRSA();
     decrypt = decrypt.importKey(publicKey, "pkcs8-public-pem");
-    const objectHash = hash(object);
+    let objectHash = typeof object === "string" ? hash(object) : hash(JSON.stringify(object))
     let [decryptedHash, UUID] = decrypt.decryptPublic(cypher, "json");
     const isValid = objectHash === decryptedHash;
     if (isValid) {
@@ -60,18 +57,21 @@ export class RsaService {
     const key = new NodeRSA({b: 1024});
     const publicKey = key.exportKey("pkcs8-public-pem");
     const privateKey = key.exportKey("pkcs8-private-pem");
-    return [publicKey, privateKey];
+    return [this.sanatiseKey(publicKey), this.sanatiseKey(privateKey)];
   }
 
   isValidPrivateKey(privateKey: string) : boolean {
     let key = new NodeRSA();
-    key = key.importKey(privateKey, "pkcs8-private-pem");
+    key = key.importKey(this.sanatiseKey(privateKey), "pkcs8-private-pem");
     return key.isPrivate();
   }
 
   isValidPublicKey(publicKey: string) : boolean {
     let key = new NodeRSA();
-    key = key.importKey(publicKey, "pkcs8-public-pem");
+    key = key.importKey(this.sanatiseKey(publicKey), "pkcs8-public-pem");
     return key.isPublic();
+  }
+  sanatiseKey(key: String){
+    return key.replace(/\n/g, "");
   }
 }
