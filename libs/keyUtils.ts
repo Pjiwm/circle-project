@@ -45,10 +45,15 @@ export class RsaService {
    * @param {string} object for hash compare
    * @returns {string | boolean} returns UUID if decrypting with public key is valid, else return false
    */
-  decrypt(cypher: string | Buffer, publicKey: string, object: object): string | boolean {
+  decrypt(cypher: string | Buffer, publicKey: string, object: object | string): string | boolean {
     let decrypt = new NodeRSA();
     decrypt = decrypt.importKey(publicKey, "pkcs8-public-pem");
-    const objectHash = hash(object);
+    let objectHash = "";
+    if(typeof object === "string"){
+      objectHash = hash(object);
+    } else {
+      objectHash = hash(JSON.stringify(object));
+    }
     let [decryptedHash, UUID] = decrypt.decryptPublic(cypher, "json");
     const isValid = objectHash === decryptedHash;
     if (isValid) {
