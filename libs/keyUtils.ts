@@ -23,14 +23,7 @@ export class RsaService {
     let encrypt = new NodeRSA();
     encrypt = encrypt.importKey(privateKey, "pkcs8-private-pem");
     console.log('hash: ' + hash(object))
-    let hashString = "";
-    if(typeof object === "string"){
-      hashString = hash(object);
-    } else {
-      hashString = hash(JSON.stringify(object));
-    }
-
-    const unsigned = JSON.stringify([hashString, uuidv4()]);
+    const unsigned = JSON.stringify([hash(object), uuidv4()]);
     return encrypt.encryptPrivate(Buffer.from(unsigned,"utf-8"), "base64","utf8");
   }
 
@@ -45,15 +38,10 @@ export class RsaService {
    * @param {string} object for hash compare
    * @returns {string | boolean} returns UUID if decrypting with public key is valid, else return false
    */
-  decrypt(cypher: string | Buffer, publicKey: string, object: object | string): string | boolean {
+  decrypt(cypher: string | Buffer, publicKey: string, object: object): string | boolean {
     let decrypt = new NodeRSA();
     decrypt = decrypt.importKey(publicKey, "pkcs8-public-pem");
-    let objectHash = "";
-    if(typeof object === "string"){
-      objectHash = hash(object);
-    } else {
-      objectHash = hash(JSON.stringify(object));
-    }
+    const objectHash = hash(object);
     let [decryptedHash, UUID] = decrypt.decryptPublic(cypher, "json");
     const isValid = objectHash === decryptedHash;
     if (isValid) {
