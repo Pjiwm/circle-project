@@ -13,6 +13,10 @@ const fs = require("fs");
 // misc
 const logger = require("tracer").console();
 const { getLatestDateFromDirectory } = require("../../../libs/get-latest-date");
+const mongoDB = require("./db-connection");
+const getRoomByUser = require("./utils/get-room-by-user");
+const roomSchema = require("./schemas/room");
+const personSchema = require("./schemas/person");
 
 // global declarations
 const nmsPort = process.env.NMS_PORT;
@@ -38,11 +42,21 @@ app.use("/api/v1/streams", streamsRouter);
 
 // TODO make express able to serve archived content based on url
 // TODO make /streams/${username} default to the currently available LIVEstream (if not live then get error saying person is not livestreaming)
-
 // TODO implement https://stackoverflow.com/questions/21878178/hls-streaming-using-node-js
-app.listen(hlsPort, () => {
-  logger.log(`Server listening on ${hlsPort}`);
-});
+
+const start = async () => {
+  // connectDB
+  try {
+    await mongoDB();
+    app.listen(hlsPort, () => {
+      logger.log(`Server listening on ${hlsPort}`);
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+start();
 
 // overkoepelend idee voor rtmp stream bestand afhandeling
 // 1. Maak de root folder voor ffmpeg input
@@ -98,16 +112,25 @@ const createFoldersForStreaming = (username, callback) => {
  * It will also make an API call to the follower backend to set the correct value of the boolean
  * @param outputFolder folder to place the file in
  * @param {boolean} isLive boolean whether user is live or not. true means the file will be created, false means the file will be deleted
+ * @param username username of the streamer
  */
-const userIsLive = (outputFolder, isLive) => {
+const userIsLive = async (outputFolder, isLive, username) => {
   if (isLive === false) {
     fs.rmSync(`${outputFolder}/_user_is_live`);
 
-    // make the api call so the other server also knows we're not live anymore
+    // update mongo so the other server also knows we're not live anymore
+    roomSchema.findByIdAndUpdate(
+      { _id: getRoomByUser(username) },
+      { isLive: false }
+    );
   } else {
     fs.writeFileSync(`${outputFolder}/_user_is_live`, "We'll do it live!");
 
-    // make the api call so the other server also knows we're live
+    // update mongo so the other server also knows we're live
+    roomSchema.findByIdAndUpdate(
+      { _id: getRoomByUser(username) },
+      { isLive: true }
+    );
   }
 };
 
@@ -121,7 +144,7 @@ const ffmpegInputToHLS = (inputFolder, outputFolder, username) => {
   logger.log(`ffmpeg input folder: ${inputFolder}`);
   logger.log(`ffmpeg output folder: ${outputFolder}`);
   // TODO dynamic input for ffmpeg
-  ffmpeg(`rtmp://localhost/live/person`, { timeout: 432000 })
+  ffmpeg(`rtmp://localhost/live/${username}`, { timeout: 432000 })
     .addOptions([
       "-profile:v baseline", // baseline profile (level 3.0) for H264 video codec
       "-level 3.0",
@@ -156,7 +179,7 @@ const handleStream = (username, isLive) => {
       );
     });
     getLatestDateFromDirectory(username, (error, result) => {
-      userIsLive(result.path, true);
+      userIsLive(result.path, true, username);
 
       // serve streams
       logger.log(`Serving: ${result.path}`);
@@ -165,7 +188,7 @@ const handleStream = (username, isLive) => {
   }
   if (isLive === false) {
     getLatestDateFromDirectory(username, (error, result) => {
-      userIsLive(result.path, false);
+      userIsLive(result.path, false, username);
     });
   }
 };

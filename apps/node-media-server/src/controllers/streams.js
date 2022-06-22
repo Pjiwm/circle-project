@@ -19,7 +19,7 @@ const getLivestreamManifestSignatureByUsername = (req, res) => {
     }
     if (result) {
       const latestDate = result.latestDate;
-      // TODO send manifest
+      // TODO make manifest available
     }
   });
 };
