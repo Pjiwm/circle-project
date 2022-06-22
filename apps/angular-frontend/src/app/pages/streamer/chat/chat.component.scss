@@ -28,6 +28,7 @@
 .chatmessages {
     z-index: 3;
     height: 90%;
+    max-height: 63vh;
     width: 100%;
 }
 
@@ -38,19 +39,11 @@
     text-align: center;
 }
 
-.chattext {
-    z-index: 3;
-    height: 100%;
-    width: 75%;
-    float: left;
-}
 
 .btn-send {
     background-color: white;
     color: black;
     border: 2px solid #C6002A;
-    width: 25%;
-
 }
 
 .btn-bold {
@@ -68,5 +61,4 @@
 
 .scrollable-child {
     overflow-y: scroll;
-    position: absolute;
 }

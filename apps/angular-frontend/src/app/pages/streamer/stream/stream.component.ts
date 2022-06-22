@@ -46,6 +46,10 @@ export class StreamComponent implements OnInit {
     // }, 4000);
   }
 
+  followRoom():void {
+
+  }
+
   previousPage() {
     this.location.back();
   }
