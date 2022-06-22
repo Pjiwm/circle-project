@@ -23,7 +23,14 @@ export class RsaService {
     let encrypt = new NodeRSA();
     encrypt = encrypt.importKey(privateKey, "pkcs8-private-pem");
     console.log('hash: ' + hash(object))
-    const unsigned = JSON.stringify([hash(object), uuidv4()]);
+    let hashString = "";
+    if(typeof object === "string"){
+      hashString = hash(object);
+    } else {
+      hashString = hash(JSON.stringify(object));
+    }
+
+    const unsigned = JSON.stringify([hashString, uuidv4()]);
     return encrypt.encryptPrivate(Buffer.from(unsigned,"utf-8"), "base64","utf8");
   }
 
