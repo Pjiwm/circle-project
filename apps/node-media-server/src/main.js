@@ -36,7 +36,7 @@ app.use(cors());
 // });
 
 // define routes
-app.use("/api/v1/streams", streamsRouter);
+app.use("/streams", streamsRouter);
 
 // TODO make express able to serve archived content based on url
 // TODO make /streams/${username} default to the currently available LIVEstream (if not live then get error saying person is not livestreaming)
