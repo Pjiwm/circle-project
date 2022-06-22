@@ -6,7 +6,7 @@ const logger = require("tracer").console();
  * @param username username of the streamer
  * @param callback (error, result), result contains the date of the latest directory and the path to this directory
  */
-const getLatestDateFromDirectory = (username, callback) => {
+const getLatestDateFromOutputDirectory = (username, callback) => {
   // read directory, load timestamps into array
   const folderContainingTimestamps = `${process.env.FFMPEG_ROOT_OUTPUT_FOLDER}/${username}-streams`;
   const timestamps = fs
@@ -29,4 +29,6 @@ const getLatestDateFromDirectory = (username, callback) => {
   });
 };
 
-module.exports = { getLatestDateFromDirectory };
+module.exports = {
+  getLatestDateFromOutputDirectory,
+};

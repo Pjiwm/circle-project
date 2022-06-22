@@ -12,7 +12,9 @@ const fs = require("fs");
 
 // misc
 const logger = require("tracer").console();
-const { getLatestDateFromDirectory } = require("../../../libs/get-latest-date");
+const {
+  getLatestDateFromOutputDirectory,
+} = require("../../../libs/get-latest-date");
 const mongoDB = require("./db-connection");
 const getRoomByUser = require("./utils/get-room-by-user");
 const roomSchema = require("./schemas/room");
@@ -178,7 +180,7 @@ const handleStream = (username, isLive) => {
         username
       );
     });
-    getLatestDateFromDirectory(username, (error, result) => {
+    getLatestDateFromOutputDirectory(username, (error, result) => {
       userIsLive(result.path, true, username);
 
       // serve streams
@@ -187,7 +189,7 @@ const handleStream = (username, isLive) => {
     });
   }
   if (isLive === false) {
-    getLatestDateFromDirectory(username, (error, result) => {
+    getLatestDateFromOutputDirectory(username, (error, result) => {
       userIsLive(result.path, false, username);
     });
   }

@@ -1,6 +1,7 @@
+const fs = require("fs");
 const logger = require("tracer").console();
 const {
-  getLatestDateFromDirectory,
+  getLatestDateFromOutputDirectory,
 } = require("../../../../libs/get-latest-date");
 
 /**
@@ -12,14 +13,22 @@ const getLivestreamManifestSignatureByUsername = (req, res) => {
 
   const username = req.params.username;
 
-  // TODO call utils/get-latest-date
-  getLatestDateFromDirectory(username, (error, result) => {
+  // figure out the latest stream
+  getLatestDateFromOutputDirectory(username, (error, result) => {
     if (error) {
       res.status(404).json({ msg: "No stream found" });
     }
     if (result) {
       const latestDate = result.latestDate;
-      // TODO make manifest available
+      // get manifest from this latestDate folder
+      const manifestFile = `${process.env.FFMPEG_ROOT_OUTPUT_FOLDER}/${username}-streams/${latestDate}/${username}.m3u8`;
+
+      // watch for changes
+      fs.watchFile(manifestFile, (curr, prev) => {
+        if (curr) {
+          // sign the file
+        }
+      });
     }
   });
 };
