@@ -5,4 +5,5 @@ const securitycontroller = new SecurityController();
 
 routes.post("/keys", securitycontroller.createKeys);
 routes.post("/login", securitycontroller.login);
+routes.post("/login/java", securitycontroller.loginJava);
 export default routes;

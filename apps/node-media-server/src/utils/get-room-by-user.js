@@ -25,4 +25,5 @@ const getRoomIdFromUsername = async (username) => {
   return roomPromise._id;
 };
 
+
 module.exports = getRoomIdFromUsername;
