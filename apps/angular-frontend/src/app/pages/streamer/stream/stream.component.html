@@ -1,9 +1,10 @@
 <!-- <button class="btn btn-info btn-hover-transition mb-2 fw-bold" (click)="previousPage()" title="Vorige pagina"><fa-icon [icon]="FaArrowLeft" class="icon align-middle"></fa-icon> Terug</button> -->
 <!-- <button class="btn btn-info btn-hover-transition mb-2 fw-bold" (click)="previousPage()" title="Vorige pagina"><fa-icon [icon]="FaArrowLeft" class="icon align-middle"></fa-icon> <fa-icon [icon]="FaDoorOpen" class="icon align-middle"></fa-icon> </button> -->
-<span class="text-light p-2 bg-dark rounded w-100 p-3 my-5">
-  <button class="btn btn-secondary btn-hover-transition fw-bold" (click)="previousPage()" title="Vorige pagina">
-    <fa-icon [icon]="FaArrowLeft" class="icon align-middle"></fa-icon>
-    <fa-icon [icon]="FaDoorOpen" class="icon align-middle"></fa-icon>
+<span class="text-light p-2 w-100 p-3 my-5">
+  <button class="btn btn-outline-primary btn-hover-transition" (click)="previousPage()" title="Vorige pagina">
+    <fa-icon [icon]="FaArrowLeft" class="icon align-middle fw-bold"></fa-icon>
+    <fa-icon [icon]="FaDoorOpen" class="icon align-middle fw-bold"></fa-icon>
+    <span class="ms-2">Terug</span>
   </button>
 </span>
 
@@ -18,28 +19,10 @@
   </div>
 </div>
 
-<div class="d-inline-block flex-grow-1 ms-2 my-2 bg-secondary p-3">
-  <p class="sidenav-text fw-bold m-0 bg-light rounded border-4 p-3">{{ room.streamer.name }}</p>
-  <p class="my-2 p-2">{{room.title}}</p>
-  <fa-icon [icon]="FaEye" class="icon fa-lg pe-2"></fa-icon>
-  <p class="sidenav-text fw-bold d-inline-block m-0">{{ room.viewers }}</p>
+<div class="d-inline-block flex-grow-1 ms-2 my-2 p-3">
+  <h2 class="fw-bold m-0">{{ room.streamer.name }}</h2>
+  <p class="m-0">{{room.title}}</p>
+  <fa-icon [icon]="FaEye" class="icon fa-lg pe-2 eye-icon"></fa-icon>
+  <p class="fw-bold d-inline-block m-0">{{ room.viewers }}</p>
+  <button (click)="followRoom()">Volgen</button>
 </div>
-<!-- *ngIf="displayWelcomeMessage"  -->
-
-<!-- <footer id="footer">
-  <div class="text-center">
-    <button class="btn btn-streaming" (click)="Start()">
-      <fa-icon [icon]="FaPlay" class="icon fa-lg pe-2"></fa-icon> Start Your
-      Live stream
-    </button>
-
-    <button class="btn btn-primary btn-streaming" (click)="Stop()">
-      <fa-icon [icon]="FaStop" class="icon fa-lg pe-2"></fa-icon> Stop your Live
-      stream
-    </button>
-    <button class="btn btn-primary btn-streaming" (click)="Pause()">
-      <fa-icon [icon]="FaPause" class="icon fa-lg pe-2"></fa-icon> Pause your
-      Live stream
-    </button>
-  </div>
-</footer> -->

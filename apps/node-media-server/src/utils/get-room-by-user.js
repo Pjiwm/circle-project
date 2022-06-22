@@ -11,18 +11,19 @@ const privateGetUserIdFromUsername = async (username) => {
       name: username,
     })
     .exec();
-
-  return personPromise._id;
+    
+  return personPromise._id.toString();
 };
 
 const getRoomIdFromUsername = async (username) => {
   const roomPromise = await roomSchema
     .findOne({
-      streamer: privateGetUserIdFromUsername(username), // this is going to error out because it's a promise
+      streamer: await privateGetUserIdFromUsername(username), // this is going to error out because it's a promise
     })
     .exec();
 
   return roomPromise._id;
 };
+
 
 module.exports = getRoomIdFromUsername;

@@ -54,7 +54,6 @@ export class PersonService {
 
   getFollowed(): Observable<Room[]> {
     const keyutil = new RsaService();
-    console.log(this.authService.currentPerson$.value._id)
      return this.http
      .get<Person[]>(`${this.baseUrl}/persons/${this.authService.currentPerson$.value._id}`, { headers: this.headers })
       .pipe(

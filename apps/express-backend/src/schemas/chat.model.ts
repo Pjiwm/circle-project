@@ -5,6 +5,7 @@ const ChatSchema = new Schema<IChatMessage>({
     type: Schema.Types.ObjectId,
     ref: "person",
     required: [true, "Person is required"],
+    autopopulate: true
   },
   room: {
     type: Schema.Types.ObjectId,
@@ -22,8 +23,11 @@ const ChatSchema = new Schema<IChatMessage>({
   },
   signature: {
     type: String,
-    required: [true, "Hash is required"],
+    required: [true, "Signature is required"],
   },
 });
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+ChatSchema.plugin(require("mongoose-autopopulate"));
 
 export const ChatModel = model<IChatMessage>("chat", ChatSchema);

@@ -12,7 +12,9 @@ const fs = require("fs");
 
 // misc
 const logger = require("tracer").console();
-const { getLatestDateFromDirectory } = require("../../../libs/get-latest-date");
+const {
+  getLatestDateFromOutputDirectory,
+} = require("../../../libs/get-latest-date");
 const mongoDB = require("./db-connection");
 const getRoomByUser = require("./utils/get-room-by-user");
 const roomSchema = require("./schemas/room");
@@ -33,12 +35,8 @@ app.use(cors());
 //   next();
 // });
 
-app.get("/", (req, res) => {
-  res.send("You've reached the media backend");
-});
-
 // define routes
-app.use("/api/v1/streams", streamsRouter);
+app.use("/streams", streamsRouter);
 
 // TODO make express able to serve archived content based on url
 // TODO make /streams/${username} default to the currently available LIVEstream (if not live then get error saying person is not livestreaming)
@@ -119,16 +117,16 @@ const userIsLive = async (outputFolder, isLive, username) => {
     fs.rmSync(`${outputFolder}/_user_is_live`);
 
     // update mongo so the other server also knows we're not live anymore
-    roomSchema.findByIdAndUpdate(
-      { _id: getRoomByUser(username) },
+    await roomSchema.findByIdAndUpdate(
+      { _id: await getRoomByUser(username) },
       { isLive: false }
     );
   } else {
     fs.writeFileSync(`${outputFolder}/_user_is_live`, "We'll do it live!");
 
     // update mongo so the other server also knows we're live
-    roomSchema.findByIdAndUpdate(
-      { _id: getRoomByUser(username) },
+    await roomSchema.findByIdAndUpdate(
+      { _id: await getRoomByUser(username) },
       { isLive: true }
     );
   }
@@ -178,7 +176,7 @@ const handleStream = (username, isLive) => {
         username
       );
     });
-    getLatestDateFromDirectory(username, (error, result) => {
+    getLatestDateFromOutputDirectory(username, (error, result) => {
       userIsLive(result.path, true, username);
 
       // serve streams
@@ -187,7 +185,7 @@ const handleStream = (username, isLive) => {
     });
   }
   if (isLive === false) {
-    getLatestDateFromDirectory(username, (error, result) => {
+    getLatestDateFromOutputDirectory(username, (error, result) => {
       userIsLive(result.path, false, username);
     });
   }

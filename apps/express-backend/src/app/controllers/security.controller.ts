@@ -16,7 +16,7 @@ export class SecurityController {
     res.status(201).send({ privateKey: keys[1], publicKey: keys[0] });
   };
 
-  
+
   login = async function (req, res, next) {
     try {
       const personPromise: Person = await PersonModel.findOne({
@@ -44,6 +44,26 @@ export class SecurityController {
       } else {
         res.status(418).send({ Message: "Object not integer"});
       }
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  loginJava = async function (req, res, next) {
+    try {
+      const personPromise: Person = await PersonModel.findOne({
+        name: req.body.name,
+      }).exec();
+
+      // Convert promise to object
+      const person: Person = new Person(
+        personPromise._id,
+        personPromise.name,
+        personPromise.publicKey,
+        personPromise.satochi,
+        personPromise.followed
+      );
+      res.status(200).send(person);
     } catch (err) {
       next(err);
     }
