@@ -22,8 +22,7 @@ const ChatSchema = new Schema<IChatMessage>({
     required: [true, "DateTime is required"],
   },
   signature: {
-    type: String,
-    required: [true, "Signature is required"],
+    type: String
   },
 });
 

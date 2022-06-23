@@ -48,22 +48,19 @@ class ChatMessage {
   room: Room;
   message: string;
   dateTime: Date;
-  signature: string;
 
   constructor(
     _id: string,
     person: Person,
     room: Room,
     message: string,
-    dateTime: Date,
-    signature: string
+    dateTime: Date
   ) {
     this._id = _id;
     this.person = person;
     this.room = room;
     this.message = message;
     this.dateTime = dateTime;
-    this.signature = signature;
   }
 }
 
