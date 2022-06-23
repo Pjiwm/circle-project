@@ -14,10 +14,11 @@ fa-icon {
   border: 2px solid #C6002A;
 }
 
+.btn-outline-danger {
+  color:#000;
+}
+
 .stream-chat-window {
-  // margin: 0px auto;
-  // width: 499px;
-  // height: 375px;
   border: 10px rgb(169, 0, 0) solid;
   border-radius: 20px;
   background-color: #000;
@@ -31,19 +32,9 @@ fa-icon {
 }
 
 .stream-frame {
-  //width: 100%;
-  // min-height: 600px;
-  // height: 100%;
   background-color: black;
 }
 
-// webcam.height {
-//   height: 900px;
-// }
-
-// webcam.width {
-//   width: 900px;
-// }
 
 #footer {
   position: absolute;

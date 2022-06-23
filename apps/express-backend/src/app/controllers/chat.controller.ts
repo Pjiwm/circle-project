@@ -17,7 +17,6 @@ export class ChatController {
     const chats = await ChatModel.find();
     for(const chat of chats) {
       if (chat.room == req.params.id) {
-
         roomChats.push(new ChatMessage(chat._id, chat.person, chat.room, chat.message, chat.dateTime,chat.signature));
       }
     };
@@ -35,7 +34,9 @@ export class ChatController {
         const personPromise = await PersonModel.findById(body.person._id);
         const person: Person = new Person(personPromise._id, personPromise.name, personPromise.publicKey, personPromise.satochi, personPromise.followed);
 
-        const decryptedMessage = rsaService.decrypt(body.signature,person.publicKey,{body});;
+        console.log(JSON.stringify(body));
+
+        const decryptedMessage = rsaService.decrypt(body.signature, person.publicKey,{body});;
         const uuidCheck = await uuidHelper.check(decryptedMessage);
         if (decryptedMessage && uuidCheck) {
           const chat = new ChatModel(body);
