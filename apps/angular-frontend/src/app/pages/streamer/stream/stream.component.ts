@@ -48,6 +48,7 @@ export class StreamComponent implements OnInit {
           hls.attachMedia(this.videostream.nativeElement);
           hls.on(Hls.Events.MEDIA_ATTACHED, function () {
             console.log('video and hls.js are now bound together !');
+            console.log('streamer naam:', room.streamer.name);
             hls.loadSource(`http://127.0.0.1:8100/${room.streamer.name}-streams/${room.streamer.name}.m3u8`);
             hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
               console.log(
