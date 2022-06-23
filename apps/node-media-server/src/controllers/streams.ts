@@ -36,7 +36,8 @@ const getLivestreamManifestSignatureByUsername = (req, res) => {
 
                 const manifestFileString = fs
                   .readFileSync(manifestFile)
-                  .toString();
+                  .toString()
+                  .replace(/\n/g, "");
                 const manifestFileStringSignature = rsaService.encrypt(
                   manifestFileString,
                   PRIVATE_SERVER_KEY
@@ -93,7 +94,10 @@ const getStreamSegmentsSignaturesByUsername = (req, res) => {
           console.log("segment exists");
           const rsaService: RsaService = new RsaService();
 
-          const segmentFileString = fs.readFileSync(segmentFile).toString();
+          const segmentFileString = fs
+            .readFileSync(segmentFile)
+            .toString()
+            .replace(/\n/g, "");
           const segmentFileStringSignature = rsaService.encrypt(
             segmentFileString,
             PRIVATE_SERVER_KEY

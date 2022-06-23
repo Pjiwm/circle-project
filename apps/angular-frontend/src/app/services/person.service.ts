@@ -81,6 +81,14 @@ export class PersonService {
           return null
         })
       );
-
   }
+
+  startStopFollowing(person: Person): void {
+        const keyutil = new RsaService();
+        const signature = keyutil.encrypt({ person: person }, JSON.parse(localStorage.getItem('currentperson')).privateKey);
+        console.log('Person following: ', person);
+        console.log('Person signature: ', signature);
+        this.http.put<Person>(`${this.baseUrl}/persons/${person._id}`, {"person": person, "signature": signature}, { headers: this.headers }).subscribe();
+  }
+
 }

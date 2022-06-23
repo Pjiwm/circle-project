@@ -29,6 +29,7 @@
                 <video *ngIf="hoveredVideo == room._id || playingStreamArray.includes(room._id)" id="{{room._id}}"
                   class="video-frame-2">
                   <source src="{{videoSource1}}" type="video/mp4">
+                  <!-- <source src="playlist.m3u8" type="application/x-mpegURL"> -->
                 </video>
               </div>
             </div>
@@ -49,15 +50,24 @@
           </div>
         </a>
         <div class="btn-group mx-2 mb-2">
-        <button class="btn btn-danger w-50" (click)="startStopVideo(room._id)" [disabled]="!room.isLive">
-          <fa-icon *ngIf="!playingStreamArray.includes(room._id)" [icon]="FaPlay" class="icon"></fa-icon> 
-          <fa-icon *ngIf="playingStreamArray.includes(room._id)" [icon]="FaStop" class="icon"></fa-icon> 
-        </button>
-        <!-- <button class="btn btn-info btn-hover-transition w-50 fw-bold" [routerLink]="['/room', room._id]" [disabled]="!room.isLive" title="Bekijk room van {{room.streamer.name}}">Room <fa-icon [icon]="FaArrowRight" class="icon align-middle"></fa-icon></button></div> -->
-        <button class="btn btn-secondary btn-hover-transition w-50 fw-bold text-black" [routerLink]="['/room', room._id]" [disabled]="!room.isLive" title="Bekijk room van {{room.streamer.name}}"><fa-icon [icon]="FaArrowRight" class="icon align-middle"></fa-icon><fa-icon [icon]="FaDoorOpen" class="icon align-middle"></fa-icon></button></div>
+          <button class="btn btn-danger w-33" (click)="startStopVideo(room._id)" [disabled]="!room.isLive">
+            <fa-icon *ngIf="!playingStreamArray.includes(room._id)" [icon]="FaPlay" class="icon"></fa-icon>
+            <fa-icon *ngIf="playingStreamArray.includes(room._id)" [icon]="FaStop" class="icon"></fa-icon>
+          </button>
+          <!-- <button class="btn btn-info btn-hover-transition w-50 fw-bold" [routerLink]="['/room', room._id]" [disabled]="!room.isLive" title="Bekijk room van {{room.streamer.name}}">Room <fa-icon [icon]="FaArrowRight" class="icon align-middle"></fa-icon></button></div> -->
+          <button class="btn btn-secondary btn-hover-transition w-33 fw-bold text-black"
+            [routerLink]="['/room', room._id]" [disabled]="!room.isLive" title="Bekijk room van {{room.streamer.name}}">
+            <fa-icon [icon]="FaArrowRight" class="icon align-middle"></fa-icon>
+            <fa-icon [icon]="FaDoorOpen" class="icon align-middle"></fa-icon>
+          </button>
+          <button *ngIf="isBrowsePage && !followedRoomsIds.includes(room._id)" class="btn btn-outline-danger btn-hover-transition w-33 fw-bold text-black"
+            title="Volg room van {{room.streamer.name}}" (click)="followRoom(room)">Volgen</button>
+          <button *ngIf="!isBrowsePage || isBrowsePage && followedRoomsIds.includes(room._id)" class="btn btn-outline-danger btn-hover-transition w-33 fw-bold text-black"
+            title="Ontvolg room van {{room.streamer.name}}" (click)="unfollowRoom(room)">Ontvolgen</button>
+        </div>
       </div>
       <!-- <div class="d-block card-border"></div> -->
     </div>
-    
+
   </div>
 </div>

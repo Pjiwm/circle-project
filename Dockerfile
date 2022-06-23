@@ -13,10 +13,12 @@ RUN npm install -g @angular/cli@8.1.2
 RUN npm install -g firebase-tools
 RUN npm install http-server -g
 
+RUN apt-get -y update
+
 # OpenSSL
 RUN apt install openssl -y
 
-# firebase
-RUN npm install -g firebase-tools
+#ffmpeg voor conversie van video
+RUN apt install ffmpeg -y
 
 USER node
