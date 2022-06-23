@@ -21,14 +21,14 @@
               <span>Live</span>
             </div>
 
-            <div (mouseenter)="mouseOnHover(room._id)" (mouseleave)="mouseOnLeave(room._id)">
+            <div (mouseenter)="mouseOnHover(room._id, room)" (mouseleave)="mouseOnLeave(room._id)">
               <img *ngIf="!(hoveredVideo == room._id || playingStreamArray.includes(room._id )) || !room.isLive"
                 id="{{room._id}} - avatar" class="card-img-top"
                 [src]="'https://avatars.dicebear.com/api/adventurer-neutral/' + room.streamer._id + '.svg'" />
               <div *ngIf="room.isLive">
                 <video *ngIf="hoveredVideo == room._id || playingStreamArray.includes(room._id)" id="{{room._id}}"
                   class="video-frame-2">
-                  <source src="{{videoSource1}}" type="video/mp4">
+                  <!-- <source src="http://127.0.0.1:8100/Stijn-streams/Stijn.m3u8" type="video/mp4"> -->
                   <!-- <source src="playlist.m3u8" type="application/x-mpegURL"> -->
                 </video>
               </div>
@@ -50,7 +50,7 @@
           </div>
         </a>
         <div class="btn-group mx-2 mb-2">
-          <button class="btn btn-danger w-33" (click)="startStopVideo(room._id)" [disabled]="!room.isLive">
+          <button class="btn btn-danger w-33" (click)="startStopVideo(room._id, room)" [disabled]="!room.isLive">
             <fa-icon *ngIf="!playingStreamArray.includes(room._id)" [icon]="FaPlay" class="icon"></fa-icon>
             <fa-icon *ngIf="playingStreamArray.includes(room._id)" [icon]="FaStop" class="icon"></fa-icon>
           </button>
