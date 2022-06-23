@@ -8,10 +8,11 @@ mongoose.Promise = global.Promise;
  */
 async function connectToMongo(): Promise<void> {
   const mongoUrl =
-    process.env.MONGO_DB_CONNECTION || "mongodb://localhost:27017";
+    process.env.MONGO_DB_CONNECTION || "mongodb://mongo_circle:27017/circle";
+  console.log(mongoUrl);
   try {
     if (process.env.NODE_ENV !== "test") {
-      await mongoose.connect(`${mongoUrl}/circle`, {
+      await mongoose.connect(`${mongoUrl}`, {
         keepAlive: true,
         keepAliveInitialDelay: 300000,
       });
@@ -28,6 +29,4 @@ async function connectToMongo(): Promise<void> {
   }
 }
 
-export {
-  connectToMongo,
-};
+export { connectToMongo };
