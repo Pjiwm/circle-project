@@ -18,7 +18,6 @@ const {
 const mongoDB = require("./db-connection");
 const getRoomByUser = require("./utils/get-room-by-user");
 const roomSchema = require("./schemas/room");
-const personSchema = require("./schemas/person");
 
 // global declarations
 const nmsPort = process.env.NMS_PORT;
@@ -38,14 +37,10 @@ app.use(cors());
 // define routes
 app.use("/streams", streamsRouter);
 
-// TODO make express able to serve archived content based on url
-// TODO make /streams/${username} default to the currently available LIVEstream (if not live then get error saying person is not livestreaming)
-// TODO implement https://stackoverflow.com/questions/21878178/hls-streaming-using-node-js
-
-const start = async () => {
+const start = () => {
   // connectDB
   try {
-    await mongoDB();
+    mongoDB();
     app.listen(hlsPort, () => {
       logger.log(`Server listening on ${hlsPort}`);
     });
@@ -141,7 +136,6 @@ const userIsLive = async (outputFolder, isLive, username) => {
 const ffmpegInputToHLS = (inputFolder, outputFolder, username) => {
   logger.log(`ffmpeg input folder: ${inputFolder}`);
   logger.log(`ffmpeg output folder: ${outputFolder}`);
-  // TODO dynamic input for ffmpeg
   ffmpeg(`rtmp://localhost/live/${username}`, { timeout: 432000 })
     .addOptions([
       "-profile:v baseline", // baseline profile (level 3.0) for H264 video codec
