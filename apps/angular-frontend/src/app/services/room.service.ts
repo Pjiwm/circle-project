@@ -6,16 +6,17 @@ import { Observable, map } from "rxjs";
 import { AuthService } from "./auth.service";
 import { RsaService } from "../../../../../libs/keyUtils";
 import { PUBLIC_SERVER_KEY } from "libs/key";
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoomService {
 
-  baseUrl: string = "http://localhost:3000/api";
+  baseUrl: string = environment.APIURL;
   headers = new HttpHeaders({
     "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": "http://127.0.0.1",
+    "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Credentials": "true",
     "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE",
     "Access-Control-Allow-Headers": "Content-Type",
