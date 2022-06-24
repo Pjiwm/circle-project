@@ -10,9 +10,9 @@
         <img class="streamer-pf d-inline-block" [src]="'https://avatars.dicebear.com/api/adventurer-neutral/' + room.streamer._id + '.svg'" />
         <div class="d-inline-block flex-grow-1 ms-2">
           <p class="sidenav-text fw-bold m-0">{{ room.streamer.name }}</p>
-          <fa-icon *ngIf="room.viewers > 0" [icon]="FaEye" class="icon fa-lg pe-2"></fa-icon>
-          <p *ngIf="room.viewers > 0" class="sidenav-text fw-bold d-inline-block m-0">{{ room.viewers }}</p>
-          <p *ngIf="room.viewers == 0" class="sidenav-text fw-bold d-inline-block m-0">Offline</p>
+          <fa-icon *ngIf="room.isLive" [icon]="FaEye" class="icon fa-lg pe-2"></fa-icon>
+          <p *ngIf="room.isLive" class="sidenav-text fw-bold d-inline-block m-0">{{ room.viewers }}</p>
+          <p *ngIf="!room.isLive" class="sidenav-text fw-bold d-inline-block m-0">Offline</p>
         </div>
       </a>
     </div>

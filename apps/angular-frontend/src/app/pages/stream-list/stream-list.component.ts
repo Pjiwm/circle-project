@@ -6,6 +6,8 @@ import { FollowService } from "../../services/follow.service";
 import { Person, Room } from "../../../../../../libs/models";
 import { Location } from '@angular/common'
 import { faPlay, faStop, faArrowRightLong, faDoorOpen } from "@fortawesome/free-solid-svg-icons";
+import Hls from 'hls.js';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: "the-circle-stream-list",
@@ -52,7 +54,7 @@ export class StreamListComponent implements OnInit {
 
           this.followService.getEmittedFollowers().subscribe(value => {
             this.followedRoomsIds = [];
-    
+
             value.forEach(room => {
               this.followedRoomsIds.push(room._id)
             });
@@ -86,7 +88,7 @@ export class StreamListComponent implements OnInit {
     return room
   }
 
-  mouseOnHover(video: string) {
+  mouseOnHover(video: string, room: Room) {
     if (!this.playingStreamArray.includes(video)) {
       console.log("mouseOnHover for video:", video);
       console.log(`mouseOnHover for avatar: ${video}-avatar`)
@@ -94,10 +96,11 @@ export class StreamListComponent implements OnInit {
 
       setTimeout(() => {
         this.hoveredVideo = video;
+        this.getHlsStream(video, room);
       }, 300);
 
       setTimeout(() => {
-        let vid = document.getElementById(video) as HTMLVideoElement;
+        let vid = document.getElementById(video) as HTMLMediaElement;
         console.log("Element in hover play preview?", vid);
         if (vid != null && !this.playingStreamArray.includes(video)) {
           vid.muted = true;
@@ -106,9 +109,12 @@ export class StreamListComponent implements OnInit {
       }, 600);
 
       setTimeout(() => {
-        let vid = document.getElementById(video) as HTMLVideoElement;
+        let vid = document.getElementById(video) as HTMLMediaElement;
         console.log("Element in hover 7 sec preview?", vid);
+        console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', vid);
+        console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', this.hoveredVideo);
         if (vid != null && !this.playingStreamArray.includes(video)) {
+          console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
           vid.pause();
           this.hoveredVideo = "";
         }
@@ -122,27 +128,28 @@ export class StreamListComponent implements OnInit {
       console.log(`mouseOnLeave for avatar: ${video}-avatar`);
       console.log(this.playingStreamArray)
       setTimeout(() => {
-        let vid = document.getElementById(video) as HTMLVideoElement
+        let vid = document.getElementById(video) as HTMLMediaElement
         vid.pause();
         this.hoveredVideo = "";
       }, 330);
     }
   }
 
-  startStopVideo(video: string): void {
+  startStopVideo(video: string, room: Room): void {
     console.log("startStopVideo for video:", video);
     if (!this.playingStreamArray.includes(video)) {
       this.playingStreamArray.push(video);
     }
 
     setTimeout(() => {
-      let vid = document.getElementById(video) as HTMLVideoElement
+      let vid = document.getElementById(video) as HTMLMediaElement
       console.log("Element startStop?", vid);
       console.log("Paused?", vid.paused);
       if (vid.paused) {
         console.log(`Video ${video} played`)
 
         setTimeout(() => {
+          this.getHlsStream(video, room);
           vid.play();
         }, 300);
         console.log(this.playingStreamArray);
@@ -169,6 +176,24 @@ export class StreamListComponent implements OnInit {
 
   previousPage() {
     this.location.back();
+  }
+
+  getHlsStream(video: string, room: Room) {
+    if (Hls.isSupported()) {
+      var hls = new Hls();
+      // bind them together
+      hls.attachMedia(document.getElementById(video) as HTMLMediaElement);
+      hls.on(Hls.Events.MEDIA_ATTACHED, function () {
+        console.log('video and hls.js are now bound together !');
+        console.log('streamer naam:', room.streamer.name);
+        hls.loadSource(`${environment.mediaUrl}/${room.streamer.name}-streams/${room.streamer.name}.m3u8`);
+        hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
+          console.log(
+            'manifest loaded, found ' + data.levels.length + ' quality level'
+          );
+        });
+      });
+    }
   }
 
   getLink(isLive: Boolean, roomId: string): string {

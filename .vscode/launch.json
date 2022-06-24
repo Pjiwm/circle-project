@@ -25,5 +25,11 @@
             "request": "launch",
             "type": "node-terminal"
         },
+        {
+            "name": "Angular production",
+            "command": "npx nx serve angular-frontend --configuration production --disableHostCheck --host=0.0.0.0",
+            "request": "launch",
+            "type": "node-terminal"
+        }
     ]
 }

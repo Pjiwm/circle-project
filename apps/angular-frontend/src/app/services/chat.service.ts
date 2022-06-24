@@ -6,15 +6,16 @@ import { PUBLIC_SERVER_KEY } from "libs/key";
 import { RsaService } from "../../../../../libs/keyUtils";
 import { Observable, map } from "rxjs";
 import * as shajs from 'sha.js';
+import { environment } from '../../environments/environment';
 
 @Injectable({
     providedIn: 'root',
 })
 export class ChatService {
-    baseUrl: string = "http://localhost:3000/api";
+    baseUrl: string = environment.APIURL;
     headers = new HttpHeaders({
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "http://127.0.0.1",
+        "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Credentials": "true",
         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE",
         "Access-Control-Allow-Headers": "Content-Type",
@@ -35,20 +36,26 @@ export class ChatService {
                     const chats = response.chats;
 
                     if (signature && chats) {
+                        console.log('HEEEEEEEEEEEEEFT SIGNATURE', signature)
+                        console.log('HEEEEEEEEEEEEEFT CHATS', chats)
                         const decrypt = keyutil.decrypt(
-                            signature.toString(),
+                            signature,
                             PUBLIC_SERVER_KEY,
-                            { chats: response.chats }
+                            chats
                         );
+
                         if (decrypt) {
                             let UUID: string = decrypt as string;
                             if (this.authService.isReplayAttack(UUID)) {
-                              console.log("this is a replay attack");
-                              return null;
+                                console.log("this is a replay attack");
+                                return null;
                             }
                             this.authService.saveUUIDToLocalStorage(UUID);
                             return chats;
-                          }
+                        } else {
+                            
+                        console.log('Decryption result', decrypt)
+                        }
                     }
                     return null;
                 })
@@ -59,10 +66,10 @@ export class ChatService {
 
     sendMessage(chatMessage: ChatMessage): void {
         const keyutil = new RsaService();
-        chatMessage.signature =  keyutil.encrypt(chatMessage, JSON.parse(localStorage.getItem('currentperson')).privateKey);
+        const signature = keyutil.encrypt(chatMessage, JSON.parse(localStorage.getItem('currentperson')).privateKey);
         console.log('aaaaaaaaaaaaaaaaaa', chatMessage);
         this.http
-            .post<ChatMessage>(`${this.baseUrl}/chats`, chatMessage, { headers: this.headers }).subscribe();
+            .post<ChatMessage>(`${this.baseUrl}/chats`, { "chatMessage": chatMessage, "signature": signature }, { headers: this.headers }).subscribe();
     }
 
     // Methode getAllFollowers in the stream

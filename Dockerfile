@@ -15,10 +15,8 @@ RUN npm install http-server -g
 
 RUN apt-get -y update
 
-# OpenSSL
-RUN apt install openssl -y
-
-#ffmpeg voor conversie van video
-RUN apt install ffmpeg -y
+# Packages
+RUN apt install openssl \
+    ffmpeg -y
 
 USER node
