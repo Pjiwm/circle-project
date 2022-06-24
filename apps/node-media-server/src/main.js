@@ -114,7 +114,10 @@ const userIsLive = async (outputFolder, isLive, username) => {
     // update mongo so the other server also knows we're not live anymore
     await roomSchema.findByIdAndUpdate(
       { _id: await getRoomByUser(username) },
-      { isLive: false }
+      {
+        isLive: false,
+        viewers: 0,
+      }
     );
   } else {
     fs.writeFileSync(`${outputFolder}/_user_is_live`, "We'll do it live!");
