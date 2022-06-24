@@ -7,6 +7,7 @@ import { LoggedInAuthGuard } from "./services/auth.guard";
 import { StreamListComponent } from "./pages/stream-list/stream-list.component";
 
 const routes: Routes = [
+  { path: "", pathMatch: "full", component: StreamListComponent, canActivate: [LoggedInAuthGuard], },
   { path: "login", pathMatch: "full", component: LoginComponent },
   { path: "browse", pathMatch: "full", component: StreamListComponent, canActivate: [LoggedInAuthGuard], },
   {
