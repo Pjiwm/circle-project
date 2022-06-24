@@ -1,7 +1,6 @@
 import {
   Component,
-  OnInit,
-  ViewChild, ElementRef
+  OnInit
 } from "@angular/core";
 import { ActivatedRoute } from '@angular/router';
 import { Room } from "../../../../../../../libs/models";
@@ -28,9 +27,8 @@ export class StreamComponent implements OnInit {
   FaArrowLeft = faArrowLeftLong;
   FaDoorOpen = faDoorOpen;
   FaEye = faEye;
-  displayWelcomeMessage = true;
   isFollowed = false;
-  @ViewChild("videoStream",{static: true}) videostream: ElementRef;
+  // @ViewChild("videoStream", { static: true }) videostream: ElementRef;
 
   constructor(private route: ActivatedRoute, private roomService: RoomService, private personService: PersonService,
     private location: Location, private authService: AuthService, private followService: FollowService) {
@@ -42,38 +40,36 @@ export class StreamComponent implements OnInit {
       this.roomService.getById(params.get('id')).subscribe((room) => {
         console.log('Room:', room);
         this.room = room;
-
-        if (Hls.isSupported()) {
-          var hls = new Hls();
-          // bind them together
-          hls.attachMedia(this.videostream.nativeElement);
-          hls.on(Hls.Events.MEDIA_ATTACHED, function () {
-            console.log('video and hls.js are now bound together !');
-            console.log('streamer naam:', room.streamer.name);
-            hls.loadSource(`${environment.mediaUrl}/${room.streamer.name}-streams/${room.streamer.name}.m3u8`);
-            hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
-              console.log(
-                'manifest loaded, found ' + data.levels.length + ' quality level'
-              );
-            });
-          });
-        }
-
+        
         this.personService.getById(room.streamer as unknown as string).subscribe((person) => {
-          console.log('Streamer with ID:', person._id);
           this.room.streamer = person;
-          if(this.authService.currentPerson$.value.followed.some(e => e.streamer._id == this.room.streamer._id)) {
-            this.isFollowed = true
+
+          console.log('HLS is supported', Hls.isSupported())
+          if (Hls.isSupported()) {
+            var hls = new Hls();
+            // bind them together
+            hls.attachMedia(document.getElementById('videoStream') as HTMLMediaElement);
+            hls.on(Hls.Events.MEDIA_ATTACHED, function () {
+              console.log('video and hls.js are now bound together !');
+              console.log('streamer naam:', room.streamer.name);
+              hls.loadSource(`${environment.mediaUrl}/${room.streamer.name}-streams/${room.streamer.name}.m3u8`);
+              hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
+                console.log(
+                  'manifest loaded, found ' + data.levels.length + ' quality level'
+                );
+              });
+            });
           }
 
+          this.personService.getById(this.authService.currentPerson$.value._id).subscribe((currentPerson) => {
+            if (currentPerson.followed.some(e => e._id == this.room._id)) {
+              console.log('Room is followed');
+              this.isFollowed = true;
+            }
+          })
         })
       });
     });
-
-
-    // setTimeout(() => {
-    //   this.displayWelcomeMessage = false;
-    // }, 4000);
   }
 
   followRoom(): void {

@@ -10,7 +10,10 @@
 
 <div class="row g-0 h-100 stream-chat-window my-3">
   <div class="text-center col-sm-9 stream-container">
-    <video class="video-frame-2 w-100 h-100 align-middle" #videoStream controls autoplay></video>
+    <video class="video-frame-2 w-100 h-100 align-middle" id="videoStream" controls autoplay></video>
+    <!-- <video class="video-frame-2 w-100 h-100 align-middle" controls>
+      <source #videoStream/>
+  </video> -->
   </div>
   <div class="col-sm-3">
     <the-circle-chat></the-circle-chat>
