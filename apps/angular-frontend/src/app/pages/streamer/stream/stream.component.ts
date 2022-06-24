@@ -12,6 +12,7 @@ import { AuthService } from "../../../services/auth.service";
 import { faPlay, faStop, faArrowLeftLong, faDoorOpen, faEye } from "@fortawesome/free-solid-svg-icons";
 import { Location } from '@angular/common'
 import  Hls  from 'hls.js';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: "the-circle-stream",
@@ -49,7 +50,7 @@ export class StreamComponent implements OnInit {
           hls.on(Hls.Events.MEDIA_ATTACHED, function () {
             console.log('video and hls.js are now bound together !');
             console.log('streamer naam:', room.streamer.name);
-            hls.loadSource(`http://127.0.0.1:8100/${room.streamer.name}-streams/${room.streamer.name}.m3u8`);
+            hls.loadSource(`${environment.mediaUrl}/${room.streamer.name}-streams/${room.streamer.name}.m3u8`);
             hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
               console.log(
                 'manifest loaded, found ' + data.levels.length + ' quality level'
