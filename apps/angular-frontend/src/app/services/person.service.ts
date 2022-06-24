@@ -7,12 +7,13 @@ import { AuthService } from "./auth.service";
 import { PUBLIC_SERVER_KEY } from "libs/key";
 import { RsaService } from "../../../../../libs/keyUtils";
 import { User } from "../models/user";
+import { environment } from "../../environments/environment";
 
 @Injectable({
   providedIn: "root",
 })
 export class PersonService {
-  baseUrl: string = "http://localhost:3000/api";
+  baseUrl: string = environment.APIURL;
   headers = new HttpHeaders({
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "http://127.0.0.1",
@@ -21,9 +22,9 @@ export class PersonService {
     "Access-Control-Allow-Headers": "Content-Type",
   });
 
-  constructor(public http: HttpClient, public authService:AuthService) {}
+  constructor(public http: HttpClient, public authService: AuthService) {}
 
-  getById(id:string): Observable<Person> {
+  getById(id: string): Observable<Person> {
     const keyutil = new RsaService();
     return this.http
       .get<any>(`${this.baseUrl}/persons/${id}`, { headers: this.headers })
@@ -31,7 +32,7 @@ export class PersonService {
         map((response: any) => {
           const signature = response.signature;
           const person = response.person;
-          if(signature && person) {
+          if (signature && person) {
             const decrypt = keyutil.decrypt(
               signature.toString(),
               PUBLIC_SERVER_KEY,
@@ -54,14 +55,17 @@ export class PersonService {
 
   getFollowed(): Observable<Room[]> {
     const keyutil = new RsaService();
-     return this.http
-     .get<Person[]>(`${this.baseUrl}/persons/${this.authService.currentPerson$.value._id}`, { headers: this.headers })
+    return this.http
+      .get<Person[]>(
+        `${this.baseUrl}/persons/${this.authService.currentPerson$.value._id}`,
+        { headers: this.headers }
+      )
       .pipe(
         map((response: any) => {
           console.log(response);
           const signature = response.signature;
           const followed = response.person.followed;
-          if(signature && followed) {
+          if (signature && followed) {
             const decrypt = keyutil.decrypt(
               signature.toString(),
               PUBLIC_SERVER_KEY,
@@ -74,21 +78,29 @@ export class PersonService {
                 return null;
               }
               this.authService.saveUUIDToLocalStorage(UUID);
-              console.log("Followed: " + followed)
+              console.log("Followed: " + followed);
               return followed;
             }
           }
-          return null
+          return null;
         })
       );
   }
 
   startStopFollowing(person: Person): void {
-        const keyutil = new RsaService();
-        const signature = keyutil.encrypt({ person: person }, JSON.parse(localStorage.getItem('currentperson')).privateKey);
-        console.log('Person following: ', person);
-        console.log('Person signature: ', signature);
-        this.http.put<Person>(`${this.baseUrl}/persons/${person._id}`, {"person": person, "signature": signature}, { headers: this.headers }).subscribe();
+    const keyutil = new RsaService();
+    const signature = keyutil.encrypt(
+      { person: person },
+      JSON.parse(localStorage.getItem("currentperson")).privateKey
+    );
+    console.log("Person following: ", person);
+    console.log("Person signature: ", signature);
+    this.http
+      .put<Person>(
+        `${this.baseUrl}/persons/${person._id}`,
+        { person: person, signature: signature },
+        { headers: this.headers }
+      )
+      .subscribe();
   }
-
 }

@@ -23,7 +23,7 @@ export class AuthService {
   public currentPerson$ = new BehaviorSubject<Person | undefined>(undefined);
   private readonly CURRENT_PERSON: string = "currentperson";
   private readonly UUIDS: string = "UUIDS";
-  private ApiUrl = environment.APIURL + "auth/login";
+  private ApiUrl = environment.APIURL + "/auth/login";
 
   httpOptions = {
     headers: new HttpHeaders({
